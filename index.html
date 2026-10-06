@@ -7,12 +7,15 @@
   <meta name="description" content="Artisanal eggless cheesecakes, cakes, brownies, muffins and cupcakes in Bangalore. Pre-orders with 1 week notice. Couverture chocolate bakes.">
   <meta property="og:title" content="PAGE 26 — Cheesecakes & Bakes">
   <meta property="og:description" content="Artisanal eggless cheesecakes & bakes. Bangalore. Pre-orders on WhatsApp / Call.">
-  <meta property="og:image" content="menu.png">
+  <meta property="og:image" content="logo.png">
 
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <!-- Google Fonts: Cormorant Garamond, Playfair Display & Outfit for luxury artisanal typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS for Map Integration -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
@@ -20,7 +23,7 @@
 <body>
 
   <!-- Top Announcement Bar -->
-  <div class="top-announcement">
+  <aside class="top-announcement">
     <div class="announcement-content">
       <span>⏳ PRE-ORDERS ONLY (1 Week's Notice)</span>
       <span class="sep">•</span>
@@ -28,15 +31,14 @@
       <span class="sep">•</span>
       <span>📍 Bangalore</span>
     </div>
-  </div>
+  </aside>
 
-  <!-- Header Section (Inspired by luxury patisseries like Liliyum) -->
+  <!-- Site Header with Brand Logo -->
   <header class="site-header">
     <div class="header-inner">
 
-      <!-- Top Utility: Contacts & Theme Switch -->
+      <!-- Top Row: Direct Actions & Simple Theme Toggle -->
       <div class="header-top-row">
-        <!-- Direct Contacts -->
         <div class="quick-contacts">
           <a href="https://wa.me/918780547928" target="_blank" class="head-pill wa-pill">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -55,79 +57,87 @@
           </button>
         </div>
 
-        <!-- Both Dark / Light Theme Segmented Switch -->
-        <div class="theme-switch" role="group" aria-label="Theme mode switcher">
-          <button type="button" class="theme-option active" id="btn-theme-light" aria-pressed="true">
-            <span>☀️</span> <span>Light</span>
-          </button>
-          <button type="button" class="theme-option" id="btn-theme-dark" aria-pressed="false">
-            <span>🌙</span> <span>Dark</span>
-          </button>
-        </div>
+        <!-- Simplified Single-Tap Dark/Light Theme Button -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <span class="theme-icon" id="theme-icon">🌙</span>
+        </button>
       </div>
 
-      <!-- Brand Logo Crest -->
+      <!-- Responsive Luxury Typography Crest -->
       <div class="brand-crest">
-        <h1 class="brand-title">PAGE 26</h1>
+        <h1 class="brand-title">PAGE <span class="brand-num">26</span></h1>
         <div class="brand-sub-wrap">
           <span class="crest-line"></span>
-          <span class="brand-sub">CHEESECAKES & BAKES</span>
+          <h2 class="brand-sub">CHEESECAKES &amp; BAKES</h2>
           <span class="crest-line"></span>
         </div>
-        <p class="brand-tagline">Artisanal eggless bakes crafted with pure couverture chocolate in Bangalore.</p>
+        <p class="brand-tagline">Small-batch eggless bakes, made fresh to order with real couverture chocolate in Bangalore.</p>
       </div>
 
     </div>
   </header>
 
-  <!-- Sticky Mobile-Friendly Category Navigation Bar (Like Liliyum / Zomato) -->
+  <!-- Sticky Mobile-Friendly Category Navigation Bar with Theme Switch -->
   <nav class="sticky-nav" id="sticky-nav">
-    <div class="nav-scroll-container">
-      <button type="button" class="nav-chip active" data-category="all">✨ All Items</button>
-      <button type="button" class="nav-chip" data-category="cheesecakes">👑 Cheesecakes</button>
-      <button type="button" class="nav-chip" data-category="cakes">🎂 Cakes</button>
-      <button type="button" class="nav-chip" data-category="brownies">🍫 Brownies</button>
-      <button type="button" class="nav-chip" data-category="muffins">🧁 Muffins</button>
-      <button type="button" class="nav-chip" data-category="cupcakes">🧁 Cupcakes</button>
+    <div class="sticky-nav-inner">
+      <div class="nav-scroll-container">
+        <button type="button" class="nav-chip active" data-category="all">✨ All Items</button>
+        <button type="button" class="nav-chip" data-category="cheesecakes">👑 Cheesecakes</button>
+        <button type="button" class="nav-chip" data-category="cakes">🎂 Cakes</button>
+        <button type="button" class="nav-chip" data-category="brownies">🍫 Brownies</button>
+        <button type="button" class="nav-chip" data-category="muffins">🧁 Muffins</button>
+        <button type="button" class="nav-chip" data-category="cupcakes">🧁 Cupcakes</button>
+      </div>
+      <div class="sticky-nav-actions">
+        <button type="button" class="theme-toggle-btn sticky-theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <!-- Main Menu Grid (Modern 2-Column Responsive Card Layout for Mobile) -->
+  <!-- Main Menu Grid -->
   <main class="main-container">
     <div class="menu-sections-wrapper" id="menu-sections">
       <!-- Generated Dynamically by app.js -->
     </div>
   </main>
 
-  <!-- Bakery Story & Footer Information Card -->
-  <footer class="site-footer">
-    <div class="footer-card">
-      <div class="footer-info">
-        <h3 class="footer-title">PRE-ORDERS ONLY (1 Week's Notice)</h3>
-        <p class="footer-badges">
-          <span class="veg-badge"><span class="veg-icon"></span> 100% Exclusively Eggless</span>
-          <span class="sep">•</span>
-          <span>Fresh to order</span>
+  <!-- Heritage Distinct Footer (Visually separated from product cards) -->
+  <footer class="heritage-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <h3 class="footer-brand-title">PAGE <span class="brand-num">26</span></h3>
+        <p class="footer-brand-sub">CHEESECAKES &amp; BAKES</p>
+        <p class="footer-desc">
+          Small-batch home bakery in Bangalore crafting 100% eggless cheesecakes, couverture chocolate cakes, brownies, and bakes made fresh to order.
         </p>
-        <p class="footer-note">All chocolate cakes, brownies, muffins & cupcakes are crafted using premium couverture chocolate.</p>
       </div>
 
-      <div class="footer-contact-block">
-        <div class="footer-city">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Bangalore, India</span>
-        </div>
-        <a href="https://wa.me/918780547928" target="_blank" class="footer-wa-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
-          </svg>
-          <span>WhatsApp: +91 8780547928</span>
+      <div class="footer-policy-column">
+        <h4 class="footer-col-heading">ORDERING POLICY</h4>
+        <ul class="policy-list">
+          <li>⏳ <strong>Pre-Orders Only:</strong> 1 week's notice required</li>
+          <li>🟢 <strong>100% Eggless:</strong> All products are vegetarian</li>
+          <li>🍫 <strong>Couverture Chocolate:</strong> Premium real cocoa butter</li>
+          <li>📍 <strong>Location:</strong> Bangalore, Karnataka</li>
+        </ul>
+      </div>
+
+      <div class="footer-contact-column">
+        <h4 class="footer-col-heading">CONTACT & INQUIRIES</h4>
+        <a href="https://wa.me/918780547928" target="_blank" class="footer-action-link wa">
+          <span>💬 WhatsApp: +91 8780547928</span>
         </a>
+        <a href="tel:+918780547928" class="footer-action-link phone">
+          <span>📞 Call: +91 8780547928</span>
+        </a>
+        <p class="footer-copy">© 2026 Page 26. Baked fresh to order.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Sticky Bottom Order Dock (Mobile Floating Bar) -->
+  <!-- Sticky Bottom Order Dock -->
   <aside class="order-dock" id="order-dock">
     <div class="dock-inner">
       <div class="dock-info" id="dock-open-cart">
@@ -138,12 +148,12 @@
         </div>
       </div>
       <button type="button" class="dock-cta-btn" id="dock-btn-checkout">
-        <span>Order on WhatsApp →</span>
+        <span>Review & Order on WhatsApp →</span>
       </button>
     </div>
   </aside>
 
-  <!-- Modern Slide-Up Checkout Drawer Modal -->
+  <!-- Slide-Up Checkout Drawer with Interactive Map Picker -->
   <div class="checkout-overlay" id="checkout-modal">
     <div class="checkout-sheet">
       <div class="sheet-header">
@@ -170,13 +180,13 @@
 
           <div class="sheet-notice-box">
             <span>⏳</span>
-            <span><strong>Notice:</strong> All orders are baked fresh and require <strong>1 week's notice</strong>.</span>
+            <span><strong>Notice:</strong> Pre-orders require <strong>1 week's notice</strong> as everything is made fresh.</span>
           </div>
 
           <!-- Checkout Form Details -->
           <div class="form-row">
             <label class="form-label" for="cust-name">Your Full Name <span class="required">*</span></label>
-            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Tarang Sharma" required>
+            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Ananya Sharma" required>
           </div>
 
           <div class="form-row">
@@ -185,23 +195,41 @@
             <small class="form-hint">Enforces 7 days notice minimum.</small>
           </div>
 
-          <!-- Address & Pinpoint Location -->
+          <!-- Address & Interactive Map Picker -->
           <div class="form-row">
             <label class="form-label" for="cust-address">Delivery Location / Area (Bangalore)</label>
-            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Indiranagar, HSR Layout, Koramangala">
+            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Indiranagar, Koramangala, Whitefield, Bangalore">
             
-            <div class="map-pin-container">
-              <button type="button" class="btn-pin-location" id="btn-pin-location">
-                <span class="pin-icon">📍</span>
-                <span id="pin-text">Pinpoint Current Location (Google Maps)</span>
+            <!-- Map Action Buttons -->
+            <div class="map-actions-row">
+              <button type="button" class="btn-map-action" id="btn-gps-auto">
+                <span>📍 Auto-Detect GPS</span>
               </button>
-              <div id="pin-status-pill" class="pin-status" style="display:none;"></div>
+              <button type="button" class="btn-map-action" id="btn-toggle-map">
+                <span>🗺️ Pick / Drag Pin on Map</span>
+              </button>
             </div>
+
+            <!-- Collapsible Leaflet Map Container -->
+            <div class="map-wrapper" id="map-wrapper" style="display: none;">
+              <p class="map-instructions">Drag the marker or tap anywhere on the map to set your exact location:</p>
+              <div id="leaflet-map" class="leaflet-map-frame"></div>
+              <div class="map-quick-areas">
+                <span class="quick-title">Quick Jump:</span>
+                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9784, 77.6408, 'Indiranagar')">Indiranagar</button>
+                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9352, 77.6245, 'Koramangala')">Koramangala</button>
+                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9121, 77.6446, 'HSR Layout')">HSR Layout</button>
+                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9698, 77.7500, 'Whitefield')">Whitefield</button>
+                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9308, 77.5838, 'Jayanagar')">Jayanagar</button>
+              </div>
+            </div>
+
+            <div id="pin-status-pill" class="pin-status" style="display:none;"></div>
           </div>
 
           <div class="form-row">
-            <label class="form-label" for="cust-notes">Cake Message / Customization Request</label>
-            <textarea id="cust-notes" class="form-control" rows="2" placeholder="e.g. Message on cake, extra toppings..."></textarea>
+            <label class="form-label" for="cust-notes">Cake Message / Notes</label>
+            <textarea id="cust-notes" class="form-control" rows="2" placeholder="e.g. Message on cake: 'Happy Birthday Ananya!', extra toppings..."></textarea>
           </div>
         </div>
       </div>
@@ -228,6 +256,8 @@
   <!-- Toast Notification -->
   <div class="toast-popup" id="toast">Added to order!</div>
 
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="menu-data.js"></script>
   <script src="app.js"></script>
 </body>

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 330" class="page26-logo" aria-label="PAGE 26 Cheesecakes & Bakes">
+  <defs>
+    <!-- Cheesecake Gradients -->
+    <linearGradient id="cheesecakeTop" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#E5AC62" />
+      <stop offset="100%" stop-color="#C88438" />
+    </linearGradient>
+    <linearGradient id="cheesecakeFilling" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBF2" />
+      <stop offset="100%" stop-color="#F7EACD" />
+    </linearGradient>
+    <linearGradient id="cheesecakeCrust" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8F5428" />
+      <stop offset="50%" stop-color="#A96B36" />
+      <stop offset="100%" stop-color="#7B451E" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .logo-main-text {
+      fill: var(--brand-cocoa, #3E271D);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 700;
+      letter-spacing: 6px;
+      transition: fill 0.25s ease;
+    }
+    .logo-sub-text {
+      fill: var(--brand-cocoa, #3E271D);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      font-weight: 600;
+      font-size: 13.5px;
+      letter-spacing: 7px;
+      transition: fill 0.25s ease;
+    }
+    .logo-stroke {
+      stroke: var(--brand-cocoa, #3E271D);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: stroke 0.25s ease;
+    }
+    .logo-book-fill {
+      fill: var(--bg-card-subtle, #FBF6EF);
+      transition: fill 0.25s ease;
+    }
+    .logo-heart {
+      fill: var(--brand-rose, #C67268);
+      stroke: var(--brand-rose, #C67268);
+      stroke-width: 0.5;
+      transition: fill 0.25s ease, stroke 0.25s ease;
+    }
+    .logo-botanical {
+      fill: var(--veg-green, #4E6547);
+      stroke: var(--veg-green, #4E6547);
+      stroke-width: 0.6;
+      transition: fill 0.25s ease, stroke 0.25s ease;
+    }
+    .logo-divider {
+      stroke: var(--brand-cocoa, #3E271D);
+      stroke-width: 1.2;
+      opacity: 0.55;
+      transition: stroke 0.25s ease;
+    }
+  </style>
+
+  <!-- BOOK & BOTANICAL ILLUSTRATION (Top Center) -->
+  <g transform="translate(145, 12)">
+    
+    <!-- Botanical Branch behind Right Book Page -->
+    <g class="logo-botanical" transform="translate(150, 22)">
+      <!-- Stem -->
+      <path d="M 5,95 Q 18,50 35,5" fill="none" stroke-width="2" />
+      <!-- Leaves -->
+      <path d="M 12,70 Q 28,68 25,55 Q 12,60 12,70 Z" />
+      <path d="M 22,46 Q 38,40 33,28 Q 20,36 22,46 Z" />
+      <path d="M 33,18 Q 45,8 39,0 Q 28,8 33,18 Z" />
+      <!-- Little Flower -->
+      <circle cx="39" cy="2" r="3.5" fill="#FAF5EE" stroke-width="1.2" />
+      <circle cx="39" cy="2" r="1.5" />
+    </g>
+
+    <!-- Open Book Left Page -->
+    <path class="logo-book-fill" d="M 125,120 C 85,115 35,118 8,128 C 8,48 35,38 125,48 Z" />
+    <path class="logo-stroke" d="M 125,120 C 85,115 35,118 8,128 C 8,48 35,38 125,48 Z" />
+    <!-- Book Leaves Lines Left -->
+    <path class="logo-stroke" d="M 8,128 Q 12,135 125,125" stroke-width="1.4" opacity="0.7" />
+    <path class="logo-stroke" d="M 14,136 Q 35,140 125,130" stroke-width="1.4" opacity="0.6" />
+
+    <!-- Open Book Right Page with Folded Corner -->
+    <path class="logo-book-fill" d="M 125,120 C 165,115 210,118 242,128 C 242,65 220,38 125,48 Z" />
+    <path class="logo-stroke" d="M 125,120 C 165,115 210,118 242,128 C 242,65 220,38 125,48 Z" />
+    <!-- Folded Corner Top Right -->
+    <path class="logo-book-fill" d="M 218,38 L 242,65 L 218,65 Z" />
+    <path class="logo-stroke" d="M 218,38 L 242,65 L 218,65 Z" stroke-width="1.6" />
+    <!-- Book Spine Center -->
+    <path class="logo-stroke" d="M 125,48 L 125,128" stroke-width="2.5" />
+
+    <!-- CHEESECAKE SLICE (On the Right Page) -->
+    <g transform="translate(136, 52)">
+      <!-- Top Golden Baked Surface (Perspective Triangle) -->
+      <polygon points="0,55 58,15 88,38 24,70" fill="url(#cheesecakeTop)" stroke="#9E6437" stroke-width="1" />
+      
+      <!-- Silky Filling (Front/Side Cut) -->
+      <polygon points="0,55 24,70 24,96 0,81" fill="url(#cheesecakeFilling)" stroke="#9E6437" stroke-width="0.8" />
+      <polygon points="24,70 88,38 88,60 24,96" fill="url(#cheesecakeFilling)" stroke="#9E6437" stroke-width="0.8" />
+      
+      <!-- Biscuit / Graham Cracker Base Crust -->
+      <polygon points="0,81 24,96 24,103 0,88" fill="url(#cheesecakeCrust)" stroke="#6F3B16" stroke-width="0.8" />
+      <polygon points="24,96 88,60 88,67 24,103" fill="url(#cheesecakeCrust)" stroke="#6F3B16" stroke-width="0.8" />
+
+      <!-- Crust texture dots -->
+      <circle cx="8" cy="84" r="0.8" fill="#FDF6EA" />
+      <circle cx="16" cy="89" r="0.8" fill="#582C0E" />
+      <circle cx="36" cy="94" r="0.9" fill="#FDF6EA" />
+      <circle cx="56" cy="83" r="0.8" fill="#582C0E" />
+      <circle cx="74" cy="71" r="0.8" fill="#FDF6EA" />
+    </g>
+
+  </g>
+
+  <!-- LOGO BRAND NAME: PAGE 26 -->
+  <text x="270" y="222" text-anchor="middle" font-size="68" class="logo-main-text">PAGE 26</text>
+
+  <!-- HEART DIVIDER LINE -->
+  <g transform="translate(0, 246)">
+    <!-- Left line -->
+    <line x1="85" y1="0" x2="252" y2="0" class="logo-divider" />
+    
+    <!-- Heart Symbol -->
+    <path class="logo-heart" d="M 270,4 C 270,4 266,0 262,0 C 258,0 255,3 255,6.5 C 255,10.5 259,14 270,18 C 281,14 285,10.5 285,6.5 C 285,3 282,0 278,0 C 274,0 270,4 270,4 Z" transform="translate(0, -6)" />
+    
+    <!-- Right line -->
+    <line x1="288" y1="0" x2="455" y2="0" class="logo-divider" />
+  </g>
+
+  <!-- SUBTITLE: CHEESECAKES & BAKES -->
+  <text x="270" y="286" text-anchor="middle" class="logo-sub-text">CHEESECAKES &amp; BAKES</text>
+
+</svg>

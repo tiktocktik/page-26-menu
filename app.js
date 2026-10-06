@@ -4,23 +4,26 @@ const PHONE_NUMBER = "918780547928";
 let cart = []; // Array of { name, size, unitPrice, qty, minQty }
 let pinnedLocationUrl = "";
 let currentFilter = "all";
-// Track selected option index per item: { [itemId]: optionIndex }
 const selectedOptions = {};
 
+// Leaflet Map state
+let leafletMap = null;
+let leafletMarker = null;
+
 document.addEventListener("DOMContentLoaded", () => {
-  setupTheme();
+  setupThemeToggle();
   setupDatePicker();
   renderProducts();
   setupCategoryNav();
-  setupGeolocation();
+  setupMapIntegration();
   setupCheckoutModal();
   updateDockUI();
 });
 
-// Segmented Theme Switch (Light / Dark)
-function setupTheme() {
-  const btnLight = document.getElementById("btn-theme-light");
-  const btnDark = document.getElementById("btn-theme-dark");
+// 1. Simplified Single Theme Toggle (🌙 / ☀️) — Accessible anywhere while scrolling
+function setupThemeToggle() {
+  const toggleBtns = document.querySelectorAll(".theme-toggle-btn");
+  const icons = document.querySelectorAll(".theme-icon");
 
   const savedTheme = localStorage.getItem("page26-theme");
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -28,48 +31,36 @@ function setupTheme() {
 
   applyTheme(initialTheme);
 
-  if (btnLight) {
-    btnLight.addEventListener("click", () => {
-      applyTheme("light");
-      localStorage.setItem("page26-theme", "light");
-      showToast("☀️ Switched to Light mode");
+  toggleBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      const newTheme = isDark ? "light" : "dark";
+      applyTheme(newTheme);
+      localStorage.setItem("page26-theme", newTheme);
+      showToast(`Switched to ${newTheme} mode`);
     });
-  }
-
-  if (btnDark) {
-    btnDark.addEventListener("click", () => {
-      applyTheme("dark");
-      localStorage.setItem("page26-theme", "dark");
-      showToast("🌙 Switched to Dark mode");
-    });
-  }
+  });
 
   function applyTheme(theme) {
     if (theme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
-      if (btnDark) {
-        btnDark.classList.add("active");
-        btnDark.setAttribute("aria-pressed", "true");
-      }
-      if (btnLight) {
-        btnLight.classList.remove("active");
-        btnLight.setAttribute("aria-pressed", "false");
-      }
+      icons.forEach(icon => { icon.textContent = "☀️"; });
+      toggleBtns.forEach(btn => {
+        btn.setAttribute("aria-label", "Switch to light theme");
+        btn.setAttribute("title", "Switch to light theme");
+      });
     } else {
       document.documentElement.removeAttribute("data-theme");
-      if (btnLight) {
-        btnLight.classList.add("active");
-        btnLight.setAttribute("aria-pressed", "true");
-      }
-      if (btnDark) {
-        btnDark.classList.remove("active");
-        btnDark.setAttribute("aria-pressed", "false");
-      }
+      icons.forEach(icon => { icon.textContent = "🌙"; });
+      toggleBtns.forEach(btn => {
+        btn.setAttribute("aria-label", "Switch to dark theme");
+        btn.setAttribute("title", "Switch to dark theme");
+      });
     }
   }
 }
 
-// 7 Days Minimum Pre-order Date Enforced
+// 2. 7 Days Minimum Pre-order Date Enforced
 function setupDatePicker() {
   const dateInput = document.getElementById("cust-date");
   if (!dateInput) return;
@@ -83,7 +74,7 @@ function setupDatePicker() {
   dateInput.value = minDate;
 }
 
-// Sticky Category Nav
+// 3. Category Filter Chips Navigation
 function setupCategoryNav() {
   const chips = document.querySelectorAll(".nav-chip");
   chips.forEach((chip) => {
@@ -93,15 +84,13 @@ function setupCategoryNav() {
       currentFilter = chip.getAttribute("data-category");
       renderProducts();
 
-      // Smooth scroll to target section if not 'all'
       if (currentFilter !== "all") {
         const sec = document.getElementById(`sec-${currentFilter}`);
         if (sec) {
-          const navOffset = 130;
+          const navOffset = 110;
           const bodyRect = document.body.getBoundingClientRect().top;
           const elemRect = sec.getBoundingClientRect().top;
-          const elemPosition = elemRect - bodyRect;
-          const offsetPosition = elemPosition - navOffset;
+          const offsetPosition = elemRect - bodyRect - navOffset;
           window.scrollTo({ top: offsetPosition, behavior: "smooth" });
         }
       }
@@ -109,7 +98,7 @@ function setupCategoryNav() {
   });
 }
 
-// Render Products as Modern Responsive Cards
+// 4. Render Category Sections & Product Cards
 function renderProducts() {
   const container = document.getElementById("menu-sections");
   if (!container || !window.PAGE26_ITEMS) return;
@@ -128,17 +117,19 @@ function renderProducts() {
     section.id = `sec-${cat.id}`;
 
     let subNote = "";
-    if (cat.id === "cheesecakes") subNote = "Signature baked cheesecakes • 100% Eggless";
+    if (cat.id === "cheesecakes") subNote = "Exclusively Eggless • Artisanal baked crust";
     if (cat.id === "cakes") subNote = "Couverture chocolate • Bento (~250–350g) to 2 kg";
     if (cat.id === "brownies") subNote = "Couverture chocolate • Min order 4 pcs • Custom toppings on request";
-    if (cat.id === "muffins") subNote = "Bakery-style muffins • Min order 4 pcs";
+    if (cat.id === "muffins") subNote = "Large bakery-style • Couverture chocolate • Min order 4 pcs";
     if (cat.id === "cupcakes") subNote = "Couverture chocolate • Min order 4 pcs";
 
+    // Section header: Cheesecakes section has the SIGNATURE badge
     section.innerHTML = `
       <div class="category-header-row">
         <div class="category-name-wrap">
           <h2 class="category-title">${cat.label}</h2>
-          <span class="veg-icon" title="100% Eggless"></span>
+          ${cat.isSignatureSection ? '<span class="category-sig-badge">👑 SIGNATURE</span>' : ''}
+          <span class="veg-icon" title="100% Eggless Vegetarian"></span>
         </div>
         <span class="category-subnote">${subNote}</span>
       </div>
@@ -154,13 +145,13 @@ function renderProducts() {
   });
 }
 
-// Create Card Component (Liliyum Style)
+// 5. Create Individual Product Card (No redundant crown on each cheesecake)
 function createProductCard(item) {
   const card = document.createElement("div");
   card.className = "patisserie-card";
 
   if (selectedOptions[item.id] === undefined) {
-    selectedOptions[item.id] = 0; // Default to first weight/box
+    selectedOptions[item.id] = 0; // Default to first option
   }
 
   let selectedIdx = selectedOptions[item.id];
@@ -169,18 +160,17 @@ function createProductCard(item) {
 
   card.innerHTML = `
     <div class="card-top">
-      <div class="card-badge-row">
-        ${item.isSignature ? '<span class="badge-tag badge-signature">👑 SIGNATURE</span>' : '<span></span>'}
+      <div class="card-title-row">
+        <h3 class="card-item-title">${item.name}</h3>
         <span class="veg-icon" title="100% Eggless"></span>
       </div>
-      <h3 class="card-item-title">${item.name}</h3>
       ${item.description ? `<p class="card-item-desc">${item.description}</p>` : ""}
       ${item.note ? `<span class="card-item-note">✨ ${item.note}</span>` : ""}
     </div>
 
     <div class="card-middle">
-      <div class="size-selector-label">Choose Weight / Box Size</div>
-      <div class="size-pill-grid">
+      <div class="size-selector-label">Select Weight / Box Size</div>
+      <div class="size-pill-row">
         ${item.options.map((opt, i) => `
           <div class="size-pill ${i === selectedIdx ? "selected" : ""}" data-idx="${i}">
             <span class="pill-weight">${opt.size}</span>
@@ -191,7 +181,7 @@ function createProductCard(item) {
 
       <div class="card-bottom-action">
         <div class="live-price-box">
-          <span class="price-currency">Price</span>
+          <span class="price-currency">Total</span>
           <span class="price-number">₹${(curOption.price * qty).toLocaleString("en-IN")}</span>
         </div>
 
@@ -209,7 +199,7 @@ function createProductCard(item) {
     </div>
   `;
 
-  // Pill Selection
+  // Pill click handlers
   const pills = card.querySelectorAll(".size-pill");
   const priceEl = card.querySelector(".price-number");
   const stepperVal = card.querySelector(".stepper-val");
@@ -266,7 +256,7 @@ function createProductCard(item) {
   return card;
 }
 
-// Cart Manager
+// 6. Cart Management
 function addToCart(item, option, qty) {
   const existing = cart.find(
     (c) => c.name === item.name && c.size === option.size
@@ -333,7 +323,133 @@ function updateDockUI() {
   }
 }
 
-// Checkout Drawer Modal
+// 7. Interactive Map Integration (Auto-detect GPS + Interactive Leaflet Pin)
+function setupMapIntegration() {
+  const btnGps = document.getElementById("btn-gps-auto");
+  const btnToggleMap = document.getElementById("btn-toggle-map");
+  const mapWrapper = document.getElementById("map-wrapper");
+  const pinStatus = document.getElementById("pin-status-pill");
+  const addressInput = document.getElementById("cust-address");
+
+  // Toggle Map Picker
+  if (btnToggleMap && mapWrapper) {
+    btnToggleMap.addEventListener("click", () => {
+      const isHidden = mapWrapper.style.display === "none";
+      mapWrapper.style.display = isHidden ? "block" : "none";
+      if (isHidden) {
+        initLeafletMap();
+      }
+    });
+  }
+
+  // Auto-Detect GPS
+  if (btnGps) {
+    btnGps.addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
+      }
+
+      btnGps.disabled = true;
+      btnGps.innerHTML = `<span>⏳ Detecting GPS...</span>`;
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          btnGps.disabled = false;
+          btnGps.innerHTML = `<span>📍 Auto-Detect GPS</span>`;
+
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setLocationCoords(lat, lng, "Auto-Detected GPS Location");
+
+          if (mapWrapper && mapWrapper.style.display !== "none") {
+            if (leafletMap && leafletMarker) {
+              leafletMap.setView([lat, lng], 15);
+              leafletMarker.setLatLng([lat, lng]);
+            }
+          }
+
+          showToast("📍 Exact GPS location attached!");
+        },
+        (err) => {
+          btnGps.disabled = false;
+          btnGps.innerHTML = `<span>📍 Auto-Detect GPS</span>`;
+          let msg = "Could not fetch GPS location.";
+          if (err.code === err.PERMISSION_DENIED) {
+            msg = "Location permission was denied. You can tap 'Pick on Map' or type your address.";
+          }
+          alert(msg);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      );
+    });
+  }
+}
+
+function initLeafletMap() {
+  if (leafletMap) {
+    setTimeout(() => leafletMap.invalidateSize(), 200);
+    return;
+  }
+
+  const defaultLat = 12.9716;
+  const defaultLng = 77.5946;
+
+  try {
+    leafletMap = L.map("leaflet-map").setView([defaultLat, defaultLng], 12);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(leafletMap);
+
+    leafletMarker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(leafletMap);
+    leafletMarker.bindPopup("Drag me to your exact delivery location!").openPopup();
+
+    // On marker drag end
+    leafletMarker.on("dragend", (e) => {
+      const pos = e.target.getLatLng();
+      setLocationCoords(pos.lat, pos.lng, "Pinned Location");
+    });
+
+    // On map click
+    leafletMap.on("click", (e) => {
+      const pos = e.latlng;
+      leafletMarker.setLatLng(pos);
+      setLocationCoords(pos.lat, pos.lng, "Pinned Location");
+    });
+
+    setTimeout(() => leafletMap.invalidateSize(), 300);
+  } catch (e) {
+    console.error("Leaflet initialization error:", e);
+  }
+}
+
+// Global quick jump to Bangalore localities
+window.jumpToLocation = function (lat, lng, name) {
+  if (!leafletMap || !leafletMarker) return;
+  leafletMap.setView([lat, lng], 15);
+  leafletMarker.setLatLng([lat, lng]);
+  setLocationCoords(lat, lng, name);
+  const addr = document.getElementById("cust-address");
+  if (addr && !addr.value.includes(name)) {
+    addr.value = addr.value ? `${addr.value}, ${name}` : name;
+  }
+};
+
+function setLocationCoords(lat, lng, label) {
+  const latFixed = lat.toFixed(6);
+  const lngFixed = lng.toFixed(6);
+  pinnedLocationUrl = `https://www.google.com/maps?q=${latFixed},${lngFixed}`;
+
+  const pinStatus = document.getElementById("pin-status-pill");
+  if (pinStatus) {
+    pinStatus.style.display = "block";
+    pinStatus.innerHTML = `✓ ${label}: <strong>${latFixed}, ${lngFixed}</strong> • <a href="${pinnedLocationUrl}" target="_blank" style="color:inherit;text-decoration:underline;">Test on Google Maps</a>`;
+  }
+}
+
+// 8. Checkout Modal Drawer
 function setupCheckoutModal() {
   const modal = document.getElementById("checkout-modal");
   const open1 = document.getElementById("dock-open-cart");
@@ -431,58 +547,7 @@ function renderDrawerCart() {
   });
 }
 
-// GPS Pinpoint Geolocation
-function setupGeolocation() {
-  const pinBtn = document.getElementById("btn-pin-location");
-  const pinStatus = document.getElementById("pin-status-pill");
-  const pinText = document.getElementById("pin-text");
-  const addressInput = document.getElementById("cust-address");
-
-  if (!pinBtn) return;
-
-  pinBtn.addEventListener("click", () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser.");
-      return;
-    }
-
-    pinText.textContent = "Detecting GPS location...";
-    pinBtn.disabled = true;
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const lat = pos.coords.latitude.toFixed(6);
-        const lng = pos.coords.longitude.toFixed(6);
-        pinnedLocationUrl = `https://maps.google.com/?q=${lat},${lng}`;
-
-        pinText.textContent = "📍 Pin Attached";
-        pinBtn.disabled = false;
-        if (pinStatus) {
-          pinStatus.style.display = "block";
-          pinStatus.innerHTML = `✓ Location pinned: <a href="${pinnedLocationUrl}" target="_blank" style="color:inherit;text-decoration:underline;margin-left:4px;">Test link</a>`;
-        }
-
-        if (addressInput && !addressInput.value) {
-          addressInput.value = `GPS Pin: ${lat}, ${lng}`;
-        }
-
-        showToast("📍 Google Maps location pin attached!");
-      },
-      (err) => {
-        pinText.textContent = "Pinpoint Current Location (Google Maps)";
-        pinBtn.disabled = false;
-        let msg = "Could not fetch location.";
-        if (err.code === err.PERMISSION_DENIED) {
-          msg = "Location permission denied. You can enter your address or Google Maps link manually.";
-        }
-        alert(msg);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  });
-}
-
-// WhatsApp Order Composer
+// 9. Send Formatted Order to WhatsApp
 function sendWhatsAppOrder() {
   if (cart.length === 0) {
     alert("Please select at least one item from the menu.");
@@ -507,7 +572,7 @@ function sendWhatsAppOrder() {
 
   const { total } = getTotals();
 
-  // Format delivery date
+  // Format delivery date nicely
   let dateFormatted = date;
   if (date) {
     try {
@@ -537,7 +602,7 @@ function sendWhatsAppOrder() {
   cart.forEach((item, i) => {
     const subtotal = item.qty * item.unitPrice;
     msg += `${i + 1}. *${item.name}*\n`;
-    msg += `   • Size: ${item.size}\n`;
+    msg += `   • Size/Weight: ${item.size}\n`;
     msg += `   • Qty: ${item.qty} × ₹${item.unitPrice} = ₹${subtotal.toLocaleString("en-IN")}\n\n`;
   });
 

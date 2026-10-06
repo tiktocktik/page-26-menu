@@ -57,6 +57,10 @@
         <button type="button" class="contact-pill img-view" id="btn-view-card">
           <span>📜 View Original Card</span>
         </button>
+        <button type="button" class="contact-pill theme-toggle" id="theme-toggle" aria-label="Toggle dark/light theme">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">Dark</span>
+        </button>
       </div>
 
       <p class="order-hint">Tip: Tap any price below to add it directly to your WhatsApp order</p>
@@ -378,6 +382,13 @@
           <div class="modal-field">
             <label for="cust-address">Delivery Location / Area (Bangalore)</label>
             <input type="text" id="cust-address" placeholder="e.g. Indiranagar, HSR Layout, Koramangala">
+            <div class="geo-pin-wrap">
+              <button type="button" class="btn-geo-pin" id="btn-get-location">
+                <span class="geo-icon">📍</span>
+                <span id="geo-text">Pinpoint Current Location (Google Maps)</span>
+              </button>
+              <div id="geo-status" class="geo-status-badge" style="display:none;"></div>
+            </div>
           </div>
 
           <div class="modal-field">

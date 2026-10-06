@@ -22,6 +22,24 @@
   --shadow-dock: 0 8px 30px rgba(35, 25, 20, 0.15);
 }
 
+[data-theme="dark"] {
+  --bg-canvas: #15110F;
+  --bg-card: #201915;
+  --bg-table-head: #2B211C;
+  --text-dark: #F5EFEB;
+  --text-muted: #A8988C;
+  --color-green-brand: #7BC5A0;
+  --color-burgundy: #E6887F;
+  --color-burgundy-hover: #F29E95;
+  --color-price-text: #F5A38B;
+  --color-price-bg: #2B1F19;
+  --color-price-border: #4D3528;
+  --color-border: #382B22;
+  --color-veg-green: #34D399;
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-dock: 0 8px 30px rgba(0, 0, 0, 0.65);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -726,3 +744,116 @@ body {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* Geolocation Pinpoint Styles */
+.geo-pin-wrap {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-geo-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background-color: #F8F2EB;
+  border: 1px dashed var(--color-burgundy);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--font-sans);
+}
+.btn-geo-pin:hover {
+  background-color: #EFE4D8;
+}
+
+.geo-status-badge {
+  font-size: 0.78rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background-color: #EBF7EE;
+  color: #146C36;
+  border: 1px solid #BCE5C8;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] .contact-pill {
+  background-color: #241D18;
+  color: #F5EFEB;
+  border-color: #3E3025;
+}
+[data-theme="dark"] .contact-pill:hover {
+  background-color: #2F241E;
+  border-color: #554133;
+}
+[data-theme="dark"] .contact-pill.wa {
+  background-color: #162B1D;
+  color: #4ADE80;
+  border-color: #245032;
+}
+[data-theme="dark"] .signature-tag {
+  background-color: #381E19;
+  color: #F5A38B;
+  border-color: #542B24;
+}
+[data-theme="dark"] .menu-table th {
+  color: #E8DFD5;
+  border-color: #3E3025;
+}
+[data-theme="dark"] .menu-table td {
+  border-color: #30261F;
+}
+[data-theme="dark"] .menu-table tbody tr:hover {
+  background-color: #271E19;
+}
+[data-theme="dark"] .modal-sheet {
+  background-color: #1C1613;
+  color: #F5EFEB;
+}
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .modal-footer {
+  background-color: #17120F;
+  border-color: #382B22;
+}
+[data-theme="dark"] .modal-field input,
+[data-theme="dark"] .modal-field textarea {
+  background-color: #261D18;
+  color: #F5EFEB;
+  border-color: #3E3025;
+}
+[data-theme="dark"] .modal-notice {
+  background-color: #332612;
+  color: #FDE047;
+}
+[data-theme="dark"] .qty-pill-btn {
+  background-color: #2C211A;
+  color: #F5EFEB;
+  border-color: #4C3729;
+}
+[data-theme="dark"] .veg-dot {
+  background-color: #1A1411;
+}
+[data-theme="dark"] .btn-geo-pin {
+  background-color: #261C17;
+  border-color: #E6887F;
+  color: #E6887F;
+}
+[data-theme="dark"] .btn-geo-pin:hover {
+  background-color: #33241D;
+}
+[data-theme="dark"] .geo-status-badge {
+  background-color: #12281A;
+  color: #4ADE80;
+  border-color: #1E4E2C;
+}
+

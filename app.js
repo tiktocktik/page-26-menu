@@ -3,8 +3,12 @@
 const PHONE_NUMBER = "918780547928";
 let cart = []; // Array of { name, size, unitPrice, qty, minQty }
 
+let pinnedLocationUrl = "";
+
 document.addEventListener("DOMContentLoaded", () => {
+  setupTheme();
   setupDeliveryDatePicker();
+  setupGeolocation();
   setupModalEvents();
   updateDockUI();
 });
@@ -236,6 +240,7 @@ function sendWhatsAppOrder() {
   msg += `👤 *Customer:* ${name}\n`;
   if (dateFormatted) msg += `📅 *Date Needed:* ${dateFormatted}\n`;
   if (address) msg += `📍 *Area/Address:* ${address}\n`;
+  if (pinnedLocationUrl) msg += `🗺️ *Google Maps Pin:* ${pinnedLocationUrl}\n`;
   if (notes) msg += `📝 *Notes/Customization:* ${notes}\n`;
   msg += `-----------------------------------------\n`;
   msg += `🛒 *SELECTED ITEMS:*\n\n`;
@@ -263,4 +268,90 @@ function showToast(text) {
   t.textContent = text;
   t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// Dark/Light Theme Manager
+function setupTheme() {
+  const toggleBtn = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
+  const themeLabel = document.getElementById("theme-label");
+
+  const savedTheme = localStorage.getItem("page26-theme");
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+
+  applyTheme(initialTheme);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      const newTheme = isDark ? "light" : "dark";
+      applyTheme(newTheme);
+      localStorage.setItem("page26-theme", newTheme);
+      showToast(`Switched to ${newTheme} theme`);
+    });
+  }
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      if (themeIcon) themeIcon.textContent = "☀️";
+      if (themeLabel) themeLabel.textContent = "Light";
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      if (themeIcon) themeIcon.textContent = "🌙";
+      if (themeLabel) themeLabel.textContent = "Dark";
+    }
+  }
+}
+
+// Geolocation Pinpoint Manager
+function setupGeolocation() {
+  const geoBtn = document.getElementById("btn-get-location");
+  const geoStatus = document.getElementById("geo-status");
+  const geoText = document.getElementById("geo-text");
+  const addressInput = document.getElementById("cust-address");
+
+  if (!geoBtn) return;
+
+  geoBtn.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    geoText.textContent = "Locating via GPS...";
+    geoBtn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude.toFixed(6);
+        const lng = position.coords.longitude.toFixed(6);
+        pinnedLocationUrl = `https://maps.google.com/?q=${lat},${lng}`;
+
+        geoText.textContent = "📍 Pin Attached";
+        geoBtn.disabled = false;
+        if (geoStatus) {
+          geoStatus.style.display = "flex";
+          geoStatus.innerHTML = `✓ Pin attached: <a href="${pinnedLocationUrl}" target="_blank" style="color:inherit;text-decoration:underline;margin-left:4px;">Test link</a>`;
+        }
+
+        if (addressInput && !addressInput.value) {
+          addressInput.value = `GPS Pin: ${lat}, ${lng}`;
+        }
+
+        showToast("📍 Google Maps location pin attached!");
+      },
+      (error) => {
+        geoText.textContent = "Pinpoint Current Location (Google Maps)";
+        geoBtn.disabled = false;
+        let errMsg = "Unable to retrieve location.";
+        if (error.code === error.PERMISSION_DENIED) {
+          errMsg = "Location access was denied. You can manually enter your address or paste a Google Maps link.";
+        }
+        alert(errMsg);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  });
 }

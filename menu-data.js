@@ -1,15 +1,15 @@
 // Page 26 - Menu Data Configuration
-// You can edit prices, flavours, or details directly in this file.
+// Synced with MENU_REFERENCE.md
 
 window.PAGE26_CONFIG = {
   storeName: "PAGE 26",
   tagline: "CHEESECAKES & BAKES",
   phone: "+91 8780547928",
-  phoneRaw: "918780547928", // for wa.me and tel:
-  location: "Bengaluru",
-  leadTime: "1 Week's Notice",
+  phoneRaw: "918780547928",
+  location: "Bangalore",
+  leadTime: "Pre-orders only (Made fresh to order)",
   dietaryNote: "All products are Exclusively Eggless",
-  chocolateNote: "All chocolate-based cakes, brownies, and muffins are made with premium couverture chocolate."
+  chocolateNote: "All chocolate-based cakes, brownies, muffins and cupcakes are made with couverture chocolate."
 };
 
 window.PAGE26_CATEGORIES = [
@@ -22,19 +22,19 @@ window.PAGE26_CATEGORIES = [
 ];
 
 window.PAGE26_ITEMS = [
-  // --- CHEESECAKES ---
+  // --- CHEESECAKES · SIGNATURE ---
   {
-    id: "cc-newyork",
+    id: "cc-classic-newyork",
     category: "cheesecakes",
-    name: "New York Cheesecake",
+    name: "Classic New York Cheesecake",
     isSignature: true,
     isEggless: true,
-    description: "Classic rich, creamy and velvety New York style baked cheesecake on a crisp biscuit base.",
+    description: "Classic rich, creamy and velvety baked cheesecake on an artisanal biscuit crust.",
     options: [
       { size: "500 g", price: 700 },
       { size: "1 kg", price: 1200 },
-      { size: "1.5 kg", price: 1750 },
-      { size: "2 kg", price: 2300 }
+      { size: "1.5 kg", price: 1800 },
+      { size: "2 kg", price: 2400 }
     ]
   },
   {
@@ -47,8 +47,8 @@ window.PAGE26_ITEMS = [
     options: [
       { size: "500 g", price: 800 },
       { size: "1 kg", price: 1400 },
-      { size: "1.5 kg", price: 2050 },
-      { size: "2 kg", price: 2700 }
+      { size: "1.5 kg", price: 2100 },
+      { size: "2 kg", price: 2800 }
     ]
   },
   {
@@ -61,8 +61,8 @@ window.PAGE26_ITEMS = [
     options: [
       { size: "500 g", price: 800 },
       { size: "1 kg", price: 1400 },
-      { size: "1.5 kg", price: 2050 },
-      { size: "2 kg", price: 2700 }
+      { size: "1.5 kg", price: 2100 },
+      { size: "2 kg", price: 2800 }
     ]
   },
   {
@@ -71,12 +71,12 @@ window.PAGE26_ITEMS = [
     name: "Blueberry Cheesecake",
     isSignature: true,
     isEggless: true,
-    description: "Silky cheesecake topped with artisanal sweet and tangy blueberry compote.",
+    description: "Silky cheesecake topped with sweet and tangy artisanal blueberry compote.",
     options: [
       { size: "500 g", price: 800 },
       { size: "1 kg", price: 1400 },
-      { size: "1.5 kg", price: 2050 },
-      { size: "2 kg", price: 2700 }
+      { size: "1.5 kg", price: 2100 },
+      { size: "2 kg", price: 2800 }
     ]
   },
   {
@@ -85,12 +85,12 @@ window.PAGE26_ITEMS = [
     name: "Strawberry Cheesecake",
     isSignature: true,
     isEggless: true,
-    description: "Smooth, luscious cheesecake smothered with fresh strawberry reduction.",
+    description: "Smooth, luscious cheesecake smothered with artisanal strawberry compote.",
     options: [
       { size: "500 g", price: 800 },
       { size: "1 kg", price: 1400 },
-      { size: "1.5 kg", price: 2050 },
-      { size: "2 kg", price: 2700 }
+      { size: "1.5 kg", price: 2100 },
+      { size: "2 kg", price: 2800 }
     ]
   },
 
@@ -104,7 +104,7 @@ window.PAGE26_ITEMS = [
     note: "Made with couverture chocolate",
     description: "Moist chocolate sponge layered with rich, silky couverture chocolate ganache.",
     options: [
-      { size: "Bento (~300 g)", price: 450 },
+      { size: "Bento (~250–350 g)", price: 500 },
       { size: "500 g", price: 650 },
       { size: "1 kg", price: 1200 },
       { size: "1.5 kg", price: 1750 },
@@ -119,7 +119,7 @@ window.PAGE26_ITEMS = [
     isEggless: true,
     description: "Classic scarlet sponge with smooth cream cheese frosting. Elegant & delicate.",
     options: [
-      { size: "Bento (~300 g)", price: 450 },
+      { size: "Bento (~250–350 g)", price: 500 },
       { size: "500 g", price: 650 },
       { size: "1 kg", price: 1200 },
       { size: "1.5 kg", price: 1750 },
@@ -135,7 +135,7 @@ window.PAGE26_ITEMS = [
     note: "Made with couverture chocolate",
     description: "Rustic naked chocolate cake layered generously with pure Nutella and couverture chocolate.",
     options: [
-      { size: "Bento (~300 g)", price: 500 },
+      { size: "Bento (~250–350 g)", price: 550 },
       { size: "500 g", price: 750 },
       { size: "1 kg", price: 1400 },
       { size: "1.5 kg", price: 2050 },
@@ -147,14 +147,14 @@ window.PAGE26_ITEMS = [
   {
     id: "brownie-classic",
     category: "brownies",
-    name: "Classic Fudgy Brownies",
+    name: "Classic Brownies",
     isSignature: false,
     isEggless: true,
-    note: "Couverture chocolate • Custom toppings on request",
-    description: "Ultra-fudgy, crackly-top brownies made with rich couverture dark chocolate.",
+    note: "Couverture chocolate • Min order 4 pcs • Other toppings on request",
+    description: "Ultra-fudgy crackly-top brownies crafted with couverture chocolate.",
     options: [
-      { size: "Box of 4", price: 450 },
-      { size: "Box of 6", price: 650 }
+      { size: "Box of 4", price: 450, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 120, minQty: 4 }
     ]
   },
   {
@@ -163,11 +163,11 @@ window.PAGE26_ITEMS = [
     name: "Nutella Brownies",
     isSignature: false,
     isEggless: true,
-    note: "Couverture chocolate • Custom toppings on request",
-    description: "Gooey chocolate brownies swirled with generous dollops of warm Nutella.",
+    note: "Couverture chocolate • Min order 4 pcs • Other toppings on request",
+    description: "Gooey chocolate brownies swirled with generous dollops of Nutella.",
     options: [
-      { size: "Box of 4", price: 500 },
-      { size: "Box of 6", price: 720 }
+      { size: "Box of 4", price: 500, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 130, minQty: 4 }
     ]
   },
   {
@@ -176,11 +176,11 @@ window.PAGE26_ITEMS = [
     name: "Biscoff Brownies",
     isSignature: false,
     isEggless: true,
-    note: "Couverture chocolate • Custom toppings on request",
-    description: "Fudgy chocolate brownies topped with spiced Lotus Biscoff spread and biscuit crunch.",
+    note: "Couverture chocolate • Min order 4 pcs • Other toppings on request",
+    description: "Fudgy chocolate brownies topped with Lotus Biscoff spread and biscuit crunch.",
     options: [
-      { size: "Box of 4", price: 500 },
-      { size: "Box of 6", price: 720 }
+      { size: "Box of 4", price: 500, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 130, minQty: 4 }
     ]
   },
 
@@ -191,11 +191,11 @@ window.PAGE26_ITEMS = [
     name: "Chocolate Muffins",
     isSignature: false,
     isEggless: true,
-    note: "Large bakery-style • Couverture chocolate",
-    description: "Soft, towering bakery-style muffins studded with melted couverture chocolate chunks.",
+    note: "Large bakery-style • Couverture chocolate • Min order 4 pcs",
+    description: "Tall bakery-style muffins studded with couverture chocolate chunks.",
     options: [
-      { size: "Box of 4", price: 380 },
-      { size: "Box of 6", price: 540 }
+      { size: "Box of 4", price: 380, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 100, minQty: 4 }
     ]
   },
   {
@@ -204,11 +204,11 @@ window.PAGE26_ITEMS = [
     name: "Vanilla Muffins",
     isSignature: false,
     isEggless: true,
-    note: "Large bakery-style",
-    description: "Fluffy, golden, aromatic bakery-style vanilla muffins with delicate crumb.",
+    note: "Large bakery-style • Min order 4 pcs",
+    description: "Golden bakery-style vanilla muffins with fragrant, delicate crumb.",
     options: [
-      { size: "Box of 4", price: 380 },
-      { size: "Box of 6", price: 540 }
+      { size: "Box of 4", price: 380, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 100, minQty: 4 }
     ]
   },
 
@@ -219,11 +219,12 @@ window.PAGE26_ITEMS = [
     name: "Strawberry Cupcakes",
     isSignature: false,
     isEggless: true,
-    note: "Sold in boxes of 4 and 6",
-    description: "Tender vanilla cupcakes swirled with delightful strawberry frosting.",
+    note: "Min order 4 pcs",
+    description: "Delicate vanilla cupcakes topped with silky strawberry buttercream.",
     options: [
-      { size: "Box of 4", price: 180 },
-      { size: "Box of 6", price: 250 }
+      { size: "Box of 4", price: 180, isBox: true },
+      { size: "Box of 6", price: 270, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 50, minQty: 4 }
     ]
   },
   {
@@ -232,11 +233,12 @@ window.PAGE26_ITEMS = [
     name: "Blueberry Cupcakes",
     isSignature: false,
     isEggless: true,
-    note: "Sold in boxes of 4 and 6",
-    description: "Soft cupcakes topped with silky blueberry infused buttercream.",
+    note: "Min order 4 pcs",
+    description: "Soft sponge cupcakes crowned with luscious blueberry frosting.",
     options: [
-      { size: "Box of 4", price: 180 },
-      { size: "Box of 6", price: 250 }
+      { size: "Box of 4", price: 180, isBox: true },
+      { size: "Box of 6", price: 270, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 50, minQty: 4 }
     ]
   },
   {
@@ -245,11 +247,12 @@ window.PAGE26_ITEMS = [
     name: "Chocolate Cupcakes",
     isSignature: false,
     isEggless: true,
-    note: "Couverture chocolate • Sold in boxes of 4 and 6",
-    description: "Rich couverture chocolate cupcakes with whipped dark chocolate swirl.",
+    note: "Couverture chocolate • Min order 4 pcs",
+    description: "Couverture chocolate cupcakes with whipped dark chocolate swirl.",
     options: [
-      { size: "Box of 4", price: 300 },
-      { size: "Box of 6", price: 420 }
+      { size: "Box of 4", price: 300, isBox: true },
+      { size: "Box of 6", price: 450, isBox: true },
+      { size: "Per piece (Min 4 pcs)", price: 80, minQty: 4 }
     ]
   }
 ];

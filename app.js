@@ -176,8 +176,13 @@ function createItemCard(item) {
   const priceDisplay = card.querySelector(".btn-price-display");
   const qtyVal = card.querySelector(".qty-value");
 
+  function getMinAllowed() {
+    const curIdx = selectedOptions[item.id] || 0;
+    return item.options[curIdx].minQty || 1;
+  }
+
   function updateButtonPrice() {
-    const curIdx = selectedOptions[item.id];
+    const curIdx = selectedOptions[item.id] || 0;
     const unitPrice = item.options[curIdx].price;
     priceDisplay.textContent = `₹${(unitPrice * qty).toLocaleString("en-IN")}`;
   }
@@ -188,13 +193,20 @@ function createItemCard(item) {
       selectedOptions[item.id] = idx;
       optionChips.forEach((c) => c.classList.remove("selected"));
       chip.classList.add("selected");
+      
+      const minAllowed = getMinAllowed();
+      if (qty < minAllowed) {
+        qty = minAllowed;
+        qtyVal.textContent = qty;
+      }
       updateButtonPrice();
     });
   });
 
   // Attach quantity handlers
   card.querySelector(".btn-minus").addEventListener("click", () => {
-    if (qty > 1) {
+    const minAllowed = getMinAllowed();
+    if (qty > minAllowed) {
       qty -= 1;
       qtyVal.textContent = qty;
       updateButtonPrice();
@@ -232,7 +244,8 @@ function addToCart(item, option, qty) {
       name: item.name,
       size: option.size,
       price: option.price,
-      qty: qty
+      qty: qty,
+      minQty: option.minQty || 1
     });
   }
   updateCartUI();
@@ -240,9 +253,14 @@ function addToCart(item, option, qty) {
 
 function updateCartQty(index, delta) {
   if (!cart[index]) return;
-  cart[index].qty += delta;
-  if (cart[index].qty <= 0) {
+  const item = cart[index];
+  const newQty = item.qty + delta;
+  if (item.minQty && newQty < item.minQty) {
     cart.splice(index, 1);
+  } else if (newQty <= 0) {
+    cart.splice(index, 1);
+  } else {
+    item.qty = newQty;
   }
   updateCartUI();
   renderCartDrawer();

@@ -14,9 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Leaflet CSS for Map Integration -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
 </head>
@@ -172,10 +169,24 @@
           <!-- Item list -->
           <div class="cart-items-box" id="cart-items-list"></div>
 
-          <!-- Price subtotal -->
-          <div class="cart-total-box">
-            <span>Estimated Total:</span>
-            <span class="cart-total-val" id="cart-total-val">₹0</span>
+          <!-- Price & Delivery Fee Breakdown -->
+          <div class="cart-breakdown-box">
+            <div class="breakdown-line">
+              <span>Items Subtotal:</span>
+              <span class="breakdown-subtotal-val" id="cart-subtotal-val">₹0</span>
+            </div>
+            <div class="breakdown-line delivery-fee-line">
+              <span>Delivery Fee:</span>
+              <span id="cart-delivery-status" class="fee-status-badge">At actuals via Porter/Dunzo</span>
+            </div>
+            <div class="breakdown-divider"></div>
+            <div class="breakdown-line total-line">
+              <span>Estimated Total:</span>
+              <span class="cart-total-val" id="cart-total-val">₹0</span>
+            </div>
+            <div class="shipping-disclaimer" id="shipping-disclaimer">
+              🛵 Delivery charges are calculated at actuals based on distance upon dispatch, or you can opt for free kitchen pickup.
+            </div>
           </div>
 
           <div class="sheet-notice-box">
@@ -195,36 +206,78 @@
             <small class="form-hint">Enforces 7 days notice minimum.</small>
           </div>
 
-          <!-- Address & Interactive Map Picker -->
+          <!-- Delivery Mode: Home Delivery vs Kitchen Pickup -->
           <div class="form-row">
-            <label class="form-label" for="cust-address">Delivery Location / Area (Bangalore)</label>
-            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Indiranagar, Koramangala, Whitefield, Bangalore">
-            
-            <!-- Map Action Buttons -->
-            <div class="map-actions-row">
-              <button type="button" class="btn-map-action" id="btn-gps-auto">
-                <span>📍 Auto-Detect GPS</span>
-              </button>
-              <button type="button" class="btn-map-action" id="btn-toggle-map">
-                <span>🗺️ Pick / Drag Pin on Map</span>
+            <label class="form-label">Delivery or Pickup? <span class="required">*</span></label>
+            <div class="delivery-type-grid">
+              <label class="delivery-option-card active" id="card-delivery-home">
+                <input type="radio" name="delivery-mode" value="home" checked>
+                <div class="delivery-card-content">
+                  <div class="delivery-card-title">🛵 Home Delivery</div>
+                  <div class="delivery-card-sub">Charges at actuals via Porter / Dunzo</div>
+                </div>
+              </label>
+
+              <label class="delivery-option-card" id="card-delivery-pickup">
+                <input type="radio" name="delivery-mode" value="pickup">
+                <div class="delivery-card-content">
+                  <div class="delivery-card-title">🛍️ Kitchen Pickup</div>
+                  <div class="delivery-card-sub">Free pickup from our Bangalore kitchen</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Kitchen Pickup Note Banner (toggled when pickup selected) -->
+          <div class="kitchen-pickup-banner" id="kitchen-pickup-banner" style="display: none;">
+            <p>📍 <strong>Bangalore Kitchen Pickup:</strong></p>
+            <p class="pickup-desc">We will share our exact kitchen address & pickup time slot over WhatsApp for your scheduled date.</p>
+          </div>
+
+          <!-- Address & Google Maps Location Group (toggled when delivery selected) -->
+          <div class="form-row" id="delivery-address-group">
+            <label class="form-label" for="cust-address">Delivery Area / Landmark in Bangalore <span class="required">*</span></label>
+            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Sobha Forest View, Indiranagar, or paste Maps link">
+            <small class="form-hint">Type your building/society, or tap below to auto-pin your GPS location.</small>
+
+            <!-- Bangalore Locality Quick Jump Chips -->
+            <div class="map-quick-areas">
+              <span class="quick-title">Quick Area:</span>
+              <button type="button" class="chip-jump" data-area="Indiranagar">Indiranagar</button>
+              <button type="button" class="chip-jump" data-area="Koramangala">Koramangala</button>
+              <button type="button" class="chip-jump" data-area="HSR Layout">HSR Layout</button>
+              <button type="button" class="chip-jump" data-area="Whitefield">Whitefield</button>
+              <button type="button" class="chip-jump" data-area="Jayanagar">Jayanagar</button>
+              <button type="button" class="chip-jump" data-area="Malleshwaram">Malleshwaram</button>
+            </div>
+
+            <!-- Single Clean Button to Pin GPS Location -->
+            <div class="map-actions-single">
+              <button type="button" class="btn-map-primary" id="btn-gps-auto">
+                <span>📍 Pin My Exact Location (Google Maps)</span>
               </button>
             </div>
 
-            <!-- Collapsible Leaflet Map Container -->
-            <div class="map-wrapper" id="map-wrapper" style="display: none;">
-              <p class="map-instructions">Drag the marker or tap anywhere on the map to set your exact location:</p>
-              <div id="leaflet-map" class="leaflet-map-frame"></div>
-              <div class="map-quick-areas">
-                <span class="quick-title">Quick Jump:</span>
-                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9784, 77.6408, 'Indiranagar')">Indiranagar</button>
-                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9352, 77.6245, 'Koramangala')">Koramangala</button>
-                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9121, 77.6446, 'HSR Layout')">HSR Layout</button>
-                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9698, 77.7500, 'Whitefield')">Whitefield</button>
-                <button type="button" class="chip-jump" onclick="jumpToLocation(12.9308, 77.5838, 'Jayanagar')">Jayanagar</button>
-              </div>
-            </div>
-
+            <!-- Pinned Location Status Pill -->
             <div id="pin-status-pill" class="pin-status" style="display:none;"></div>
+
+            <!-- Interactive Google Maps Embed Container -->
+            <div class="gmaps-preview-box" id="gmaps-preview-box" style="display: none;">
+              <iframe
+                id="gmaps-iframe"
+                class="gmaps-iframe"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://maps.google.com/maps?q=Bangalore,Karnataka&z=12&output=embed">
+              </iframe>
+            </div>
+
+            <!-- Friendly WhatsApp Location Tip -->
+            <div class="whatsapp-location-tip">
+              <span>💡</span>
+              <span><strong>Tip:</strong> You can also tap <strong>📎 → Location</strong> in WhatsApp after placing your order to share your live pin!</span>
+            </div>
           </div>
 
           <div class="form-row">
@@ -256,8 +309,6 @@
   <!-- Toast Notification -->
   <div class="toast-popup" id="toast">Added to order!</div>
 
-  <!-- Leaflet Map JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="menu-data.js"></script>
   <script src="app.js"></script>
 </body>

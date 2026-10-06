@@ -6,17 +6,20 @@ let pinnedLocationUrl = "";
 let currentFilter = "all";
 const selectedOptions = {};
 
-// Leaflet Map state
-let leafletMap = null;
-let leafletMarker = null;
+// Order & Fulfillment state
+let currentDeliveryMode = "home"; // "home" or "pickup"
 
 document.addEventListener("DOMContentLoaded", () => {
+  loadCartFromStorage();
   setupThemeToggle();
   setupDatePicker();
   renderProducts();
   setupCategoryNav();
-  setupMapIntegration();
+  setupDeliveryMethod();
+  setupGoogleMapsIntegration();
   setupCheckoutModal();
+  restoreFormDraft();
+  setupFormAutoSave();
   updateDockUI();
 });
 
@@ -71,7 +74,9 @@ function setupDatePicker() {
   const dd = String(target.getDate()).padStart(2, "0");
   const minDate = `${yyyy}-${mm}-${dd}`;
   dateInput.min = minDate;
-  dateInput.value = minDate;
+  if (!dateInput.value || dateInput.value < minDate) {
+    dateInput.value = minDate;
+  }
 }
 
 // 3. Category Filter Chips Navigation
@@ -256,7 +261,40 @@ function createProductCard(item) {
   return card;
 }
 
-// 6. Cart Management
+// 6. Cart Management & Session Persistence (LocalStorage)
+const CART_STORAGE_KEY = "page26_cart";
+const DRAFT_STORAGE_KEY = "page26_checkout_draft";
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch (e) {
+    console.warn("Could not save cart to localStorage", e);
+  }
+}
+
+function loadCartFromStorage() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        cart = parsed.filter((item) =>
+          item &&
+          typeof item.name === "string" &&
+          typeof item.size === "string" &&
+          typeof item.unitPrice === "number" &&
+          typeof item.qty === "number" &&
+          item.qty > 0
+        );
+      }
+    }
+  } catch (e) {
+    console.warn("Could not load cart from localStorage", e);
+    cart = [];
+  }
+}
+
 function addToCart(item, option, qty) {
   const existing = cart.find(
     (c) => c.name === item.name && c.size === option.size
@@ -274,6 +312,7 @@ function addToCart(item, option, qty) {
     });
   }
 
+  saveCartToStorage();
   updateDockUI();
 }
 
@@ -290,15 +329,29 @@ function updateCartQty(index, delta) {
     item.qty = newQty;
   }
 
+  saveCartToStorage();
   updateDockUI();
   renderDrawerCart();
 }
 
 function removeCartItem(index) {
   cart.splice(index, 1);
+  saveCartToStorage();
   updateDockUI();
   renderDrawerCart();
 }
+
+function clearAllCart() {
+  cart = [];
+  saveCartToStorage();
+  updateDockUI();
+  renderDrawerCart();
+}
+
+// Expose cart functions globally for inline onclick handlers
+window.updateCartQty = updateCartQty;
+window.removeCartItem = removeCartItem;
+window.clearAllCart = clearAllCart;
 
 function getTotals() {
   const count = cart.reduce((sum, i) => sum + i.qty, 0);
@@ -323,60 +376,234 @@ function updateDockUI() {
   }
 }
 
-// 7. Interactive Map Integration (Auto-detect GPS + Interactive Leaflet Pin)
-function setupMapIntegration() {
-  const btnGps = document.getElementById("btn-gps-auto");
-  const btnToggleMap = document.getElementById("btn-toggle-map");
-  const mapWrapper = document.getElementById("map-wrapper");
-  const pinStatus = document.getElementById("pin-status-pill");
-  const addressInput = document.getElementById("cust-address");
+// Form Draft Auto-Save & Restore
+function saveFormDraft() {
+  try {
+    const nameInput = document.getElementById("cust-name");
+    const dateInput = document.getElementById("cust-date");
+    const addrInput = document.getElementById("cust-address");
+    const notesInput = document.getElementById("cust-notes");
 
-  // Toggle Map Picker
-  if (btnToggleMap && mapWrapper) {
-    btnToggleMap.addEventListener("click", () => {
-      const isHidden = mapWrapper.style.display === "none";
-      mapWrapper.style.display = isHidden ? "block" : "none";
-      if (isHidden) {
-        initLeafletMap();
+    const draft = {
+      name: nameInput ? nameInput.value : "",
+      date: dateInput ? dateInput.value : "",
+      mode: currentDeliveryMode,
+      address: addrInput ? addrInput.value : "",
+      pinnedLocationUrl: pinnedLocationUrl,
+      notes: notesInput ? notesInput.value : ""
+    };
+    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+  } catch (e) {
+    console.warn("Could not save form draft", e);
+  }
+}
+
+function restoreFormDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) return;
+    const draft = JSON.parse(raw);
+    if (!draft) return;
+
+    const nameInput = document.getElementById("cust-name");
+    const dateInput = document.getElementById("cust-date");
+    const addrInput = document.getElementById("cust-address");
+    const notesInput = document.getElementById("cust-notes");
+
+    if (nameInput && draft.name) nameInput.value = draft.name;
+    if (notesInput && draft.notes) notesInput.value = draft.notes;
+    if (addrInput && draft.address) addrInput.value = draft.address;
+
+    if (dateInput && draft.date && dateInput.min && draft.date >= dateInput.min) {
+      dateInput.value = draft.date;
+    }
+
+    if (draft.mode === "pickup") {
+      const pickupRadio = document.querySelector('input[name="delivery-mode"][value="pickup"]');
+      if (pickupRadio) {
+        pickupRadio.checked = true;
+        pickupRadio.dispatchEvent(new Event("change"));
       }
-    });
+    }
+
+    if (draft.pinnedLocationUrl) {
+      pinnedLocationUrl = draft.pinnedLocationUrl;
+      const gmapsIframe = document.getElementById("gmaps-iframe");
+      const mapPreviewBox = document.getElementById("gmaps-preview-box");
+      const pinStatus = document.getElementById("pin-status-pill");
+
+      if (pinStatus) {
+        pinStatus.style.display = "flex";
+        pinStatus.innerHTML = `
+          <span>✓ Saved Location • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a></span>
+          <button type="button" class="btn-clear-pin" id="btn-clear-pin" title="Clear location">✕ Clear</button>
+        `;
+        const clearBtn = document.getElementById("btn-clear-pin");
+        if (clearBtn) {
+          clearBtn.addEventListener("click", () => {
+            if (addrInput) addrInput.value = "";
+            pinnedLocationUrl = "";
+            pinStatus.style.display = "none";
+            if (mapPreviewBox) mapPreviewBox.style.display = "none";
+            saveFormDraft();
+          });
+        }
+      }
+
+      if (gmapsIframe && mapPreviewBox) {
+        if (pinnedLocationUrl.includes("q=")) {
+          const qVal = pinnedLocationUrl.split("q=")[1];
+          gmapsIframe.src = `https://maps.google.com/maps?q=${qVal}&z=15&output=embed`;
+          mapPreviewBox.style.display = "block";
+        }
+      }
+    }
+  } catch (e) {
+    console.warn("Could not restore form draft", e);
+  }
+}
+
+function setupFormAutoSave() {
+  const nameInput = document.getElementById("cust-name");
+  const dateInput = document.getElementById("cust-date");
+  const addrInput = document.getElementById("cust-address");
+  const notesInput = document.getElementById("cust-notes");
+
+  [nameInput, dateInput, addrInput, notesInput].forEach((el) => {
+    if (el) {
+      el.addEventListener("input", saveFormDraft);
+      el.addEventListener("change", saveFormDraft);
+    }
+  });
+}
+
+// 7. Delivery Method Selection (Home Delivery vs Kitchen Pickup)
+function setupDeliveryMethod() {
+  const homeRadio = document.querySelector('input[name="delivery-mode"][value="home"]');
+  const pickupRadio = document.querySelector('input[name="delivery-mode"][value="pickup"]');
+  const cardHome = document.getElementById("card-delivery-home");
+  const cardPickup = document.getElementById("card-delivery-pickup");
+  const addressGroup = document.getElementById("delivery-address-group");
+  const pickupBanner = document.getElementById("kitchen-pickup-banner");
+  const deliveryStatusBadge = document.getElementById("cart-delivery-status");
+  const shippingDisclaimer = document.getElementById("shipping-disclaimer");
+
+  function updateDeliveryUI() {
+    const isHome = homeRadio && homeRadio.checked;
+    currentDeliveryMode = isHome ? "home" : "pickup";
+
+    if (cardHome && cardPickup) {
+      if (isHome) {
+        cardHome.classList.add("active");
+        cardPickup.classList.remove("active");
+      } else {
+        cardPickup.classList.add("active");
+        cardHome.classList.remove("active");
+      }
+    }
+
+    if (addressGroup) addressGroup.style.display = isHome ? "block" : "none";
+    if (pickupBanner) pickupBanner.style.display = isHome ? "none" : "block";
+
+    if (deliveryStatusBadge) {
+      deliveryStatusBadge.textContent = isHome ? "At actuals via Porter/Dunzo" : "Free (Kitchen Pickup)";
+    }
+    if (shippingDisclaimer) {
+      shippingDisclaimer.innerHTML = isHome
+        ? "🛵 Delivery charges are calculated at actuals based on distance upon dispatch, or you can opt for free kitchen pickup."
+        : "🛍️ Free pickup from our Bangalore kitchen. Exact address & time window will be shared on WhatsApp.";
+    }
   }
 
-  // Auto-Detect GPS
+  if (homeRadio) homeRadio.addEventListener("change", () => {
+    updateDeliveryUI();
+    saveFormDraft();
+  });
+  if (pickupRadio) pickupRadio.addEventListener("change", () => {
+    updateDeliveryUI();
+    saveFormDraft();
+  });
+}
+
+// 8. User-Friendly Google Maps Integration (Auto-detect GPS + Manual Override + Link Paste)
+function setupGoogleMapsIntegration() {
+  const btnGps = document.getElementById("btn-gps-auto");
+  const mapPreviewBox = document.getElementById("gmaps-preview-box");
+  const gmapsIframe = document.getElementById("gmaps-iframe");
+  const pinStatus = document.getElementById("pin-status-pill");
+  const addressInput = document.getElementById("cust-address");
+  const chips = document.querySelectorAll(".chip-jump");
+
+  function clearLocationPin() {
+    pinnedLocationUrl = "";
+    if (pinStatus) {
+      pinStatus.style.display = "none";
+      pinStatus.innerHTML = "";
+    }
+    if (mapPreviewBox) {
+      mapPreviewBox.style.display = "none";
+    }
+    if (btnGps) {
+      btnGps.disabled = false;
+      btnGps.innerHTML = `<span>📍 Pin My Exact Location (Google Maps)</span>`;
+    }
+  }
+
+  function renderStatusPill(labelHtml) {
+    if (!pinStatus) return;
+    pinStatus.style.display = "flex";
+    pinStatus.innerHTML = `
+      <span>${labelHtml}</span>
+      <button type="button" class="btn-clear-pin" id="btn-clear-pin" title="Clear or update location">✕ Clear</button>
+    `;
+    const clearBtn = document.getElementById("btn-clear-pin");
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (addressInput) addressInput.value = "";
+        clearLocationPin();
+        showToast("Location cleared. You can type an address or re-pin.");
+      });
+    }
+  }
+
+  // Single-Tap "Pin My Exact Location"
   if (btnGps) {
     btnGps.addEventListener("click", () => {
       if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser.");
+        alert("Location services are not supported by your browser.");
         return;
       }
 
       btnGps.disabled = true;
-      btnGps.innerHTML = `<span>⏳ Detecting GPS...</span>`;
+      btnGps.innerHTML = `<span>⏳ Pinning your location...</span>`;
 
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           btnGps.disabled = false;
-          btnGps.innerHTML = `<span>📍 Auto-Detect GPS</span>`;
+          btnGps.innerHTML = `<span>✓ Location Pinned on Google Maps!</span>`;
 
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
-          setLocationCoords(lat, lng, "Auto-Detected GPS Location");
+          const latFixed = lat.toFixed(6);
+          const lngFixed = lng.toFixed(6);
 
-          if (mapWrapper && mapWrapper.style.display !== "none") {
-            if (leafletMap && leafletMarker) {
-              leafletMap.setView([lat, lng], 15);
-              leafletMarker.setLatLng([lat, lng]);
-            }
+          pinnedLocationUrl = `https://www.google.com/maps?q=${latFixed},${lngFixed}`;
+
+          renderStatusPill(`✓ GPS Pinned: <strong>${latFixed}, ${lngFixed}</strong> • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a>`);
+
+          if (gmapsIframe) {
+            gmapsIframe.src = `https://maps.google.com/maps?q=${latFixed},${lngFixed}&z=16&output=embed`;
+            if (mapPreviewBox) mapPreviewBox.style.display = "block";
           }
 
-          showToast("📍 Exact GPS location attached!");
+          showToast("📍 Location pinned on Google Maps!");
         },
         (err) => {
           btnGps.disabled = false;
-          btnGps.innerHTML = `<span>📍 Auto-Detect GPS</span>`;
-          let msg = "Could not fetch GPS location.";
+          btnGps.innerHTML = `<span>📍 Pin My Exact Location (Google Maps)</span>`;
+          let msg = "Could not detect GPS location.";
           if (err.code === err.PERMISSION_DENIED) {
-            msg = "Location permission was denied. You can tap 'Pick on Map' or type your address.";
+            msg = "Location permission was denied. You can type your society/apartment name or share your live pin in WhatsApp.";
           }
           alert(msg);
         },
@@ -384,69 +611,71 @@ function setupMapIntegration() {
       );
     });
   }
-}
 
-function initLeafletMap() {
-  if (leafletMap) {
-    setTimeout(() => leafletMap.invalidateSize(), 200);
-    return;
-  }
+  // Live address preview, link paste & coordinate detection
+  if (addressInput) {
+    let debounceTimer;
+    addressInput.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const val = addressInput.value.trim();
+        if (!val) {
+          if (!pinnedLocationUrl.includes("q=")) {
+            clearLocationPin();
+          }
+          return;
+        }
 
-  const defaultLat = 12.9716;
-  const defaultLng = 77.5946;
+        // 1. If user pasted a Google Maps or web link
+        if (/^https?:\/\//i.test(val)) {
+          pinnedLocationUrl = val;
+          renderStatusPill(`✓ Google Maps link added • <a href="${val}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify</a>`);
+          return;
+        }
 
-  try {
-    leafletMap = L.map("leaflet-map").setView([defaultLat, defaultLng], 12);
+        // 2. If user pasted exact coordinates e.g. "12.9716, 77.5946"
+        const coordsMatch = val.match(/^(-?\d+(\.\d+)?)[,\s]+(-?\d+(\.\d+)?)$/);
+        if (coordsMatch) {
+          const lat = parseFloat(coordsMatch[1]).toFixed(6);
+          const lng = parseFloat(coordsMatch[3]).toFixed(6);
+          pinnedLocationUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+          if (gmapsIframe) {
+            gmapsIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
+            if (mapPreviewBox) mapPreviewBox.style.display = "block";
+          }
+          renderStatusPill(`✓ Coordinates: <strong>${lat}, ${lng}</strong> • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a>`);
+          return;
+        }
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-    }).addTo(leafletMap);
-
-    leafletMarker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(leafletMap);
-    leafletMarker.bindPopup("Drag me to your exact delivery location!").openPopup();
-
-    // On marker drag end
-    leafletMarker.on("dragend", (e) => {
-      const pos = e.target.getLatLng();
-      setLocationCoords(pos.lat, pos.lng, "Pinned Location");
+        // 3. Typed address or landmark in Bangalore
+        const query = `${val}, Bangalore`;
+        pinnedLocationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+        if (gmapsIframe) {
+          gmapsIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&output=embed`;
+          if (mapPreviewBox) mapPreviewBox.style.display = "block";
+        }
+        renderStatusPill(`📍 Using address: <strong>${val}</strong>`);
+      }, 600);
     });
+  }
 
-    // On map click
-    leafletMap.on("click", (e) => {
-      const pos = e.latlng;
-      leafletMarker.setLatLng(pos);
-      setLocationCoords(pos.lat, pos.lng, "Pinned Location");
+  // Bangalore Quick Area Chips
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const area = chip.getAttribute("data-area");
+      if (!area) return;
+      if (addressInput) {
+        addressInput.value = `${area}, Bangalore`;
+      }
+      if (gmapsIframe) {
+        gmapsIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(area + ", Bangalore")}&z=14&output=embed`;
+        if (mapPreviewBox) mapPreviewBox.style.display = "block";
+      }
+      pinnedLocationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(area + ", Bangalore")}`;
+      renderStatusPill(`✓ Area: <strong>${area}, Bangalore</strong>`);
+      showToast(`Selected ${area}`);
     });
-
-    setTimeout(() => leafletMap.invalidateSize(), 300);
-  } catch (e) {
-    console.error("Leaflet initialization error:", e);
-  }
-}
-
-// Global quick jump to Bangalore localities
-window.jumpToLocation = function (lat, lng, name) {
-  if (!leafletMap || !leafletMarker) return;
-  leafletMap.setView([lat, lng], 15);
-  leafletMarker.setLatLng([lat, lng]);
-  setLocationCoords(lat, lng, name);
-  const addr = document.getElementById("cust-address");
-  if (addr && !addr.value.includes(name)) {
-    addr.value = addr.value ? `${addr.value}, ${name}` : name;
-  }
-};
-
-function setLocationCoords(lat, lng, label) {
-  const latFixed = lat.toFixed(6);
-  const lngFixed = lng.toFixed(6);
-  pinnedLocationUrl = `https://www.google.com/maps?q=${latFixed},${lngFixed}`;
-
-  const pinStatus = document.getElementById("pin-status-pill");
-  if (pinStatus) {
-    pinStatus.style.display = "block";
-    pinStatus.innerHTML = `✓ ${label}: <strong>${latFixed}, ${lngFixed}</strong> • <a href="${pinnedLocationUrl}" target="_blank" style="color:inherit;text-decoration:underline;">Test on Google Maps</a>`;
-  }
+  });
 }
 
 // 8. Checkout Modal Drawer
@@ -508,6 +737,7 @@ function setupCheckoutModal() {
 
 function renderDrawerCart() {
   const list = document.getElementById("cart-items-list");
+  const subtotalEl = document.getElementById("cart-subtotal-val");
   const totalEl = document.getElementById("cart-total-val");
   const emptyMsg = document.getElementById("cart-empty-message");
   const content = document.getElementById("cart-content-wrapper");
@@ -516,7 +746,8 @@ function renderDrawerCart() {
   list.innerHTML = "";
 
   const { total } = getTotals();
-  totalEl.textContent = `₹${total.toLocaleString("en-IN")}`;
+  if (subtotalEl) subtotalEl.textContent = `₹${total.toLocaleString("en-IN")}`;
+  if (totalEl) totalEl.textContent = `₹${total.toLocaleString("en-IN")}`;
 
   if (cart.length === 0) {
     emptyMsg.style.display = "block";
@@ -526,6 +757,25 @@ function renderDrawerCart() {
 
   emptyMsg.style.display = "none";
   content.style.display = "block";
+
+  // Items header with Clear Cart option
+  const headerRow = document.createElement("div");
+  headerRow.style.cssText = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;";
+  headerRow.innerHTML = `
+    <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Selected Items (${cart.length})</span>
+    <button type="button" id="btn-clear-cart-all" style="background: none; border: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; text-decoration: underline; padding: 2px 4px;">Clear Cart</button>
+  `;
+  list.appendChild(headerRow);
+
+  const clearBtn = headerRow.querySelector("#btn-clear-cart-all");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (confirm("Are you sure you want to clear all items from your order?")) {
+        clearAllCart();
+        showToast("Cart cleared");
+      }
+    });
+  }
 
   cart.forEach((item, i) => {
     const row = document.createElement("div");
@@ -557,16 +807,25 @@ function sendWhatsAppOrder() {
   const nameInput = document.getElementById("cust-name");
   const dateInput = document.getElementById("cust-date");
   const addrInput = document.getElementById("cust-address");
+  const mapLinkInput = document.getElementById("cust-map-link");
   const notesInput = document.getElementById("cust-notes");
 
   const name = nameInput ? nameInput.value.trim() : "";
   const date = dateInput ? dateInput.value : "";
   const address = addrInput ? addrInput.value.trim() : "";
+  const mapLink = mapLinkInput ? mapLinkInput.value.trim() : "";
   const notes = notesInput ? notesInput.value.trim() : "";
+  const isHomeDelivery = currentDeliveryMode === "home";
 
   if (!name) {
     alert("Please enter your name.");
     if (nameInput) nameInput.focus();
+    return;
+  }
+
+  if (isHomeDelivery && !address && !pinnedLocationUrl && !mapLink) {
+    alert("Please enter your delivery area or location.");
+    if (addrInput) addrInput.focus();
     return;
   }
 
@@ -593,8 +852,16 @@ function sendWhatsAppOrder() {
   msg += `-----------------------------------------\n`;
   msg += `👤 *Customer Name:* ${name}\n`;
   if (dateFormatted) msg += `📅 *Date Needed:* ${dateFormatted}\n`;
-  if (address) msg += `📍 *Delivery Area/Address:* ${address}\n`;
-  if (pinnedLocationUrl) msg += `🗺️ *Google Maps Pin:* ${pinnedLocationUrl}\n`;
+  msg += `🚚 *Fulfillment:* ${isHomeDelivery ? "🛵 Home Delivery" : "🛍️ Kitchen Pickup (Self-Pickup)"}\n`;
+
+  if (isHomeDelivery) {
+    if (address) msg += `📍 *Delivery Area:* ${address}\n`;
+    const finalMapUrl = pinnedLocationUrl || mapLink;
+    if (finalMapUrl) msg += `🗺️ *Google Maps Link:* ${finalMapUrl}\n`;
+  } else {
+    msg += `📍 *Pickup Location:* Bangalore Kitchen (please confirm time window)\n`;
+  }
+
   if (notes) msg += `📝 *Notes/Customization:* ${notes}\n`;
   msg += `-----------------------------------------\n`;
   msg += `🛒 *SELECTED ITEMS:*\n\n`;
@@ -607,9 +874,14 @@ function sendWhatsAppOrder() {
   });
 
   msg += `-----------------------------------------\n`;
-  msg += `💰 *TOTAL ESTIMATE: ₹${total.toLocaleString("en-IN")}*\n`;
+  msg += `💰 *ITEMS SUBTOTAL: ₹${total.toLocaleString("en-IN")}*\n`;
+  if (isHomeDelivery) {
+    msg += `📦 *Delivery Charges:* Extra at actuals via Porter/Dunzo (based on distance)\n`;
+  } else {
+    msg += `📦 *Delivery Charges:* Free (Kitchen Pickup)\n`;
+  }
   msg += `-----------------------------------------\n`;
-  msg += `⏳ *Pre-orders only (1 week's notice) • Exclusively Eggless*\n`;
+  msg += `⏳ *Pre-orders only (1 week notice) • Exclusively Eggless*\n`;
   msg += `📍 Bangalore`;
 
   const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`;

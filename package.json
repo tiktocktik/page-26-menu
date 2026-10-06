@@ -1,0 +1,13 @@
+{
+  "name": "page-26-menu",
+  "version": "1.0.0",
+  "description": "Page 26 Cheesecakes & Bakes - Digital Menu and WhatsApp Ordering System",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": ["bakery", "menu", "whatsapp-ordering", "vercel", "eggless"],
+  "author": "Page 26",
+  "license": "MIT"
+}

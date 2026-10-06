@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PAGE 26 | Cheesecakes & Bakes - Bengaluru</title>
+  <meta name="description" content="Artisanal eggless cheesecakes, cakes, brownies, muffins and cupcakes in Bengaluru. Couverture chocolate bakes. Pre-orders with 1 week notice.">
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PAGE 26 — Cheesecakes & Bakes">
+  <meta property="og:description" content="Artisanal eggless cheesecakes and bakes in Bengaluru. Order on WhatsApp or Call.">
+  <meta property="og:image" content="menu.png">
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <header class="top-banner">
+    <span>⏳ PRE-ORDERS ONLY (1 Week's Notice)</span>
+    <span class="separator">•</span>
+    <span>🟢 All Products Exclusively Eggless</span>
+    <span class="separator">•</span>
+    <span>📍 Bengaluru</span>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="brand-title">PAGE 26</h1>
+      <p class="brand-subtitle">CHEESECAKES & BAKES</p>
+
+      <div class="badges-bar">
+        <span class="badge badge-notice">⏳ 1 Week's Pre-Order Notice</span>
+        <span class="badge badge-eggless"><span class="veg-indicator"></span> 100% Exclusively Eggless</span>
+        <span class="badge badge-location">📍 Bengaluru</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/918780547928" target="_blank" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+
+        <a href="tel:+918780547928" class="btn btn-call">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call +91 8780547928
+        </a>
+
+        <button type="button" id="btn-view-menu-img" class="btn btn-menu-img">
+          📜 View Original Menu Card
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Filters & Search Navigation -->
+  <nav class="nav-section">
+    <div class="container nav-controls">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search flavours (e.g. Biscoff, Nutella, Ganache)..." autocomplete="off">
+      </div>
+
+      <div class="category-tabs" id="category-tabs">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Menu Grid Section -->
+  <main class="container menu-container">
+    <div id="menu-root">
+      <!-- Cards rendered dynamically -->
+    </div>
+  </main>
+
+  <!-- Sticky Bottom Cart Bar -->
+  <aside class="sticky-bottom-bar" id="sticky-bottom-bar">
+    <div class="bottom-bar-inner">
+      <div class="cart-summary-pill">
+        <span class="cart-count-badge" id="cart-count-badge">0</span>
+        <div>
+          <span class="cart-total-label">Estimated Total</span>
+          <span class="cart-total-text" id="cart-total-display">₹0</span>
+        </div>
+      </div>
+      <button type="button" class="btn-checkout" id="btn-open-checkout">
+        Review & Order via WhatsApp →
+      </button>
+    </div>
+  </aside>
+
+  <!-- Order / Checkout Modal Drawer -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🍰 Your Order Summary</h3>
+        <button type="button" class="btn-close" id="btn-close-checkout" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="cart-empty-state" style="text-align: center; padding: 30px 10px; display: none;">
+          <p style="font-size: 2rem; margin-bottom: 8px;">🛒</p>
+          <p style="font-weight: 600; color: var(--text-main);">Your order is currently empty</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Choose your favourite flavours and weights to begin!</p>
+        </div>
+
+        <div id="checkout-form-section">
+          <!-- Item breakdown list -->
+          <div class="order-items-list" id="modal-items-list"></div>
+
+          <!-- Pre-order notice callout -->
+          <div class="form-callout">
+            <span>⏳</span>
+            <span><strong>Pre-Orders Only:</strong> Please provide at least <strong>1 week's notice</strong> for your order.</span>
+          </div>
+
+          <!-- Customer details inputs -->
+          <div class="form-group">
+            <label class="form-label" for="order-name">Your Full Name <span style="color:#DC2626;">*</span></label>
+            <input type="text" id="order-name" class="form-input" placeholder="e.g. Priya Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-phone">Your Phone Number (Optional)</label>
+            <input type="tel" id="order-phone" class="form-input" placeholder="e.g. +91 9876543210">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-date">Preferred Delivery / Pickup Date <span style="color:#DC2626;">*</span></label>
+            <input type="date" id="order-date" class="form-input" required>
+            <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 3px; display: block;">
+              Minimum 7 days from today as per pre-order policy.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-address">Delivery Location / Area (Bengaluru)</label>
+            <input type="text" id="order-address" class="form-input" placeholder="e.g. Indiranagar, Koramangala, Whitefield">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="order-notes">Customization / Cake Message / Notes</label>
+            <textarea id="order-notes" class="form-textarea" rows="2" placeholder="e.g. Please write 'Happy Birthday Tarang' on cake, extra toppings..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="total-summary-row">
+          <span>Total Estimate:</span>
+          <span class="total-amount" id="modal-total-display">₹0</span>
+        </div>
+
+        <div class="modal-cta-buttons">
+          <button type="button" class="btn btn-whatsapp" id="btn-send-whatsapp" style="width: 100%; padding: 13px;">
+            <span>💬 Send Order on WhatsApp</span>
+          </button>
+          <button type="button" class="btn btn-call" id="btn-call-direct" style="width: 100%; padding: 13px;">
+            <span>📞 Call Us</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal for Original Menu Card -->
+  <div class="image-lightbox" id="menu-image-lightbox">
+    <div class="lightbox-card">
+      <button type="button" class="lightbox-close" id="btn-close-lightbox">&times;</button>
+      <img src="menu.png" alt="PAGE 26 Menu Card" class="lightbox-img">
+      <div style="margin-top: 12px;">
+        <a href="menu.png" download="PAGE_26_Menu.png" class="btn btn-menu-img" style="background: white;">
+          📥 Download Menu Image
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast message -->
+  <div class="toast-msg" id="toast-notification">Added to order!</div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <h4 class="footer-title">PAGE 26</h4>
+      <p style="letter-spacing: 0.15em; font-weight: 600; color: var(--brand-burgundy); margin-bottom: 12px;">
+        CHEESECAKES & BAKES
+      </p>
+      <p class="footer-text">
+        All chocolate creations are crafted using premium couverture chocolate. All products are exclusively 100% eggless.
+        Baking with love in Bengaluru.
+      </p>
+      <div class="footer-links">
+        <a href="https://wa.me/918780547928" target="_blank" class="footer-link">WhatsApp: +91 8780547928</a>
+        <span>•</span>
+        <a href="tel:+918780547928" class="footer-link">Call: +91 8780547928</a>
+      </div>
+      <p style="font-size: 0.78rem; opacity: 0.7;">
+        © <span id="current-year">2026</span> Page 26. Pre-orders only (1 week's notice).
+      </p>
+    </div>
+  </footer>
+
+  <script src="menu-data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -9,397 +9,205 @@
   <meta property="og:description" content="Artisanal eggless cheesecakes & bakes. Bangalore. Pre-orders on WhatsApp / Call.">
   <meta property="og:image" content="menu.png">
 
-  <!-- Google Fonts: Cormorant Garamond / Playfair Display & Plus Jakarta Sans -->
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
 </head>
 <body>
 
-  <!-- Menu Sheet Container -->
-  <div class="menu-page">
-
-    <!-- Top Announcement -->
-    <div class="menu-notice-strip">
-      <span>PRE-ORDERS ONLY (1 Week's Notice)</span>
-      <span class="dot">•</span>
-      <span>🟢 Exclusively Eggless</span>
-      <span class="dot">•</span>
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <div class="announcement-content">
+      <span>⏳ PRE-ORDERS ONLY (1 Week's Notice)</span>
+      <span class="sep">•</span>
+      <span>🟢 100% Exclusively Eggless</span>
+      <span class="sep">•</span>
       <span>📍 Bangalore</span>
     </div>
-
-    <!-- Header Section (Matching original Menu layout) -->
-    <header class="menu-header">
-      <h1 class="brand-name">PAGE 26</h1>
-      <div class="brand-divider">
-        <span class="rule"></span>
-        <span class="brand-sub">CHEESECAKES & BAKES</span>
-        <span class="rule"></span>
-      </div>
-
-      <!-- Quick Action Contacts -->
-      <div class="header-actions">
-        <a href="https://wa.me/918780547928" target="_blank" class="contact-pill wa">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
-          </svg>
-          <span>WhatsApp 8780547928</span>
-        </a>
-        <a href="tel:+918780547928" class="contact-pill phone">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-          </svg>
-          <span>Call 8780547928</span>
-        </a>
-        <button type="button" class="contact-pill img-view" id="btn-view-card">
-          <span>📜 View Original Card</span>
-        </button>
-        <button type="button" class="contact-pill theme-toggle" id="theme-toggle" aria-label="Toggle dark/light theme">
-          <span id="theme-icon">🌙</span>
-          <span id="theme-label">Dark</span>
-        </button>
-      </div>
-
-      <p class="order-hint">Tip: Tap any price below to add it directly to your WhatsApp order</p>
-    </header>
-
-    <!-- SECTION 1: CHEESECAKES -->
-    <section class="menu-card-box">
-      <div class="box-header">
-        <h2 class="category-heading">CHEESECAKES</h2>
-        <span class="signature-tag">👑 SIGNATURE</span>
-        <span class="veg-dot" title="100% Eggless Vegetarian"></span>
-      </div>
-
-      <div class="table-responsive">
-        <table class="menu-table">
-          <thead>
-            <tr>
-              <th class="col-flavour">Flavour</th>
-              <th>500 g</th>
-              <th>1 kg</th>
-              <th>1.5 kg</th>
-              <th>2 kg</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="flavour-name">Classic New York</td>
-              <td><button class="price-btn" onclick="addToOrder('Classic New York Cheesecake', '500 g', 700)">₹700</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Classic New York Cheesecake', '1 kg', 1200)">₹1,200</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Classic New York Cheesecake', '1.5 kg', 1800)">₹1,800</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Classic New York Cheesecake', '2 kg', 2400)">₹2,400</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Biscoff</td>
-              <td><button class="price-btn" onclick="addToOrder('Biscoff Cheesecake', '500 g', 800)">₹800</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Biscoff Cheesecake', '1 kg', 1400)">₹1,400</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Biscoff Cheesecake', '1.5 kg', 2100)">₹2,100</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Biscoff Cheesecake', '2 kg', 2800)">₹2,800</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Nutella</td>
-              <td><button class="price-btn" onclick="addToOrder('Nutella Cheesecake', '500 g', 800)">₹800</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Nutella Cheesecake', '1 kg', 1400)">₹1,400</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Nutella Cheesecake', '1.5 kg', 2100)">₹2,100</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Nutella Cheesecake', '2 kg', 2800)">₹2,800</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Blueberry</td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cheesecake', '500 g', 800)">₹800</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cheesecake', '1 kg', 1400)">₹1,400</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cheesecake', '1.5 kg', 2100)">₹2,100</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cheesecake', '2 kg', 2800)">₹2,800</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Strawberry</td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cheesecake', '500 g', 800)">₹800</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cheesecake', '1 kg', 1400)">₹1,400</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cheesecake', '1.5 kg', 2100)">₹2,100</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cheesecake', '2 kg', 2800)">₹2,800</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- SECTION 2: CAKES -->
-    <section class="menu-card-box">
-      <div class="box-header">
-        <h2 class="category-heading">CAKES</h2>
-        <span class="veg-dot" title="100% Eggless Vegetarian"></span>
-      </div>
-
-      <div class="table-responsive">
-        <table class="menu-table">
-          <thead>
-            <tr>
-              <th class="col-flavour">Flavour</th>
-              <th>Bento (~250–350g)</th>
-              <th>500 g</th>
-              <th>1 kg</th>
-              <th>1.5 kg</th>
-              <th>2 kg</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="flavour-name">Chocolate Ganache</td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Ganache Cake', 'Bento (~250–350g)', 500)">₹500</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Ganache Cake', '500 g', 650)">₹650</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Ganache Cake', '1 kg', 1200)">₹1,200</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Ganache Cake', '1.5 kg', 1750)">₹1,750</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Ganache Cake', '2 kg', 2300)">₹2,300</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Red Velvet</td>
-              <td><button class="price-btn" onclick="addToOrder('Red Velvet Cake', 'Bento (~250–350g)', 500)">₹500</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Red Velvet Cake', '500 g', 650)">₹650</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Red Velvet Cake', '1 kg', 1200)">₹1,200</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Red Velvet Cake', '1.5 kg', 1750)">₹1,750</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Red Velvet Cake', '2 kg', 2300)">₹2,300</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Naked Chocolate Nutella</td>
-              <td><button class="price-btn" onclick="addToOrder('Naked Chocolate Nutella Cake', 'Bento (~250–350g)', 550)">₹550</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Naked Chocolate Nutella Cake', '500 g', 750)">₹750</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Naked Chocolate Nutella Cake', '1 kg', 1400)">₹1,400</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Naked Chocolate Nutella Cake', '1.5 kg', 2050)">₹2,050</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Naked Chocolate Nutella Cake', '2 kg', 2700)">₹2,700</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="box-note">All chocolate-based cakes are made with couverture chocolate.</p>
-    </section>
-
-    <!-- ROW: BROWNIES & MUFFINS -->
-    <div class="two-col-grid">
-      
-      <!-- BROWNIES -->
-      <section class="menu-card-box">
-        <div class="box-header">
-          <h2 class="category-heading">BROWNIES</h2>
-          <span class="veg-dot" title="100% Eggless Vegetarian"></span>
-        </div>
-
-        <div class="table-responsive">
-          <table class="menu-table">
-            <thead>
-              <tr>
-                <th class="col-flavour">Flavour</th>
-                <th>Box of 4</th>
-                <th>Per piece (Min 4)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="flavour-name">Classic</td>
-                <td><button class="price-btn" onclick="addToOrder('Classic Brownies', 'Box of 4', 450)">₹450</button></td>
-                <td><button class="price-btn" onclick="addToOrder('Classic Brownies', 'Per piece (Min 4 pcs)', 120, 4)">₹120 / pc</button></td>
-              </tr>
-              <tr>
-                <td class="flavour-name">Nutella</td>
-                <td><button class="price-btn" onclick="addToOrder('Nutella Brownies', 'Box of 4', 500)">₹500</button></td>
-                <td><button class="price-btn" onclick="addToOrder('Nutella Brownies', 'Per piece (Min 4 pcs)', 130, 4)">₹130 / pc</button></td>
-              </tr>
-              <tr>
-                <td class="flavour-name">Biscoff</td>
-                <td><button class="price-btn" onclick="addToOrder('Biscoff Brownies', 'Box of 4', 500)">₹500</button></td>
-                <td><button class="price-btn" onclick="addToOrder('Biscoff Brownies', 'Per piece (Min 4 pcs)', 130, 4)">₹130 / pc</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="box-note">All brownies are made with couverture chocolate.<br>Minimum order: 4 pieces. Custom toppings on request.</p>
-      </section>
-
-      <!-- MUFFINS -->
-      <section class="menu-card-box">
-        <div class="box-header">
-          <h2 class="category-heading">MUFFINS</h2>
-          <span class="veg-dot" title="100% Eggless Vegetarian"></span>
-        </div>
-
-        <div class="table-responsive">
-          <table class="menu-table">
-            <thead>
-              <tr>
-                <th class="col-flavour">Flavour</th>
-                <th>Box of 4</th>
-                <th>Per piece (Min 4)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="flavour-name">Chocolate</td>
-                <td><button class="price-btn" onclick="addToOrder('Chocolate Muffins', 'Box of 4', 380)">₹380</button></td>
-                <td><button class="price-btn" onclick="addToOrder('Chocolate Muffins', 'Per piece (Min 4 pcs)', 100, 4)">₹100 / pc</button></td>
-              </tr>
-              <tr>
-                <td class="flavour-name">Vanilla</td>
-                <td><button class="price-btn" onclick="addToOrder('Vanilla Muffins', 'Box of 4', 380)">₹380</button></td>
-                <td><button class="price-btn" onclick="addToOrder('Vanilla Muffins', 'Per piece (Min 4 pcs)', 100, 4)">₹100 / pc</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="box-note">Large bakery-style muffins.<br>Chocolate muffins made with couverture chocolate. Min order: 4 pcs.</p>
-      </section>
-
-    </div>
-
-    <!-- SECTION 4: CUPCAKES -->
-    <section class="menu-card-box">
-      <div class="box-header">
-        <h2 class="category-heading">CUPCAKES</h2>
-        <span class="veg-dot" title="100% Eggless Vegetarian"></span>
-      </div>
-
-      <div class="table-responsive">
-        <table class="menu-table">
-          <thead>
-            <tr>
-              <th class="col-flavour">Flavour</th>
-              <th>Box of 4</th>
-              <th>Box of 6</th>
-              <th>Per piece (Min 4)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="flavour-name">Strawberry</td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cupcakes', 'Box of 4', 180)">₹180</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cupcakes', 'Box of 6', 270)">₹270</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Strawberry Cupcakes', 'Per piece (Min 4 pcs)', 50, 4)">₹50 / pc</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Blueberry</td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cupcakes', 'Box of 4', 180)">₹180</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cupcakes', 'Box of 6', 270)">₹270</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Blueberry Cupcakes', 'Per piece (Min 4 pcs)', 50, 4)">₹50 / pc</button></td>
-            </tr>
-            <tr>
-              <td class="flavour-name">Chocolate</td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Cupcakes', 'Box of 4', 300)">₹300</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Cupcakes', 'Box of 6', 450)">₹450</button></td>
-              <td><button class="price-btn" onclick="addToOrder('Chocolate Cupcakes', 'Per piece (Min 4 pcs)', 80, 4)">₹80 / pc</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="box-note">Chocolate cupcakes made with couverture chocolate. Minimum order: 4 pieces.</p>
-    </section>
-
-    <!-- FOOTER BANNER (Matching original menu card footer) -->
-    <footer class="menu-footer-card">
-      <div class="footer-left">
-        <h3 class="footer-title">PRE-ORDERS ONLY (1 Week's Notice)</h3>
-        <p class="footer-eggless"><span class="veg-dot"></span> All products are Exclusively Eggless</p>
-        <p class="footer-fresh">All products are made fresh to order.</p>
-      </div>
-
-      <div class="footer-right">
-        <div class="footer-loc">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Bangalore</span>
-        </div>
-        <div class="footer-phone-group">
-          <a href="https://wa.me/918780547928" target="_blank" class="footer-wa-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#146C36">
-              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
-            </svg>
-            <strong>+91 8780547928</strong>
-          </a>
-        </div>
-      </div>
-    </footer>
-
   </div>
 
-  <!-- FLOATING ORDER DOCK (Appears cleanly when items are selected) -->
-  <aside class="floating-order-dock" id="order-dock">
-    <div class="dock-content">
-      <div class="dock-summary" id="dock-btn-open">
-        <span class="dock-badge" id="dock-count">0</span>
-        <div>
-          <span class="dock-title">Your Pre-Order</span>
-          <span class="dock-price" id="dock-total">₹0</span>
+  <!-- Header Section (Inspired by luxury patisseries like Liliyum) -->
+  <header class="site-header">
+    <div class="header-inner">
+
+      <!-- Top Utility: Contacts & Theme Switch -->
+      <div class="header-top-row">
+        <!-- Direct Contacts -->
+        <div class="quick-contacts">
+          <a href="https://wa.me/918780547928" target="_blank" class="head-pill wa-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+          <a href="tel:+918780547928" class="head-pill phone-pill">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span>Call</span>
+          </a>
+          <button type="button" class="head-pill card-pill" id="btn-view-card">
+            <span>📜 Menu Card</span>
+          </button>
+        </div>
+
+        <!-- Both Dark / Light Theme Segmented Switch -->
+        <div class="theme-switch" role="group" aria-label="Theme mode switcher">
+          <button type="button" class="theme-option active" id="btn-theme-light" aria-pressed="true">
+            <span>☀️</span> <span>Light</span>
+          </button>
+          <button type="button" class="theme-option" id="btn-theme-dark" aria-pressed="false">
+            <span>🌙</span> <span>Dark</span>
+          </button>
         </div>
       </div>
-      <button type="button" class="dock-action-btn" id="dock-checkout-btn">
+
+      <!-- Brand Logo Crest -->
+      <div class="brand-crest">
+        <h1 class="brand-title">PAGE 26</h1>
+        <div class="brand-sub-wrap">
+          <span class="crest-line"></span>
+          <span class="brand-sub">CHEESECAKES & BAKES</span>
+          <span class="crest-line"></span>
+        </div>
+        <p class="brand-tagline">Artisanal eggless bakes crafted with pure couverture chocolate in Bangalore.</p>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Sticky Mobile-Friendly Category Navigation Bar (Like Liliyum / Zomato) -->
+  <nav class="sticky-nav" id="sticky-nav">
+    <div class="nav-scroll-container">
+      <button type="button" class="nav-chip active" data-category="all">✨ All Items</button>
+      <button type="button" class="nav-chip" data-category="cheesecakes">👑 Cheesecakes</button>
+      <button type="button" class="nav-chip" data-category="cakes">🎂 Cakes</button>
+      <button type="button" class="nav-chip" data-category="brownies">🍫 Brownies</button>
+      <button type="button" class="nav-chip" data-category="muffins">🧁 Muffins</button>
+      <button type="button" class="nav-chip" data-category="cupcakes">🧁 Cupcakes</button>
+    </div>
+  </nav>
+
+  <!-- Main Menu Grid (Modern 2-Column Responsive Card Layout for Mobile) -->
+  <main class="main-container">
+    <div class="menu-sections-wrapper" id="menu-sections">
+      <!-- Generated Dynamically by app.js -->
+    </div>
+  </main>
+
+  <!-- Bakery Story & Footer Information Card -->
+  <footer class="site-footer">
+    <div class="footer-card">
+      <div class="footer-info">
+        <h3 class="footer-title">PRE-ORDERS ONLY (1 Week's Notice)</h3>
+        <p class="footer-badges">
+          <span class="veg-badge"><span class="veg-icon"></span> 100% Exclusively Eggless</span>
+          <span class="sep">•</span>
+          <span>Fresh to order</span>
+        </p>
+        <p class="footer-note">All chocolate cakes, brownies, muffins & cupcakes are crafted using premium couverture chocolate.</p>
+      </div>
+
+      <div class="footer-contact-block">
+        <div class="footer-city">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Bangalore, India</span>
+        </div>
+        <a href="https://wa.me/918780547928" target="_blank" class="footer-wa-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+          </svg>
+          <span>WhatsApp: +91 8780547928</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Bottom Order Dock (Mobile Floating Bar) -->
+  <aside class="order-dock" id="order-dock">
+    <div class="dock-inner">
+      <div class="dock-info" id="dock-open-cart">
+        <span class="dock-qty-bubble" id="dock-qty">0</span>
+        <div class="dock-text">
+          <span class="dock-label">Your Pre-Order</span>
+          <span class="dock-val" id="dock-price">₹0</span>
+        </div>
+      </div>
+      <button type="button" class="dock-cta-btn" id="dock-btn-checkout">
         <span>Order on WhatsApp →</span>
       </button>
     </div>
   </aside>
 
-  <!-- CLEAN CHECKOUT MODAL DRAWER -->
-  <div class="modal-backdrop" id="checkout-modal">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3 class="modal-title">🍰 Pre-Order Summary</h3>
-        <button type="button" class="modal-close-btn" id="modal-close">&times;</button>
+  <!-- Modern Slide-Up Checkout Drawer Modal -->
+  <div class="checkout-overlay" id="checkout-modal">
+    <div class="checkout-sheet">
+      <div class="sheet-header">
+        <h3 class="sheet-title">🍰 Your Pre-Order Details</h3>
+        <button type="button" class="sheet-close" id="sheet-close" aria-label="Close drawer">&times;</button>
       </div>
 
-      <div class="modal-body">
-        <div id="cart-empty-view" style="display: none; text-align: center; padding: 30px;">
-          <p style="font-size: 1.5rem;">🧺</p>
-          <p style="color: #666; font-size: 0.9rem;">Your order is currently empty.<br>Tap any price on the menu to add items.</p>
+      <div class="sheet-body">
+        <div id="cart-empty-message" style="display: none; text-align: center; padding: 36px 16px;">
+          <p style="font-size: 2rem; margin-bottom: 8px;">🧺</p>
+          <h4 style="font-weight: 700; margin-bottom: 4px;">Your order is empty</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Select your favourite cakes or desserts to proceed.</p>
         </div>
 
-        <div id="cart-active-view">
-          <!-- Selected Items Table -->
-          <div class="selected-items-list" id="modal-items-container"></div>
+        <div id="cart-content-wrapper">
+          <!-- Item list -->
+          <div class="cart-items-box" id="cart-items-list"></div>
 
-          <!-- Total display -->
-          <div class="total-row">
+          <!-- Price subtotal -->
+          <div class="cart-total-box">
             <span>Estimated Total:</span>
-            <span class="total-val" id="modal-total-val">₹0</span>
+            <span class="cart-total-val" id="cart-total-val">₹0</span>
           </div>
 
-          <hr class="modal-divider">
-
-          <!-- Notice -->
-          <div class="modal-notice">
-            ⏳ <strong>Notice:</strong> Pre-orders require <strong>1 week's notice</strong>.
+          <div class="sheet-notice-box">
+            <span>⏳</span>
+            <span><strong>Notice:</strong> All orders are baked fresh and require <strong>1 week's notice</strong>.</span>
           </div>
 
-          <!-- Order Form Details -->
-          <div class="modal-field">
-            <label for="cust-name">Your Full Name <span style="color:#B91C1C;">*</span></label>
-            <input type="text" id="cust-name" placeholder="e.g. Tarang" required>
+          <!-- Checkout Form Details -->
+          <div class="form-row">
+            <label class="form-label" for="cust-name">Your Full Name <span class="required">*</span></label>
+            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Tarang Sharma" required>
           </div>
 
-          <div class="modal-field">
-            <label for="cust-date">Preferred Delivery / Pickup Date <span style="color:#B91C1C;">*</span></label>
-            <input type="date" id="cust-date" required>
-            <small style="color: #777; font-size: 0.75rem;">Minimum 7 days notice enforced.</small>
+          <div class="form-row">
+            <label class="form-label" for="cust-date">Preferred Delivery / Pickup Date <span class="required">*</span></label>
+            <input type="date" id="cust-date" class="form-control" required>
+            <small class="form-hint">Enforces 7 days notice minimum.</small>
           </div>
 
-          <div class="modal-field">
-            <label for="cust-address">Delivery Location / Area (Bangalore)</label>
-            <input type="text" id="cust-address" placeholder="e.g. Indiranagar, HSR Layout, Koramangala">
-            <div class="geo-pin-wrap">
-              <button type="button" class="btn-geo-pin" id="btn-get-location">
-                <span class="geo-icon">📍</span>
-                <span id="geo-text">Pinpoint Current Location (Google Maps)</span>
+          <!-- Address & Pinpoint Location -->
+          <div class="form-row">
+            <label class="form-label" for="cust-address">Delivery Location / Area (Bangalore)</label>
+            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Indiranagar, HSR Layout, Koramangala">
+            
+            <div class="map-pin-container">
+              <button type="button" class="btn-pin-location" id="btn-pin-location">
+                <span class="pin-icon">📍</span>
+                <span id="pin-text">Pinpoint Current Location (Google Maps)</span>
               </button>
-              <div id="geo-status" class="geo-status-badge" style="display:none;"></div>
+              <div id="pin-status-pill" class="pin-status" style="display:none;"></div>
             </div>
           </div>
 
-          <div class="modal-field">
-            <label for="cust-notes">Cake Message / Notes</label>
-            <textarea id="cust-notes" rows="2" placeholder="e.g. Message on cake, specific toppings..."></textarea>
+          <div class="form-row">
+            <label class="form-label" for="cust-notes">Cake Message / Customization Request</label>
+            <textarea id="cust-notes" class="form-control" rows="2" placeholder="e.g. Message on cake, extra toppings..."></textarea>
           </div>
         </div>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn-whatsapp-submit" id="btn-submit-order">
+      <div class="sheet-footer">
+        <button type="button" class="btn-wa-checkout" id="btn-submit-whatsapp">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
           </svg>
@@ -409,17 +217,18 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX FOR ORIGINAL MENU CARD -->
-  <div class="lightbox" id="card-lightbox">
-    <div class="lightbox-inner">
-      <button type="button" class="lightbox-close" id="lightbox-close">&times;</button>
-      <img src="menu.png" alt="PAGE 26 Original Menu Card" class="lightbox-img">
+  <!-- Original Menu Card Lightbox -->
+  <div class="image-modal" id="card-modal">
+    <div class="image-modal-card">
+      <button type="button" class="image-modal-close" id="card-modal-close">&times;</button>
+      <img src="menu.png" alt="PAGE 26 Original Menu Card" class="image-modal-img">
     </div>
   </div>
 
-  <!-- SUBTLE TOAST -->
-  <div class="menu-toast" id="toast">Added to order!</div>
+  <!-- Toast Notification -->
+  <div class="toast-popup" id="toast">Added to order!</div>
 
+  <script src="menu-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

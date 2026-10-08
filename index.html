@@ -345,16 +345,35 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
+  <!-- Top Announcement Rolling Marquee Ticker -->
   <aside class="top-announcement" aria-label="Bakery Announcements">
-    <div class="announcement-content">
-      <span class="ann-item"><strong>PRE-ORDERS ONLY</strong> — 7 DAYS ADVANCE NOTICE</span>
-      <span class="ann-sep">✦</span>
-      <span class="ann-item"><strong>100% EGGLESS PATISSERIE</strong></span>
-      <span class="ann-sep">✦</span>
-      <span class="ann-item"><strong>PURE COUVERTURE CHOCOLATE</strong></span>
-      <span class="ann-sep">✦</span>
-      <span class="ann-item"><strong>HANDCRAFTED IN BANGALORE</strong></span>
+    <div class="marquee-track-wrapper">
+      <div class="marquee-track" id="top-marquee-track">
+        <div class="marquee-group">
+          <span class="ann-item"><strong>PRE-ORDERS ONLY</strong> — 7 DAYS ADVANCE NOTICE</span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>100% EGGLESS PATISSERIE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>PURE COUVERTURE CHOCOLATE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>HANDCRAFTED IN BANGALORE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>DOORSTEP DELIVERY &amp; KITCHEN PICKUP</strong></span>
+          <span class="ann-sep">✦</span>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span class="ann-item"><strong>PRE-ORDERS ONLY</strong> — 7 DAYS ADVANCE NOTICE</span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>100% EGGLESS PATISSERIE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>PURE COUVERTURE CHOCOLATE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>HANDCRAFTED IN BANGALORE</strong></span>
+          <span class="ann-sep">✦</span>
+          <span class="ann-item"><strong>DOORSTEP DELIVERY &amp; KITCHEN PICKUP</strong></span>
+          <span class="ann-sep">✦</span>
+        </div>
+      </div>
     </div>
   </aside>
 
@@ -512,8 +531,8 @@
 
           <!-- Slides Container -->
           <div class="hero-slides-wrapper" id="hero-slides-wrapper">
-            
-            <!-- Slide 1: Classic New York Cheesecake -->
+            <div class="hero-slides-track" id="hero-slides-track">
+              <!-- Slide 1: Classic New York Cheesecake -->
             <div class="hero-slide active" data-slide-index="0" role="group" aria-roledescription="slide" aria-label="1 of 5">
               <div class="hero-image-frame">
                 <img 
@@ -707,8 +726,8 @@
                 </div>
               </div>
             </div>
-
           </div>
+        </div>
 
           <!-- Bottom Slider Pagination Bar -->
           <div class="hero-slider-bar">

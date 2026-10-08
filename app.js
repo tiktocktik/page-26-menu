@@ -656,6 +656,10 @@ function setupHeroSlider() {
 
   function updateSlide(newIndex) {
     currentIndex = (newIndex + totalSlides) % totalSlides;
+    const track = document.getElementById("hero-slides-track");
+    if (track) {
+      track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+    }
 
     slides.forEach((slide, idx) => {
       const isActive = idx === currentIndex;

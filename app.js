@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupGoogleMapsIntegration();
   setupCheckoutModal();
   setupMenuCardModal();
+  setupProductModal();
   restoreFormDraft();
   setupFormAutoSave();
   updateDockUI();
@@ -225,11 +226,13 @@ function renderProducts() {
 }
 
 // --------------------------------------------------------------------------
-// 6. Create Individual Product Vitrine Card
+// 6. Create Individual Product Vitrine Card (Studio Food Photography)
 // --------------------------------------------------------------------------
 function createProductCard(item) {
   const card = document.createElement("article");
   card.className = "patisserie-card";
+  card.setAttribute("data-id", item.id);
+  card.setAttribute("data-category", item.category);
 
   if (selectedOptions[item.id] === undefined) {
     selectedOptions[item.id] = 0; // Default to first weight/box option
@@ -240,27 +243,52 @@ function createProductCard(item) {
   let qty = curOption.minQty || 1;
 
   card.innerHTML = `
-    <div class="card-top">
-      <div class="card-header-line">
-        <h3 class="card-title">${item.name}</h3>
-        <div class="veg-seal" title="100% Eggless Vegetarian">
-          <span class="veg-seal-dot"></span>
-        </div>
+    <!-- Studio Product Photography Media Vitrine -->
+    <div class="card-media-wrapper" role="button" tabindex="0" aria-label="View ${item.name} high-res photo and details">
+      <img 
+        src="${item.image}" 
+        alt="${item.name} - 100% Eggless Patisserie Bangalore" 
+        class="card-product-img" 
+        loading="lazy"
+        width="600"
+        height="450"
+      >
+      <div class="card-media-overlay">
+        <span class="card-zoom-hint">🔍 Tap to View</span>
       </div>
-
-      ${item.badge ? `<span class="card-badge-tag">${item.badge}</span>` : ""}
-      ${item.description ? `<p class="card-desc">${item.description}</p>` : ""}
-      ${item.flavorNotes ? `
-        <div class="card-flavor-notes">
-          <span>✨</span>
-          <span>${item.flavorNotes}</span>
-        </div>
-      ` : ""}
+      ${item.badge ? `<span class="card-badge-pill">${item.badge}</span>` : ""}
+      <div class="card-veg-seal" title="100% Eggless Vegetarian">
+        <span class="card-veg-dot"></span>
+      </div>
     </div>
 
-    <div class="card-middle">
-      <div class="card-sizes-group">
-        <div class="size-label">Select Weight / Box Size</div>
+    <!-- Product Content Body -->
+    <div class="card-content-body">
+      <div class="card-header-row">
+        <h3 class="card-title">${item.name}</h3>
+      </div>
+
+      ${item.flavorNotes ? `
+        <div class="card-flavor-pill">
+          <span class="flavor-sparkle">✨</span>
+          <span class="flavor-text">${item.flavorNotes}</span>
+        </div>
+      ` : ""}
+
+      ${item.description ? `<p class="card-desc">${item.description}</p>` : ""}
+
+      <!-- Serving Guidance Badge -->
+      <div class="card-serving-row">
+        <span class="serving-icon">👥</span>
+        <span class="serving-text" id="serving-${item.id}">${curOption.serving || "Artisanal Pre-order"}</span>
+      </div>
+
+      <!-- Size & Weight Selector Pills -->
+      <div class="card-sizes-block">
+        <div class="sizes-header">
+          <span class="sizes-title">Select Size / Box</span>
+          <span class="sizes-lead-note">Pre-order</span>
+        </div>
         <div class="size-chips-grid">
           ${item.options.map((opt, i) => `
             <button type="button" class="size-chip ${i === selectedIdx ? "active" : ""}" data-idx="${i}">
@@ -272,19 +300,21 @@ function createProductCard(item) {
         </div>
       </div>
 
-      <div class="card-action-bar">
-        <div class="live-price-group">
-          <span class="price-micro-label">Subtotal</span>
-          <span class="price-number">₹${(curOption.price * qty).toLocaleString("en-IN")}</span>
+      <!-- Live Pricing & Order Action Bar -->
+      <div class="card-bottom-bar">
+        <div class="card-price-stack">
+          <span class="price-label">Subtotal</span>
+          <span class="price-value" id="price-${item.id}">₹${(curOption.price * qty).toLocaleString("en-IN")}</span>
         </div>
 
-        <div class="card-controls">
-          <div class="stepper">
+        <div class="card-action-controls">
+          <div class="stepper-widget">
             <button type="button" class="stepper-btn btn-dec" aria-label="Decrease quantity">−</button>
             <span class="stepper-val">${qty}</span>
             <button type="button" class="stepper-btn btn-inc" aria-label="Increase quantity">+</button>
           </div>
-          <button type="button" class="btn-card-add">
+          <button type="button" class="btn-card-add" aria-label="Add ${item.name} to pre-order bag">
+            <span class="btn-add-icon">🛍️</span>
             <span>+ Add</span>
           </button>
         </div>
@@ -292,9 +322,22 @@ function createProductCard(item) {
     </div>
   `;
 
-  // Option pill click handlers
-  const pills = card.querySelectorAll(".size-chip");
-  const priceEl = card.querySelector(".price-number");
+  // Media click opens Lightbox / Quick View
+  const mediaWrap = card.querySelector(".card-media-wrapper");
+  mediaWrap.addEventListener("click", () => {
+    openProductModal(item);
+  });
+  mediaWrap.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openProductModal(item);
+    }
+  });
+
+  // Size chips click handler
+  const chips = card.querySelectorAll(".size-chip");
+  const priceEl = card.querySelector(`#price-${item.id}`);
+  const servingEl = card.querySelector(`#serving-${item.id}`);
   const stepperVal = card.querySelector(".stepper-val");
 
   function getMinAllowed() {
@@ -305,14 +348,18 @@ function createProductCard(item) {
   function updatePriceDisplay() {
     const opt = item.options[selectedOptions[item.id] || 0];
     priceEl.textContent = `₹${(opt.price * qty).toLocaleString("en-IN")}`;
+    if (servingEl && opt.serving) {
+      servingEl.textContent = opt.serving;
+    }
   }
 
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => {
-      const idx = parseInt(pill.getAttribute("data-idx"), 10);
+  chips.forEach((chip) => {
+    chip.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const idx = parseInt(chip.getAttribute("data-idx"), 10);
       selectedOptions[item.id] = idx;
-      pills.forEach((p) => p.classList.remove("active"));
-      pill.classList.add("active");
+      chips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
 
       const minAllowed = getMinAllowed();
       if (qty < minAllowed) {
@@ -324,7 +371,8 @@ function createProductCard(item) {
   });
 
   // Quantity Steppers
-  card.querySelector(".btn-dec").addEventListener("click", () => {
+  card.querySelector(".btn-dec").addEventListener("click", (e) => {
+    e.stopPropagation();
     const minAllowed = getMinAllowed();
     if (qty > minAllowed) {
       qty -= 1;
@@ -333,14 +381,16 @@ function createProductCard(item) {
     }
   });
 
-  card.querySelector(".btn-inc").addEventListener("click", () => {
+  card.querySelector(".btn-inc").addEventListener("click", (e) => {
+    e.stopPropagation();
     qty += 1;
     stepperVal.textContent = qty;
     updatePriceDisplay();
   });
 
-  // Add to Order Action
-  card.querySelector(".btn-card-add").addEventListener("click", () => {
+  // Add to Pre-order Bag Action
+  card.querySelector(".btn-card-add").addEventListener("click", (e) => {
+    e.stopPropagation();
     const opt = item.options[selectedOptions[item.id] || 0];
     addToCart(item, opt, qty);
     showToast(`Added ${qty}x ${item.name} (${opt.size})`);
@@ -418,6 +468,7 @@ function addToCart(item, opt, qty) {
     cart.push({
       id: item.id,
       name: item.name,
+      image: item.image || "",
       size: opt.size,
       unitPrice: opt.price,
       serving: opt.serving || "",
@@ -526,6 +577,7 @@ function renderCartItems() {
     const row = document.createElement("div");
     row.className = "cart-item-row";
     row.innerHTML = `
+      ${item.image ? `<img src="${item.image}" alt="${item.name}" class="cart-item-thumb">` : ""}
       <div class="item-info">
         <span class="item-name">${item.name}</span>
         <span class="item-size">${item.size} • ₹${item.unitPrice.toLocaleString("en-IN")} each</span>
@@ -627,6 +679,116 @@ function setupMenuCardModal() {
       if (e.target === modal) closeCard();
     });
   }
+}
+
+// --------------------------------------------------------------------------
+// 10B. Product Quick-View & Lightbox Modal
+// --------------------------------------------------------------------------
+function setupProductModal() {
+  const modal = document.getElementById("product-modal");
+  const closeBtn = document.getElementById("product-modal-close");
+  if (!modal) return;
+
+  if (closeBtn) closeBtn.addEventListener("click", closeProductModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeProductModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.style.display === "flex") {
+      closeProductModal();
+    }
+  });
+}
+
+function openProductModal(item) {
+  const modal = document.getElementById("product-modal");
+  if (!modal) return;
+
+  const img = document.getElementById("modal-product-img");
+  const title = document.getElementById("modal-p-title");
+  const badge = document.getElementById("modal-badge-tag");
+  const flavorBox = document.getElementById("modal-flavor-box");
+  const flavorText = document.getElementById("modal-flavor-text");
+  const desc = document.getElementById("modal-description");
+  const ingredients = document.getElementById("modal-ingredients-text");
+  const chipsContainer = document.getElementById("modal-size-chips");
+  const priceVal = document.getElementById("modal-price-val");
+  const addBtn = document.getElementById("btn-modal-add-cart");
+
+  img.src = item.image;
+  img.alt = `${item.name} - Page 26 Artisanal Bakery Bangalore`;
+  title.textContent = item.name;
+  
+  if (badge) {
+    badge.textContent = item.badge || "Artisanal Bake";
+    badge.style.display = "inline-block";
+  }
+
+  if (flavorBox && flavorText) {
+    if (item.flavorNotes) {
+      flavorBox.style.display = "flex";
+      flavorText.textContent = item.flavorNotes;
+    } else {
+      flavorBox.style.display = "none";
+    }
+  }
+
+  if (desc) desc.textContent = item.description || "";
+  if (ingredients) {
+    ingredients.textContent = item.ingredients || "Handcrafted with pure dairy, unbleached flour, and natural extracts.";
+  }
+
+  let activeIdx = selectedOptions[item.id] !== undefined ? selectedOptions[item.id] : 0;
+
+  function renderModalChips() {
+    if (!chipsContainer) return;
+    chipsContainer.innerHTML = item.options.map((opt, i) => `
+      <button type="button" class="modal-size-chip ${i === activeIdx ? "active" : ""}" data-idx="${i}">
+        <span class="m-chip-size">${opt.size}</span>
+        ${opt.serving ? `<span class="m-chip-serving">${opt.serving}</span>` : ""}
+        <span class="m-chip-price">₹${opt.price.toLocaleString("en-IN")}</span>
+      </button>
+    `).join("");
+
+    chipsContainer.querySelectorAll(".modal-size-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        activeIdx = parseInt(chip.getAttribute("data-idx"), 10);
+        selectedOptions[item.id] = activeIdx;
+        renderModalChips();
+        updateModalPrice();
+      });
+    });
+  }
+
+  function updateModalPrice() {
+    if (!priceVal) return;
+    const opt = item.options[activeIdx];
+    priceVal.textContent = `₹${opt.price.toLocaleString("en-IN")}`;
+  }
+
+  renderModalChips();
+  updateModalPrice();
+
+  if (addBtn) {
+    addBtn.onclick = () => {
+      const opt = item.options[activeIdx];
+      addToCart(item, opt, opt.minQty || 1);
+      showToast(`Added ${item.name} (${opt.size}) to pre-order!`);
+      closeProductModal();
+    };
+  }
+
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeProductModal() {
+  const modal = document.getElementById("product-modal");
+  if (!modal) return;
+  modal.style.display = "none";
+  document.body.style.overflow = "";
 }
 
 // --------------------------------------------------------------------------

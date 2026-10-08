@@ -11,8 +11,8 @@
   <meta name="author" content="PAGE 26 Cheesecakes &amp; Bakes">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://page26.vercel.app/">
-  <meta name="theme-color" content="#2C1A11" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#16110E" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#2C1A11">
+  <meta name="color-scheme" content="light">
 
   <!-- Geo & Local Business Meta (Bangalore / Bengaluru, Karnataka, India) -->
   <meta name="geo.region" content="IN-KA">
@@ -43,10 +43,15 @@
   <meta name="twitter:description" content="100% Eggless slow-baked cheesecakes &amp; pure couverture chocolate bakes in Bangalore. Pre-orders with 1 week notice.">
   <meta name="twitter:image" content="https://page26.vercel.app/images/hero_cheesecake.jpg">
 
-  <!-- High-End Patisserie Typography Pairing -->
+  <!-- High-Performance Typography & Resource Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Critical Resource Preload (LCP Hero Showcase for instant paint) -->
+  <link rel="preload" as="image" href="images/hero_cheesecake.jpg" fetchpriority="high">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -518,7 +523,7 @@
     <div class="header-inner">
       <div class="nav-brand-group">
         <a href="#" class="brand-logo-link" aria-label="Page 26 Cheesecakes & Bakes Home">
-          <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="brand-logo-img" width="220" height="50">
+          <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="brand-logo-img" width="220" height="50" decoding="async">
         </a>
       </div>
 
@@ -682,6 +687,7 @@
                   width="800"
                   height="500"
                   fetchpriority="high"
+                  decoding="async"
                 >
                 <div class="hero-img-badge-overlay">
                   <span class="hero-pill-badge">
@@ -721,6 +727,7 @@
                   width="800"
                   height="500"
                   loading="lazy"
+                  decoding="async"
                 >
                 <div class="hero-img-badge-overlay">
                   <span class="hero-pill-badge">
@@ -760,6 +767,7 @@
                   width="800"
                   height="500"
                   loading="lazy"
+                  decoding="async"
                 >
                 <div class="hero-img-badge-overlay">
                   <span class="hero-pill-badge">
@@ -799,6 +807,7 @@
                   width="800"
                   height="500"
                   loading="lazy"
+                  decoding="async"
                 >
                 <div class="hero-img-badge-overlay">
                   <span class="hero-pill-badge">
@@ -838,6 +847,7 @@
                   width="800"
                   height="500"
                   loading="lazy"
+                  decoding="async"
                 >
                 <div class="hero-img-badge-overlay">
                   <span class="hero-pill-badge">
@@ -1187,7 +1197,7 @@
     <div class="footer-container">
       <div class="footer-brand-column">
         <a href="#" class="footer-logo-link" aria-label="Page 26 Home">
-          <img src="logo-clean.png" alt="PAGE 26 Cheesecakes & Bakes" class="footer-logo-img" width="180" height="117">
+          <img src="logo-clean.png" alt="PAGE 26 Cheesecakes & Bakes" class="footer-logo-img" width="180" height="117" loading="lazy" decoding="async">
         </a>
         <p class="footer-desc">
           Boutique artisanal patisserie in Bangalore crafting 100% eggless baked cheesecakes, celebration cakes, and couverture chocolate brownies made fresh to order.
@@ -1275,7 +1285,7 @@
       <div class="sheet-header">
         <div class="sheet-title-group">
           <div class="sheet-title-row">
-            <img src="logo-mark.png" alt="Page 26 Emblem" class="sheet-logo-mark" width="36" height="36">
+            <img src="logo-mark.png" alt="Page 26 Emblem" class="sheet-logo-mark" width="36" height="36" loading="lazy" decoding="async">
             <h3 class="sheet-title" id="drawer-title">Your Pre-Order Details</h3>
           </div>
           <span class="sheet-sub">Bangalore • 100% Eggless • Direct WhatsApp Order</span>
@@ -1481,7 +1491,7 @@
     <div class="image-modal-card">
       <div class="image-modal-bar">
         <div class="modal-bar-left">
-          <img src="logo-mark.png" alt="Page 26 Emblem" class="modal-bar-icon" width="22" height="22">
+          <img src="logo-mark.png" alt="Page 26 Emblem" class="modal-bar-icon" width="22" height="22" loading="lazy" decoding="async">
           <span class="modal-bar-title">Menu Card</span>
         </div>
         <div class="modal-bar-actions">
@@ -1507,7 +1517,7 @@
 
           <!-- Header -->
           <div class="dms-header">
-            <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="dms-logo-img" width="190" height="44">
+            <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="dms-logo-img" width="190" height="44" loading="lazy" decoding="async">
             <div class="dms-tagline">ARTISANAL PATISSERIE • BANGALORE</div>
             <div class="dms-pills-row">
               <span class="dms-pill"><span class="dms-veg-dot"></span> 100% Eggless Pure Vegetarian</span>
@@ -1797,7 +1807,7 @@
 
         <!-- 2. Original Scanned Card Image (Toggled on request) -->
         <div class="scanned-menu-wrap" id="scanned-menu-wrap" style="display: none;">
-          <img src="menu.png" alt="PAGE 26 Original Handcrafted Menu Card" class="image-modal-img" id="card-modal-img" loading="lazy">
+          <img src="menu.png" alt="PAGE 26 Original Handcrafted Menu Card" class="image-modal-img" id="card-modal-img" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -1873,7 +1883,7 @@
     </a>
   </aside>
 
-  <script src="menu-data.js"></script>
-  <script src="app.js"></script>
+  <script src="menu-data.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>

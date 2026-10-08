@@ -229,59 +229,89 @@ img {
 .nav-brand-group {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
-.brand-monogram {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--brand-cocoa), var(--brand-cocoa-dark));
-  color: #FFFFFF;
+.brand-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo-link:hover {
+  transform: scale(1.02);
+}
+
+.brand-logo-img {
+  height: 46px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+
+@media (max-width: 520px) {
+  .brand-logo-img {
+    height: 38px;
+    max-width: 175px;
+  }
+}
+
+.brand-logo-dark {
+  display: none;
+}
+
+[data-theme="dark"] .brand-logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .brand-logo-dark {
+  display: block;
+}
+
+/* Footer Brand Logo */
+.footer-logo-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease;
+}
+
+.footer-logo-link:hover {
+  transform: scale(1.02);
+}
+
+.footer-logo-img {
+  height: auto;
+  max-width: 175px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-logo-dark {
+  display: none;
+}
+
+[data-theme="dark"] .footer-logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .footer-logo-dark {
+  display: block;
+}
+
+/* Sheet Header Logo Mark */
+.sheet-title-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 10px;
 }
 
-.brand-monogram:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-[data-theme="dark"] .brand-monogram {
-  background: linear-gradient(135deg, var(--brand-gold), var(--brand-gold-hover));
-  color: #130D0A;
-}
-
-.monogram-text {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
-}
-
-.brand-meta-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-eyebrow {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-
-.brand-city {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--brand-gold);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.sheet-logo-mark {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .header-nav-actions {

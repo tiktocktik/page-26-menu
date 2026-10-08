@@ -44,7 +44,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
   <!-- 1. JSON-LD: Bakery & Local Business Schema -->
   <script type="application/ld+json">
@@ -360,13 +362,10 @@
   <header class="site-header" id="site-header">
     <div class="header-inner">
       <div class="nav-brand-group">
-        <a href="#" class="brand-monogram" aria-label="Page 26 Home">
-          <span class="monogram-text">P<span class="monogram-num">26</span></span>
+        <a href="#" class="brand-logo-link" aria-label="Page 26 Cheesecakes & Bakes Home">
+          <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="brand-logo-img brand-logo-light" width="220" height="50">
+          <img src="logo-horizontal-dark.png" alt="PAGE 26 Cheesecakes & Bakes" class="brand-logo-img brand-logo-dark" width="220" height="50">
         </a>
-        <div class="brand-meta-text">
-          <span class="brand-eyebrow">Artisanal Patisserie</span>
-          <span class="brand-city">Bangalore • 100% Eggless</span>
-        </div>
       </div>
 
       <div class="header-nav-actions">
@@ -676,8 +675,10 @@
   <footer class="heritage-footer" role="contentinfo">
     <div class="footer-container">
       <div class="footer-brand-column">
-        <h3 class="footer-brand-title">PAGE <span class="brand-num">26</span></h3>
-        <p class="footer-brand-sub">CHEESECAKES &amp; BAKES</p>
+        <a href="#" class="footer-logo-link" aria-label="Page 26 Home">
+          <img src="logo-clean.png" alt="PAGE 26 Cheesecakes & Bakes" class="footer-logo-img footer-logo-light" width="180" height="117">
+          <img src="logo-dark.png" alt="PAGE 26 Cheesecakes & Bakes" class="footer-logo-img footer-logo-dark" width="180" height="117">
+        </a>
         <p class="footer-desc">
           Boutique artisanal patisserie in Bangalore crafting 100% eggless baked cheesecakes, celebration cakes, and couverture chocolate brownies made fresh to order.
         </p>
@@ -746,7 +747,10 @@
     <div class="checkout-sheet">
       <div class="sheet-header">
         <div class="sheet-title-group">
-          <h3 class="sheet-title" id="drawer-title">🍰 Your Pre-Order Details</h3>
+          <div class="sheet-title-row">
+            <img src="logo-mark.png" alt="Page 26 Emblem" class="sheet-logo-mark" width="36" height="36">
+            <h3 class="sheet-title" id="drawer-title">Your Pre-Order Details</h3>
+          </div>
           <span class="sheet-sub">Bangalore • 100% Eggless • Direct WhatsApp Order</span>
         </div>
         <button type="button" class="sheet-close" id="sheet-close" aria-label="Close pre-order drawer">&times;</button>

@@ -1307,23 +1307,300 @@
           <span class="modal-bar-title">Menu Card</span>
         </div>
         <div class="modal-bar-actions">
-          <button type="button" class="modal-bar-btn btn-modal-zoom" id="btn-card-zoom" aria-label="Toggle zoom view" title="Toggle Zoom View">
-            <svg class="zoom-icon-svg" id="zoom-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-            <span class="zoom-btn-label" id="zoom-btn-label">Fit</span>
+          <button type="button" class="modal-bar-btn" id="btn-toggle-scan" title="Toggle between Responsive Menu and Original Scan">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span class="toggle-scan-text" id="toggle-scan-text">Original Scan</span>
           </button>
           <a href="menu-card-render.html" target="_blank" rel="noopener" class="modal-bar-btn" title="Open Full Screen HD Printable Menu">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            <span class="modal-btn-label">HD View</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span class="modal-btn-label">Print</span>
           </a>
           <a href="https://wa.me/918780547928?text=Hi%20Page%2026!%20I%20am%20looking%20at%20your%20menu%20card%20and%20would%20like%20to%20enquire%20about%20ordering." target="_blank" rel="noopener noreferrer" class="modal-bar-btn modal-bar-btn-wa" title="Order on WhatsApp">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
             <span class="modal-btn-label">WhatsApp</span>
           </a>
           <button type="button" class="image-modal-close" id="card-modal-close" aria-label="Close menu card">&times;</button>
         </div>
       </div>
       <div class="image-modal-scroll" id="card-modal-scroll">
-        <img src="menu.png" alt="PAGE 26 Original Handcrafted Menu Card" class="image-modal-img" id="card-modal-img" loading="lazy">
+        <!-- 1. Artisanal Responsive Menu Sheet (Guaranteed Zero Cropping & 100% Mobile Readability) -->
+        <div class="digital-menu-sheet" id="digital-menu-sheet">
+          <div class="dms-inner-border"></div>
+
+          <!-- Header -->
+          <div class="dms-header">
+            <img src="logo-horizontal-light.png" alt="PAGE 26 Cheesecakes & Bakes" class="dms-logo-img" width="190" height="44">
+            <div class="dms-tagline">ARTISANAL PATISSERIE • BANGALORE</div>
+            <div class="dms-pills-row">
+              <span class="dms-pill"><span class="dms-veg-dot"></span> 100% Eggless Pure Vegetarian</span>
+              <span class="dms-pill">✨ Pure Couverture Chocolate</span>
+              <span class="dms-pill">⏱ Freshly Baked to Order</span>
+            </div>
+            <div class="dms-divider">✦ ✦ ✦</div>
+          </div>
+
+          <!-- Section 1: Signature Cheesecakes -->
+          <div class="dms-section">
+            <div class="dms-section-header">
+              <div class="dms-section-title-wrap">
+                <h3 class="dms-section-title">Signature Cheesecakes</h3>
+                <span class="dms-badge">100% Eggless</span>
+              </div>
+              <span class="dms-section-sub">Slow-baked with Philadelphia-style cream cheese & buttery graham crust</span>
+            </div>
+
+            <!-- Desktop View Table (Screens > 640px) -->
+            <table class="dms-table dms-table-desktop">
+              <thead>
+                <tr>
+                  <th>Flavour Profile</th>
+                  <th>500 g</th>
+                  <th>1 kg</th>
+                  <th>1.5 kg</th>
+                  <th>2 kg</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Classic New York</td>
+                  <td class="dms-price">₹700</td>
+                  <td class="dms-price">₹1,200</td>
+                  <td class="dms-price">₹1,800</td>
+                  <td class="dms-price">₹2,400</td>
+                </tr>
+                <tr>
+                  <td>Lotus Biscoff</td>
+                  <td class="dms-price">₹800</td>
+                  <td class="dms-price">₹1,400</td>
+                  <td class="dms-price">₹2,100</td>
+                  <td class="dms-price">₹2,800</td>
+                </tr>
+                <tr>
+                  <td>Nutella Hazelnut</td>
+                  <td class="dms-price">₹800</td>
+                  <td class="dms-price">₹1,400</td>
+                  <td class="dms-price">₹2,100</td>
+                  <td class="dms-price">₹2,800</td>
+                </tr>
+                <tr>
+                  <td>Wild Blueberry Compote</td>
+                  <td class="dms-price">₹800</td>
+                  <td class="dms-price">₹1,400</td>
+                  <td class="dms-price">₹2,100</td>
+                  <td class="dms-price">₹2,800</td>
+                </tr>
+                <tr>
+                  <td>Fresh Strawberry Glaze</td>
+                  <td class="dms-price">₹800</td>
+                  <td class="dms-price">₹1,400</td>
+                  <td class="dms-price">₹2,100</td>
+                  <td class="dms-price">₹2,800</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Mobile View Responsive Cards (Zero Cropping, 100% Legible) -->
+            <div class="dms-cards-mobile">
+              <div class="dms-card-item">
+                <div class="dms-card-name">Classic New York</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">500g: <strong>₹700</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,200</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹1,800</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,400</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Lotus Biscoff</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">500g: <strong>₹800</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,400</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹2,100</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,800</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Nutella Hazelnut</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">500g: <strong>₹800</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,400</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹2,100</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,800</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Wild Blueberry Compote</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">500g: <strong>₹800</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,400</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹2,100</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,800</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Fresh Strawberry Glaze</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">500g: <strong>₹800</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,400</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹2,100</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,800</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Artisanal Celebration Cakes -->
+          <div class="dms-section">
+            <div class="dms-section-header">
+              <div class="dms-section-title-wrap">
+                <h3 class="dms-section-title">Artisanal Celebration Cakes</h3>
+                <span class="dms-badge">100% Eggless</span>
+              </div>
+              <span class="dms-section-sub">Crafted with pure couverture chocolate & silky ganache</span>
+            </div>
+
+            <!-- Desktop View Table -->
+            <table class="dms-table dms-table-desktop">
+              <thead>
+                <tr>
+                  <th>Flavour Profile</th>
+                  <th>Bento (250–350g)</th>
+                  <th>500 g</th>
+                  <th>1 kg</th>
+                  <th>1.5 kg</th>
+                  <th>2 kg</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Chocolate Ganache (Couverture)</td>
+                  <td class="dms-price">₹500</td>
+                  <td class="dms-price">₹650</td>
+                  <td class="dms-price">₹1,200</td>
+                  <td class="dms-price">₹1,750</td>
+                  <td class="dms-price">₹2,300</td>
+                </tr>
+                <tr>
+                  <td>Classic Red Velvet</td>
+                  <td class="dms-price">₹500</td>
+                  <td class="dms-price">₹650</td>
+                  <td class="dms-price">₹1,200</td>
+                  <td class="dms-price">₹1,750</td>
+                  <td class="dms-price">₹2,300</td>
+                </tr>
+                <tr>
+                  <td>Naked Chocolate Nutella</td>
+                  <td class="dms-price">₹550</td>
+                  <td class="dms-price">₹750</td>
+                  <td class="dms-price">₹1,400</td>
+                  <td class="dms-price">₹2,050</td>
+                  <td class="dms-price">₹2,700</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Mobile View Responsive Cards -->
+            <div class="dms-cards-mobile">
+              <div class="dms-card-item">
+                <div class="dms-card-name">Chocolate Ganache (Couverture)</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">Bento: <strong>₹500</strong></span>
+                  <span class="dms-chip">500g: <strong>₹650</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,200</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹1,750</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,300</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Classic Red Velvet</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">Bento: <strong>₹500</strong></span>
+                  <span class="dms-chip">500g: <strong>₹650</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,200</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹1,750</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,300</strong></span>
+                </div>
+              </div>
+              <div class="dms-card-item">
+                <div class="dms-card-name">Naked Chocolate Nutella</div>
+                <div class="dms-price-chips">
+                  <span class="dms-chip">Bento: <strong>₹550</strong></span>
+                  <span class="dms-chip">500g: <strong>₹750</strong></span>
+                  <span class="dms-chip">1kg: <strong>₹1,400</strong></span>
+                  <span class="dms-chip">1.5kg: <strong>₹2,050</strong></span>
+                  <span class="dms-chip">2kg: <strong>₹2,700</strong></span>
+                </div>
+              </div>
+            </div>
+            <div class="dms-foot-note">*All chocolate cakes, brownies, muffins and cupcakes are crafted with premium couverture chocolate.</div>
+          </div>
+
+          <!-- Section 3: Lower Split Row (Brownies & Muffins/Cupcakes) -->
+          <div class="dms-split-row">
+            <!-- Brownies -->
+            <div class="dms-panel">
+              <div class="dms-panel-title">
+                <span>Couverture Fudge Brownies</span>
+                <span class="dms-badge">Min 4 pcs</span>
+              </div>
+              <div class="dms-row">
+                <span>Classic Dark Fudge</span>
+                <strong class="dms-val">₹120 / pc</strong>
+              </div>
+              <div class="dms-row">
+                <span>Nutella Swirl Fudge</span>
+                <strong class="dms-val">₹135 / pc</strong>
+              </div>
+              <div class="dms-row">
+                <span>Lotus Biscoff Crunch</span>
+                <strong class="dms-val">₹135 / pc</strong>
+              </div>
+              <div class="dms-box-deal">
+                <span>Curated Gift Box of 4:</span>
+                <span>Classic: <strong>₹450</strong> • Nutella/Biscoff: <strong>₹500</strong></span>
+              </div>
+            </div>
+
+            <!-- Muffins & Cupcakes -->
+            <div class="dms-panel">
+              <div class="dms-panel-title">
+                <span>Muffins &amp; Artisan Cupcakes</span>
+                <span class="dms-badge">Min 4 pcs</span>
+              </div>
+              <div class="dms-row">
+                <span>Bakery Muffins (Choc/Vanilla)</span>
+                <strong class="dms-val">₹120 / pc • Box of 4: ₹460</strong>
+              </div>
+              <div class="dms-row">
+                <span>Strawberry / Blueberry Cupcakes</span>
+                <strong class="dms-val">₹125 / pc • Box of 4: ₹480 • Box of 6: ₹700</strong>
+              </div>
+              <div class="dms-row">
+                <span>Pure Couverture Chocolate Cupcakes</span>
+                <strong class="dms-val">₹150 / pc • Box of 4: ₹550 • Box of 6: ₹800</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Concierge Footer Box -->
+          <div class="dms-footer-box">
+            <div class="dms-fb-left">
+              <div class="dms-fb-title">Pre-Orders Only • 1 Week Notice</div>
+              <div class="dms-fb-sub">Bangalore Kitchen Pickup or Doorstep Delivery at actuals via Porter/Dunzo</div>
+            </div>
+            <div class="dms-fb-right">
+              <a href="https://wa.me/918780547928?text=Hi%20Page%2026!%20I%20would%20like%20to%20order." target="_blank" rel="noopener noreferrer" class="dms-fb-wa">
+                <span>💬 +91 87805 47928</span>
+              </a>
+              <span class="dms-fb-micro">Direct WhatsApp Pre-Orders</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Original Scanned Card Image (Toggled on request) -->
+        <div class="scanned-menu-wrap" id="scanned-menu-wrap" style="display: none;">
+          <img src="menu.png" alt="PAGE 26 Original Handcrafted Menu Card" class="image-modal-img" id="card-modal-img" loading="lazy">
+        </div>
       </div>
     </div>
   </div>

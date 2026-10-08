@@ -2959,6 +2959,379 @@ img {
   cursor: zoom-out;
 }
 
+/* Artisanal Digital Menu Sheet */
+.digital-menu-sheet {
+  background: #FDFBF7;
+  color: #2D241E;
+  padding: 24px 28px 28px;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.dms-inner-border {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(197, 138, 56, 0.28);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.dms-header {
+  text-align: center;
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.dms-logo-img {
+  max-width: 190px;
+  height: auto;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.dms-tagline {
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8C5E28;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.dms-pills-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.dms-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(197, 138, 56, 0.08);
+  border: 1px solid rgba(197, 138, 56, 0.25);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5C4533;
+}
+
+.dms-veg-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #2E7D32;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dms-divider {
+  color: #C58A38;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  letter-spacing: 0.2em;
+}
+
+.dms-section {
+  margin-bottom: 24px;
+}
+
+.dms-section-header {
+  border-bottom: 2px solid #E8DFD3;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.dms-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dms-section-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: #2D241E;
+  margin: 0;
+  font-weight: 700;
+}
+
+.dms-badge {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #2E7D32;
+  color: #FFFFFF;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.dms-section-sub {
+  font-size: 0.76rem;
+  color: #7A695B;
+  font-style: italic;
+  display: block;
+  margin-top: 3px;
+}
+
+/* Desktop Tables */
+.dms-table-desktop {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.dms-table-desktop th {
+  background: #F4EDE2;
+  color: #4A3A2F;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  text-align: right;
+  border: 1px solid #E5DACB;
+}
+
+.dms-table-desktop th:first-child {
+  text-align: left;
+}
+
+.dms-table-desktop td {
+  padding: 8px 10px;
+  border: 1px solid #EDE4D8;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.dms-table-desktop td:first-child {
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  color: #2D241E;
+}
+
+.dms-table-desktop tr:nth-child(even) td {
+  background: rgba(244, 237, 226, 0.35);
+}
+
+.dms-price {
+  color: #8C5E28;
+  font-weight: 700;
+}
+
+.dms-foot-note {
+  font-size: 0.72rem;
+  color: #857262;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+.dms-cards-mobile {
+  display: none;
+}
+
+/* Split Row for Brownies & Muffins */
+.dms-split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.dms-panel {
+  background: #FFFFFF;
+  border: 1px solid #EDE4D8;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.dms-panel-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: #2D241E;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EFE8DE;
+  padding-bottom: 5px;
+  font-weight: 700;
+}
+
+.dms-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px dashed #F0EAE2;
+  font-size: 0.82rem;
+  gap: 8px;
+}
+
+.dms-row:last-of-type {
+  border-bottom: none;
+}
+
+.dms-val {
+  color: #8C5E28;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dms-box-deal {
+  background: #F8F3EA;
+  border-radius: 6px;
+  padding: 7px 10px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.78rem;
+  color: #4A3A2F;
+}
+
+/* Footer Box */
+.dms-footer-box {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #2D241E, #1F1813);
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dms-fb-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: #E2B770;
+  font-weight: 600;
+}
+
+.dms-fb-sub {
+  font-size: 0.74rem;
+  color: #CBB9A8;
+  margin-top: 2px;
+}
+
+.dms-fb-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.dms-fb-wa {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #25D366;
+  text-decoration: none;
+  display: block;
+}
+
+.dms-fb-micro {
+  font-size: 0.7rem;
+  color: #A89582;
+  display: block;
+}
+
+.scanned-menu-wrap {
+  width: 100%;
+  text-align: center;
+}
+
+/* Mobile Media Queries for Zero-Cropping Digital Menu Sheet */
+@media (max-width: 640px) {
+  .digital-menu-sheet {
+    padding: 16px 12px 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dms-inner-border {
+    inset: 6px;
+  }
+
+  .dms-table-desktop {
+    display: none;
+  }
+
+  .dms-cards-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dms-card-item {
+    background: #FFFFFF;
+    border: 1px solid #EDE4D8;
+    border-radius: 8px;
+    padding: 9px 11px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dms-card-name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2D241E;
+    margin-bottom: 6px;
+  }
+
+  .dms-price-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .dms-chip {
+    background: #F9F5EE;
+    border: 1px solid #E5DACB;
+    border-radius: 6px;
+    padding: 4px 7px;
+    font-size: 0.74rem;
+    color: #4A3A2F;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+  }
+
+  .dms-chip strong {
+    color: #8C5E28;
+    font-weight: 700;
+  }
+
+  .dms-split-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dms-footer-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dms-fb-right {
+    text-align: center;
+  }
+}
+
 /* Floating Bakery WhatsApp Concierge FAB */
 .floating-wa-fab-wrap {
   position: fixed;

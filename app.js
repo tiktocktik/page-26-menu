@@ -787,26 +787,29 @@ function setupMenuCardModal() {
   const closeBtn = document.getElementById("card-modal-close");
   const zoomBtn = document.getElementById("btn-card-zoom");
   const zoomLabel = document.getElementById("zoom-btn-label");
+  const zoomIcon = document.getElementById("zoom-icon-svg");
   const scrollContainer = document.getElementById("card-modal-scroll");
   const cardImg = document.getElementById("card-modal-img");
-  const zoomPill = document.getElementById("card-zoom-pill");
 
   let isZoomed = false;
+
+  const zoomIconMinus = `<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line>`;
+  const zoomIconPlus = `<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line>`;
 
   function setZoom(zoomed) {
     isZoomed = zoomed;
     if (scrollContainer) {
       scrollContainer.classList.toggle("is-zoomed", isZoomed);
     }
+    if (zoomIcon) {
+      zoomIcon.innerHTML = isZoomed ? zoomIconMinus : zoomIconPlus;
+    }
     if (zoomLabel) {
-      zoomLabel.textContent = isZoomed ? "Fit Screen" : "Zoom In";
+      zoomLabel.textContent = isZoomed ? "Fit" : "Zoom";
     }
     if (zoomBtn) {
-      zoomBtn.setAttribute("title", isZoomed ? "Fit to Screen" : "Zoom In (100% Readable)");
+      zoomBtn.setAttribute("title", isZoomed ? "Fit Full Screen Overview" : "Zoom In (100% Readable)");
       zoomBtn.setAttribute("aria-label", isZoomed ? "Fit to Screen" : "Zoom In");
-    }
-    if (zoomPill) {
-      zoomPill.style.opacity = isZoomed ? "0" : "1";
     }
   }
 
@@ -817,8 +820,13 @@ function setupMenuCardModal() {
   function openCard() {
     if (modal) modal.classList.add("open");
     document.body.style.overflow = "hidden";
-    // Default open state: fit screen, with tap or button to zoom in
-    setZoom(false);
+    // On mobile devices, default to readable zoom so text and prices are 100% readable immediately!
+    const isMobile = window.innerWidth <= 768;
+    setZoom(isMobile);
+    if (scrollContainer) {
+      scrollContainer.scrollLeft = 0;
+      scrollContainer.scrollTop = 0;
+    }
   }
 
   function closeCard() {

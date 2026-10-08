@@ -527,8 +527,10 @@ function updateDockUI() {
 
   if (totalQty > 0) {
     dock.classList.add("visible");
+    document.body.classList.add("dock-active");
   } else {
     dock.classList.remove("visible");
+    document.body.classList.remove("dock-active");
   }
 }
 
@@ -783,15 +785,46 @@ function setupMenuCardModal() {
     document.getElementById("hero-btn-menu-card")
   ];
   const closeBtn = document.getElementById("card-modal-close");
+  const zoomBtn = document.getElementById("btn-card-zoom");
+  const zoomLabel = document.getElementById("zoom-btn-label");
+  const scrollContainer = document.getElementById("card-modal-scroll");
+  const cardImg = document.getElementById("card-modal-img");
+  const zoomPill = document.getElementById("card-zoom-pill");
+
+  let isZoomed = false;
+
+  function setZoom(zoomed) {
+    isZoomed = zoomed;
+    if (scrollContainer) {
+      scrollContainer.classList.toggle("is-zoomed", isZoomed);
+    }
+    if (zoomLabel) {
+      zoomLabel.textContent = isZoomed ? "Fit Screen" : "Zoom In";
+    }
+    if (zoomBtn) {
+      zoomBtn.setAttribute("title", isZoomed ? "Fit to Screen" : "Zoom In (100% Readable)");
+      zoomBtn.setAttribute("aria-label", isZoomed ? "Fit to Screen" : "Zoom In");
+    }
+    if (zoomPill) {
+      zoomPill.style.opacity = isZoomed ? "0" : "1";
+    }
+  }
+
+  function toggleZoom() {
+    setZoom(!isZoomed);
+  }
 
   function openCard() {
     if (modal) modal.classList.add("open");
     document.body.style.overflow = "hidden";
+    // Default open state: fit screen, with tap or button to zoom in
+    setZoom(false);
   }
 
   function closeCard() {
     if (modal) modal.classList.remove("open");
     document.body.style.overflow = "";
+    setZoom(false);
   }
 
   openBtns.forEach((btn) => {
@@ -800,11 +833,31 @@ function setupMenuCardModal() {
 
   if (closeBtn) closeBtn.addEventListener("click", closeCard);
 
+  if (zoomBtn) {
+    zoomBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleZoom();
+    });
+  }
+
+  if (cardImg) {
+    cardImg.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleZoom();
+    });
+  }
+
   if (modal) {
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeCard();
     });
   }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal && modal.classList.contains("open")) {
+      closeCard();
+    }
+  });
 }
 
 // --------------------------------------------------------------------------

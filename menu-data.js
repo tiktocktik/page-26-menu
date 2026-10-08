@@ -23,12 +23,12 @@ window.PAGE26_CONFIG = {
 };
 
 window.PAGE26_CATEGORIES = [
-  { id: "all", label: "All Creations", icon: "✨", count: 16 },
-  { id: "cheesecakes", label: "Baked Cheesecakes", icon: "👑", count: 5, isSignatureSection: true, highlight: "Slow-baked on biscuit crust" },
-  { id: "cakes", label: "Celebration Cakes", icon: "🎂", count: 3, highlight: "Pure Couverture & Whipped Frostings" },
-  { id: "brownies", label: "Fudgy Brownies", icon: "🍫", count: 3, highlight: "Crinkle-top couverture bakes" },
-  { id: "muffins", label: "Bakery Muffins", icon: "🧁", count: 2, highlight: "Jumbo bakery-style dome bakes" },
-  { id: "cupcakes", label: "Artisanal Cupcakes", icon: "🧁", count: 3, highlight: "Whipped buttercream swirls in boxes" }
+  { id: "all", label: "All Creations", count: 16 },
+  { id: "cheesecakes", label: "Baked Cheesecakes", count: 5, isSignatureSection: true, highlight: "Slow-baked on biscuit crust" },
+  { id: "cakes", label: "Celebration Cakes", count: 3, highlight: "Pure Couverture & Whipped Frostings" },
+  { id: "brownies", label: "Fudgy Brownies", count: 3, highlight: "Crinkle-top couverture bakes" },
+  { id: "muffins", label: "Bakery Muffins", count: 2, highlight: "Jumbo bakery-style dome bakes" },
+  { id: "cupcakes", label: "Artisanal Cupcakes", count: 3, highlight: "Whipped buttercream swirls in boxes" }
 ];
 
 window.PAGE26_ITEMS = [

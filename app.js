@@ -14,8 +14,9 @@ const selectedOptions = {};
 let currentDeliveryMode = "home"; // "home" or "pickup"
 
 document.addEventListener("DOMContentLoaded", () => {
+  document.documentElement.removeAttribute("data-theme");
+  try { localStorage.removeItem("page26-theme"); } catch (e) {}
   loadCartFromStorage();
-  setupThemeToggle();
   setupDatePicker();
   setupCategoryNav();
   setupSearchInput();
@@ -31,41 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupFormAutoSave();
   updateDockUI();
 });
-
-// --------------------------------------------------------------------------
-// 1. Theme Toggle (🌙 / ☀️)
-// --------------------------------------------------------------------------
-function setupThemeToggle() {
-  const toggleBtn = document.getElementById("theme-toggle");
-  const icon = document.getElementById("theme-icon");
-  if (!toggleBtn || !icon) return;
-
-  const savedTheme = localStorage.getItem("page26-theme");
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
-
-  applyTheme(initialTheme);
-
-  toggleBtn.addEventListener("click", () => {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    const newTheme = isDark ? "light" : "dark";
-    applyTheme(newTheme);
-    localStorage.setItem("page26-theme", newTheme);
-    showToast(`Switched to ${newTheme} mode`);
-  });
-
-  function applyTheme(theme) {
-    if (theme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-      icon.textContent = "☀️";
-      toggleBtn.setAttribute("aria-label", "Switch to light theme");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      icon.textContent = "🌙";
-      toggleBtn.setAttribute("aria-label", "Switch to dark theme");
-    }
-  }
-}
 
 // --------------------------------------------------------------------------
 // 2. 7-Day Minimum Pre-order Date Enforced
@@ -202,7 +168,7 @@ function renderProducts() {
       <div class="category-header-banner">
         <div class="cat-title-group">
           <h2 class="category-heading" id="heading-${cat.id}">${cat.label}</h2>
-          ${cat.isSignatureSection ? '<span class="category-badge-pill">👑 BOUTIQUE SIGNATURE</span>' : ''}
+          ${cat.isSignatureSection ? '<span class="category-badge-pill">BOUTIQUE SIGNATURE</span>' : ''}
           <div class="veg-seal" title="100% Eggless Vegetarian">
             <span class="veg-seal-dot"></span>
           </div>
@@ -254,7 +220,13 @@ function createProductCard(item) {
         height="450"
       >
       <div class="card-media-overlay">
-        <span class="card-zoom-hint">🔍 Tap to View</span>
+        <span class="card-zoom-hint">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Quick View
+        </span>
       </div>
       ${item.badge ? `<span class="card-badge-pill">${item.badge}</span>` : ""}
       <div class="card-veg-seal" title="100% Eggless Vegetarian">
@@ -270,7 +242,7 @@ function createProductCard(item) {
 
       ${item.flavorNotes ? `
         <div class="card-flavor-pill">
-          <span class="flavor-sparkle">✨</span>
+          <span class="flavor-sparkle">✦</span>
           <span class="flavor-text">${item.flavorNotes}</span>
         </div>
       ` : ""}
@@ -279,7 +251,12 @@ function createProductCard(item) {
 
       <!-- Serving Guidance Badge -->
       <div class="card-serving-row">
-        <span class="serving-icon">👥</span>
+        <span class="serving-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+        </span>
         <span class="serving-text" id="serving-${item.id}">${curOption.serving || "Artisanal Pre-order"}</span>
       </div>
 
@@ -314,7 +291,12 @@ function createProductCard(item) {
             <button type="button" class="stepper-btn btn-inc" aria-label="Increase quantity">+</button>
           </div>
           <button type="button" class="btn-card-add" aria-label="Add ${item.name} to pre-order bag">
-            <span class="btn-add-icon">🛍️</span>
+            <span class="btn-add-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
             <span>+ Add</span>
           </button>
         </div>
@@ -450,7 +432,7 @@ function renderReviews() {
       <p class="review-text">${rev.review}</p>
       <div class="review-author">
         <span class="review-name">${rev.name}</span>
-        <span class="review-loc">📍 ${rev.locality}</span>
+        <span class="review-loc">• ${rev.locality}</span>
       </div>
     `;
     container.appendChild(card);
@@ -814,7 +796,7 @@ function setupDeliveryMethod() {
         if (pickupBanner) pickupBanner.style.display = "none";
         if (deliveryStatus) deliveryStatus.textContent = "At actuals via Porter/Dunzo upon dispatch";
         if (shippingDisclaimer) {
-          shippingDisclaimer.textContent = "🛵 Delivery charges are calculated at actuals based on distance via Porter or Dunzo upon dispatch. Or choose free kitchen pickup!";
+          shippingDisclaimer.textContent = "Delivery charges are calculated at actuals based on distance via Porter or Dunzo upon dispatch. Or choose free kitchen pickup!";
         }
       } else {
         if (cardPickup) cardPickup.classList.add("active");
@@ -823,7 +805,7 @@ function setupDeliveryMethod() {
         if (pickupBanner) pickupBanner.style.display = "block";
         if (deliveryStatus) deliveryStatus.textContent = "Free (Kitchen Self-Pickup)";
         if (shippingDisclaimer) {
-          shippingDisclaimer.textContent = "🛍️ Free kitchen self-pickup. Scheduled pickup time slot will be confirmed over WhatsApp.";
+          shippingDisclaimer.textContent = "Free kitchen self-pickup. Scheduled pickup time slot will be confirmed over WhatsApp.";
         }
       }
     });
@@ -857,7 +839,7 @@ function setupGoogleMapsIntegration() {
         return;
       }
 
-      gpsBtn.textContent = "📍 Locating your position...";
+      gpsBtn.textContent = "Locating your position...";
       gpsBtn.disabled = true;
 
       navigator.geolocation.getCurrentPosition(
@@ -871,14 +853,14 @@ function setupGoogleMapsIntegration() {
 
           if (statusPill) {
             statusPill.style.display = "block";
-            statusPill.innerHTML = `📍 Pinned GPS: <strong>${lat}, ${lng}</strong> (<a href="${pinnedLocationUrl}" target="_blank" style="text-decoration:underline;">View in Maps</a>)`;
+            statusPill.innerHTML = `Pinned GPS: <strong>${lat}, ${lng}</strong> (<a href="${pinnedLocationUrl}" target="_blank" style="text-decoration:underline;">View in Maps</a>)`;
           }
 
           updateMapPreview(`${lat},${lng}`);
           showToast("Exact location pinned!");
         },
         (err) => {
-          gpsBtn.textContent = "📍 Pin My Exact Location (Google Maps)";
+          gpsBtn.textContent = "Pin My Exact Location (Google Maps)";
           gpsBtn.disabled = false;
           showToast("Could not retrieve GPS. Please type your locality below.");
         },
@@ -997,11 +979,11 @@ function handleWhatsAppSubmit() {
   } catch (e) {}
 
   // Compile Structured WhatsApp Pre-Order Message
-  let msg = `*🍰 PRE-ORDER — PAGE 26 CHEESECAKES & BAKES*\n`;
+  let msg = `*PRE-ORDER — PAGE 26 CHEESECAKES & BAKES*\n`;
   msg += `─────────────────────────\n`;
   msg += `*Customer:* ${name}\n`;
   msg += `*Scheduled Date:* ${formattedDate}\n`;
-  msg += `*Fulfillment:* ${currentDeliveryMode === "home" ? "🛵 Bangalore Door Delivery" : "🛍️ Kitchen Self-Pickup"}\n`;
+  msg += `*Fulfillment:* ${currentDeliveryMode === "home" ? "Bangalore Door Delivery" : "Kitchen Self-Pickup"}\n`;
 
   if (currentDeliveryMode === "home") {
     if (address) msg += `*Delivery Area:* ${address}\n`;

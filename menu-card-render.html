@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PAGE 26 — Artisanal Menu Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #FDFBF7;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: #2D241E;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .menu-sheet {
+      width: 1080px;
+      height: 1310px;
+      box-sizing: border-box;
+      background: #FDFBF7;
+      border: 1px solid rgba(197, 138, 56, 0.4);
+      padding: 38px 48px 36px;
+      position: relative;
+    }
+    .menu-border-inner {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(197, 138, 56, 0.25);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .corner-ornament {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #C58A38;
+      pointer-events: none;
+    }
+    .c-tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+    .c-tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+    .c-bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+    .c-br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+    /* Header */
+    .menu-header {
+      text-align: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .brand-logo-img {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 4px rgba(45,36,30,0.06));
+    }
+    .brand-tagline {
+      font-size: 0.8rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #8C5E28;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .brand-pills-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(197, 138, 56, 0.08);
+      border: 1px solid rgba(197, 138, 56, 0.25);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #5C4533;
+      letter-spacing: 0.04em;
+    }
+    .veg-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #2E7D32;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .header-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+      color: #C58A38;
+      font-size: 0.9rem;
+    }
+    .header-rule::before, .header-rule::after {
+      content: "";
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(197, 138, 56, 0.5), transparent);
+    }
+
+    /* Section Headers */
+    .section-title-wrap {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 2px solid #E8DFD3;
+      padding-bottom: 6px;
+      margin-top: 26px;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      color: #2D241E;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-badge {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #2E7D32;
+      color: #FFFFFF;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+    .section-subtext {
+      font-size: 0.78rem;
+      color: #7A695B;
+      font-style: italic;
+    }
+
+    /* Tables */
+    .menu-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+    }
+    .menu-table th {
+      background: #F4EDE2;
+      color: #4A3A2F;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 9px 12px;
+      text-align: right;
+      border: 1px solid #E5DACB;
+    }
+    .menu-table th:first-child {
+      text-align: left;
+    }
+    .menu-table td {
+      padding: 9px 12px;
+      border: 1px solid #EDE4D8;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: #2D241E;
+    }
+    .menu-table td:first-child {
+      text-align: left;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2D241E;
+    }
+    .menu-table tr:nth-child(even) td {
+      background: rgba(244, 237, 226, 0.35);
+    }
+    .flavor-highlight {
+      color: #9C4124 !important;
+    }
+    .price-num {
+      color: #8C5E28;
+      font-weight: 700;
+    }
+    .foot-note {
+      font-size: 0.75rem;
+      color: #857262;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* Grid for Lower Sections */
+    .menu-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 6px;
+    }
+    .sub-panel {
+      background: #FFFFFF;
+      border: 1px solid #EDE4D8;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .sub-panel-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.12rem;
+      color: #2D241E;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #EFE8DE;
+      padding-bottom: 6px;
+    }
+    .item-list-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px dashed #F0EAE2;
+      font-size: 0.86rem;
+    }
+    .item-list-row:last-child {
+      border-bottom: none;
+    }
+    .item-name {
+      font-weight: 600;
+      color: #3B2E24;
+    }
+    .item-price {
+      font-weight: 700;
+      color: #8C5E28;
+      font-variant-numeric: tabular-nums;
+    }
+    .box-deal-banner {
+      background: #F8F3EA;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #4A3A2F;
+    }
+
+    /* Concierge Footer */
+    .menu-footer-box {
+      margin-top: 26px;
+      background: linear-gradient(135deg, #2D241E, #1F1813);
+      color: #FFFFFF;
+      border-radius: 10px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mf-col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .mf-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1rem;
+      color: #E2B770;
+      letter-spacing: 0.04em;
+    }
+    .mf-desc {
+      font-size: 0.78rem;
+      color: #CBB9A8;
+      line-height: 1.4;
+    }
+    .mf-col-right {
+      text-align: right;
+    }
+    .mf-wa-num {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .mf-wa-sub {
+      font-size: 0.74rem;
+      color: #A89582;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-sheet">
+    <div class="menu-border-inner"></div>
+    <div class="corner-ornament c-tl"></div>
+    <div class="corner-ornament c-tr"></div>
+    <div class="corner-ornament c-bl"></div>
+    <div class="corner-ornament c-br"></div>
+
+    <!-- Header with Official Logo -->
+    <header class="menu-header">
+      <img src="logo-clean.png" alt="Page 26 Cheesecakes & Bakes" class="brand-logo-img">
+      <div class="brand-tagline">ARTISANAL PATISSERIE • BANGALORE</div>
+      
+      <div class="brand-pills-row">
+        <span class="header-pill"><span class="veg-dot"></span> 100% Eggless Pure Vegetarian</span>
+        <span class="header-pill">✨ 100% Pure Couverture Chocolate</span>
+        <span class="header-pill">⏱ Freshly Baked to Order</span>
+      </div>
+
+      <div class="header-rule">✦ ✦ ✦</div>
+    </header>
+
+    <!-- 1. CHEESECAKES -->
+    <div class="section-title-wrap">
+      <h2 class="section-title">
+        Signature Cheesecakes
+        <span class="section-badge">100% Eggless</span>
+      </h2>
+      <span class="section-subtext">Slow-baked with Philadelphia-style cream cheese & buttery graham crust</span>
+    </div>
+
+    <table class="menu-table">
+      <thead>
+        <tr>
+          <th>Flavour Profile</th>
+          <th>500 g</th>
+          <th>1 kg</th>
+          <th>1.5 kg</th>
+          <th>2 kg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Classic New York</td>
+          <td class="price-num">₹700</td>
+          <td class="price-num">₹1,200</td>
+          <td class="price-num">₹1,800</td>
+          <td class="price-num">₹2,400</td>
+        </tr>
+        <tr>
+          <td>Lotus Biscoff</td>
+          <td class="price-num">₹800</td>
+          <td class="price-num">₹1,400</td>
+          <td class="price-num">₹2,100</td>
+          <td class="price-num">₹2,800</td>
+        </tr>
+        <tr>
+          <td>Nutella Hazelnut</td>
+          <td class="price-num">₹800</td>
+          <td class="price-num">₹1,400</td>
+          <td class="price-num">₹2,100</td>
+          <td class="price-num">₹2,800</td>
+        </tr>
+        <tr>
+          <td>Wild Blueberry Compote</td>
+          <td class="price-num">₹800</td>
+          <td class="price-num">₹1,400</td>
+          <td class="price-num">₹2,100</td>
+          <td class="price-num">₹2,800</td>
+        </tr>
+        <tr>
+          <td>Fresh Strawberry Glaze</td>
+          <td class="price-num">₹800</td>
+          <td class="price-num">₹1,400</td>
+          <td class="price-num">₹2,100</td>
+          <td class="price-num">₹2,800</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 2. CAKES -->
+    <div class="section-title-wrap" style="margin-top: 22px;">
+      <h2 class="section-title">
+        Artisanal Celebration Cakes
+        <span class="section-badge">100% Eggless</span>
+      </h2>
+      <span class="section-subtext">Crafted with pure couverture chocolate & silky ganache</span>
+    </div>
+
+    <table class="menu-table">
+      <thead>
+        <tr>
+          <th>Flavour Profile</th>
+          <th>Bento (250–350g)</th>
+          <th>500 g</th>
+          <th>1 kg</th>
+          <th>1.5 kg</th>
+          <th>2 kg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chocolate Ganache (Couverture)</td>
+          <td class="price-num">₹500</td>
+          <td class="price-num">₹650</td>
+          <td class="price-num">₹1,200</td>
+          <td class="price-num">₹1,750</td>
+          <td class="price-num">₹2,300</td>
+        </tr>
+        <tr>
+          <td>Classic Red Velvet</td>
+          <td class="price-num">₹500</td>
+          <td class="price-num">₹650</td>
+          <td class="price-num">₹1,200</td>
+          <td class="price-num">₹1,750</td>
+          <td class="price-num">₹2,300</td>
+        </tr>
+        <tr>
+          <td>Naked Chocolate Nutella</td>
+          <td class="price-num">₹550</td>
+          <td class="price-num">₹750</td>
+          <td class="price-num">₹1,400</td>
+          <td class="price-num">₹2,050</td>
+          <td class="price-num">₹2,700</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="foot-note">*All chocolate cakes, brownies, muffins and cupcakes are crafted with premium couverture chocolate.</div>
+
+    <!-- 3. SPLIT ROW: Brownies & Muffins / Cupcakes -->
+    <div class="menu-split-grid">
+      <!-- Brownies -->
+      <div class="sub-panel">
+        <div class="sub-panel-title">
+          <span>Couverture Fudge Brownies</span>
+          <span class="section-badge">Min 4 pcs</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Classic Dark Fudge</span>
+          <span class="item-price">₹120 / pc</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Nutella Swirl Fudge</span>
+          <span class="item-price">₹130 / pc</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Lotus Biscoff Crunch</span>
+          <span class="item-price">₹130 / pc</span>
+        </div>
+        <div class="box-deal-banner">
+          <span>Curated Gift Box of 4</span>
+          <span class="item-price">Classic: ₹450 · Nutella/Biscoff: ₹500</span>
+        </div>
+        <div class="foot-note" style="margin-top: 8px;">*Custom gourmet toppings available upon request.</div>
+      </div>
+
+      <!-- Muffins & Cupcakes -->
+      <div class="sub-panel">
+        <div class="sub-panel-title">
+          <span>Muffins & Artisan Cupcakes</span>
+          <span class="section-badge">Min 4 pcs</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Bakery Muffins (Chocolate / Vanilla)</span>
+          <span class="item-price">₹100 / pc · Box of 4: ₹380</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Strawberry / Blueberry Cupcakes</span>
+          <span class="item-price">₹50 / pc · Box 4: ₹180 · Box 6: ₹270</span>
+        </div>
+        <div class="item-list-row">
+          <span class="item-name">Pure Couverture Chocolate Cupcakes</span>
+          <span class="item-price">₹80 / pc · Box 4: ₹300 · Box 6: ₹450</span>
+        </div>
+        <div class="box-deal-banner">
+          <span>Large Bakery-Style Sponges</span>
+          <span class="item-price">Freshly Whipped Frosting</span>
+        </div>
+        <div class="foot-note" style="margin-top: 8px;">*Crafted fresh in small batches on morning of dispatch.</div>
+      </div>
+    </div>
+
+    <!-- Concierge Footer -->
+    <div class="menu-footer-box">
+      <div class="mf-col-left">
+        <div class="mf-title">Pre-Orders Only · 1 Week Notice</div>
+        <div class="mf-desc">
+          📍 Bangalore, Karnataka · Doorstep Delivery at Actuals via Porter/Dunzo or Free Kitchen Pickup<br>
+          Handcrafted eggless bakes tailored specifically for your special celebrations.
+        </div>
+      </div>
+      <div class="mf-col-right">
+        <div class="mf-wa-num">
+          <span>+91 87805 47928</span>
+        </div>
+        <div class="mf-wa-sub">WhatsApp Concierge Ordering</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

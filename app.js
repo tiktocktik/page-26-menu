@@ -1,9 +1,13 @@
-// Page 26 — Boutique Patisserie Script
+// ==========================================================================
+// PAGE 26 — Artisanal Eggless Patisserie & Bakes (Bangalore)
+// Core Application Logic & WhatsApp Pre-Order Engine
+// ==========================================================================
 
 const PHONE_NUMBER = "918780547928";
-let cart = []; // Array of { name, size, unitPrice, qty, minQty }
+let cart = []; // Array of { id, name, size, unitPrice, qty, minQty, serving }
 let pinnedLocationUrl = "";
 let currentFilter = "all";
+let searchQuery = "";
 const selectedOptions = {};
 
 // Order & Fulfillment state
@@ -13,20 +17,27 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCartFromStorage();
   setupThemeToggle();
   setupDatePicker();
-  renderProducts();
   setupCategoryNav();
+  setupSearchInput();
+  renderProducts();
+  renderFaqs();
+  renderReviews();
   setupDeliveryMethod();
   setupGoogleMapsIntegration();
   setupCheckoutModal();
+  setupMenuCardModal();
   restoreFormDraft();
   setupFormAutoSave();
   updateDockUI();
 });
 
-// 1. Simplified Single Theme Toggle (🌙 / ☀️) — Accessible anywhere while scrolling
+// --------------------------------------------------------------------------
+// 1. Theme Toggle (🌙 / ☀️)
+// --------------------------------------------------------------------------
 function setupThemeToggle() {
-  const toggleBtns = document.querySelectorAll(".theme-toggle-btn");
-  const icons = document.querySelectorAll(".theme-icon");
+  const toggleBtn = document.getElementById("theme-toggle");
+  const icon = document.getElementById("theme-icon");
+  if (!toggleBtn || !icon) return;
 
   const savedTheme = localStorage.getItem("page26-theme");
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -34,36 +45,30 @@ function setupThemeToggle() {
 
   applyTheme(initialTheme);
 
-  toggleBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      const newTheme = isDark ? "light" : "dark";
-      applyTheme(newTheme);
-      localStorage.setItem("page26-theme", newTheme);
-      showToast(`Switched to ${newTheme} mode`);
-    });
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("page26-theme", newTheme);
+    showToast(`Switched to ${newTheme} mode`);
   });
 
   function applyTheme(theme) {
     if (theme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
-      icons.forEach(icon => { icon.textContent = "☀️"; });
-      toggleBtns.forEach(btn => {
-        btn.setAttribute("aria-label", "Switch to light theme");
-        btn.setAttribute("title", "Switch to light theme");
-      });
+      icon.textContent = "☀️";
+      toggleBtn.setAttribute("aria-label", "Switch to light theme");
     } else {
       document.documentElement.removeAttribute("data-theme");
-      icons.forEach(icon => { icon.textContent = "🌙"; });
-      toggleBtns.forEach(btn => {
-        btn.setAttribute("aria-label", "Switch to dark theme");
-        btn.setAttribute("title", "Switch to dark theme");
-      });
+      icon.textContent = "🌙";
+      toggleBtn.setAttribute("aria-label", "Switch to dark theme");
     }
   }
 }
 
-// 2. 7 Days Minimum Pre-order Date Enforced
+// --------------------------------------------------------------------------
+// 2. 7-Day Minimum Pre-order Date Enforced
+// --------------------------------------------------------------------------
 function setupDatePicker() {
   const dateInput = document.getElementById("cust-date");
   if (!dateInput) return;
@@ -79,20 +84,26 @@ function setupDatePicker() {
   }
 }
 
+// --------------------------------------------------------------------------
 // 3. Category Filter Chips Navigation
+// --------------------------------------------------------------------------
 function setupCategoryNav() {
   const chips = document.querySelectorAll(".nav-chip");
   chips.forEach((chip) => {
     chip.addEventListener("click", () => {
-      chips.forEach((c) => c.classList.remove("active"));
+      chips.forEach((c) => {
+        c.classList.remove("active");
+        c.setAttribute("aria-selected", "false");
+      });
       chip.classList.add("active");
+      chip.setAttribute("aria-selected", "true");
       currentFilter = chip.getAttribute("data-category");
       renderProducts();
 
       if (currentFilter !== "all") {
         const sec = document.getElementById(`sec-${currentFilter}`);
         if (sec) {
-          const navOffset = 110;
+          const navOffset = 130;
           const bodyRect = document.body.getBoundingClientRect().top;
           const elemRect = sec.getBoundingClientRect().top;
           const offsetPosition = elemRect - bodyRect - navOffset;
@@ -103,40 +114,99 @@ function setupCategoryNav() {
   });
 }
 
-// 4. Render Category Sections & Product Cards
+// --------------------------------------------------------------------------
+// 4. Live Search Input
+// --------------------------------------------------------------------------
+function setupSearchInput() {
+  const searchInput = document.getElementById("menu-search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+  const resetBtn = document.getElementById("btn-reset-search");
+
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = (e.target.value || "").trim().toLowerCase();
+    if (clearBtn) {
+      clearBtn.style.display = searchQuery ? "flex" : "none";
+    }
+    renderProducts();
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      searchQuery = "";
+      clearBtn.style.display = "none";
+      renderProducts();
+      searchInput.focus();
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      searchQuery = "";
+      if (clearBtn) clearBtn.style.display = "none";
+      currentFilter = "all";
+      document.querySelectorAll(".nav-chip").forEach((c) => {
+        const isAll = c.getAttribute("data-category") === "all";
+        c.classList.toggle("active", isAll);
+        c.setAttribute("aria-selected", isAll ? "true" : "false");
+      });
+      renderProducts();
+    });
+  }
+}
+
+// --------------------------------------------------------------------------
+// 5. Render Category Sections & Product Vitrines
+// --------------------------------------------------------------------------
 function renderProducts() {
   const container = document.getElementById("menu-sections");
+  const zeroState = document.getElementById("search-zero-state");
   if (!container || !window.PAGE26_ITEMS) return;
   container.innerHTML = "";
 
   const categories = window.PAGE26_CATEGORIES.filter((c) => c.id !== "all");
+  let totalMatched = 0;
 
   categories.forEach((cat) => {
     if (currentFilter !== "all" && currentFilter !== cat.id) return;
 
-    const items = window.PAGE26_ITEMS.filter((i) => i.category === cat.id);
+    let items = window.PAGE26_ITEMS.filter((i) => i.category === cat.id);
+
+    // Apply search filter if active
+    if (searchQuery) {
+      items = items.filter((item) => {
+        const textToSearch = [
+          item.name,
+          item.description || "",
+          item.flavorNotes || "",
+          item.ingredients || "",
+          item.badge || ""
+        ].join(" ").toLowerCase();
+        return textToSearch.includes(searchQuery);
+      });
+    }
+
     if (items.length === 0) return;
+    totalMatched += items.length;
 
     const section = document.createElement("section");
     section.className = "menu-category-section";
     section.id = `sec-${cat.id}`;
+    section.setAttribute("aria-labelledby", `heading-${cat.id}`);
 
-    let subNote = "";
-    if (cat.id === "cheesecakes") subNote = "Exclusively Eggless • Artisanal baked crust";
-    if (cat.id === "cakes") subNote = "Couverture chocolate • Bento (~250–350g) to 2 kg";
-    if (cat.id === "brownies") subNote = "Couverture chocolate • Min order 4 pcs • Custom toppings on request";
-    if (cat.id === "muffins") subNote = "Large bakery-style • Couverture chocolate • Min order 4 pcs";
-    if (cat.id === "cupcakes") subNote = "Couverture chocolate • Min order 4 pcs";
-
-    // Section header: Cheesecakes section has the SIGNATURE badge
     section.innerHTML = `
-      <div class="category-header-row">
-        <div class="category-name-wrap">
-          <h2 class="category-title">${cat.label}</h2>
-          ${cat.isSignatureSection ? '<span class="category-sig-badge">👑 SIGNATURE</span>' : ''}
-          <span class="veg-icon" title="100% Eggless Vegetarian"></span>
+      <div class="category-header-banner">
+        <div class="cat-title-group">
+          <h2 class="category-heading" id="heading-${cat.id}">${cat.label}</h2>
+          ${cat.isSignatureSection ? '<span class="category-badge-pill">👑 BOUTIQUE SIGNATURE</span>' : ''}
+          <div class="veg-seal" title="100% Eggless Vegetarian">
+            <span class="veg-seal-dot"></span>
+          </div>
         </div>
-        <span class="category-subnote">${subNote}</span>
+        ${cat.highlight ? `<span class="category-note-right">${cat.highlight}</span>` : ''}
       </div>
       <div class="product-grid" id="grid-${cat.id}"></div>
     `;
@@ -148,15 +218,21 @@ function renderProducts() {
       grid.appendChild(createProductCard(item));
     });
   });
+
+  if (zeroState) {
+    zeroState.style.display = totalMatched === 0 ? "block" : "none";
+  }
 }
 
-// 5. Create Individual Product Card (No redundant crown on each cheesecake)
+// --------------------------------------------------------------------------
+// 6. Create Individual Product Vitrine Card
+// --------------------------------------------------------------------------
 function createProductCard(item) {
-  const card = document.createElement("div");
+  const card = document.createElement("article");
   card.className = "patisserie-card";
 
   if (selectedOptions[item.id] === undefined) {
-    selectedOptions[item.id] = 0; // Default to first option
+    selectedOptions[item.id] = 0; // Default to first weight/box option
   }
 
   let selectedIdx = selectedOptions[item.id];
@@ -165,32 +241,44 @@ function createProductCard(item) {
 
   card.innerHTML = `
     <div class="card-top">
-      <div class="card-title-row">
-        <h3 class="card-item-title">${item.name}</h3>
-        <span class="veg-icon" title="100% Eggless"></span>
+      <div class="card-header-line">
+        <h3 class="card-title">${item.name}</h3>
+        <div class="veg-seal" title="100% Eggless Vegetarian">
+          <span class="veg-seal-dot"></span>
+        </div>
       </div>
-      ${item.description ? `<p class="card-item-desc">${item.description}</p>` : ""}
-      ${item.note ? `<span class="card-item-note">✨ ${item.note}</span>` : ""}
+
+      ${item.badge ? `<span class="card-badge-tag">${item.badge}</span>` : ""}
+      ${item.description ? `<p class="card-desc">${item.description}</p>` : ""}
+      ${item.flavorNotes ? `
+        <div class="card-flavor-notes">
+          <span>✨</span>
+          <span>${item.flavorNotes}</span>
+        </div>
+      ` : ""}
     </div>
 
     <div class="card-middle">
-      <div class="size-selector-label">Select Weight / Box Size</div>
-      <div class="size-pill-row">
-        ${item.options.map((opt, i) => `
-          <div class="size-pill ${i === selectedIdx ? "selected" : ""}" data-idx="${i}">
-            <span class="pill-weight">${opt.size}</span>
-            <span class="pill-price">₹${opt.price.toLocaleString("en-IN")}</span>
-          </div>
-        `).join("")}
+      <div class="card-sizes-group">
+        <div class="size-label">Select Weight / Box Size</div>
+        <div class="size-chips-grid">
+          ${item.options.map((opt, i) => `
+            <button type="button" class="size-chip ${i === selectedIdx ? "active" : ""}" data-idx="${i}">
+              <span class="chip-size-name">${opt.size}</span>
+              ${opt.serving ? `<span class="chip-serving">${opt.serving}</span>` : ""}
+              <span class="chip-price">₹${opt.price.toLocaleString("en-IN")}</span>
+            </button>
+          `).join("")}
+        </div>
       </div>
 
-      <div class="card-bottom-action">
-        <div class="live-price-box">
-          <span class="price-currency">Total</span>
+      <div class="card-action-bar">
+        <div class="live-price-group">
+          <span class="price-micro-label">Subtotal</span>
           <span class="price-number">₹${(curOption.price * qty).toLocaleString("en-IN")}</span>
         </div>
 
-        <div class="card-ctrls">
+        <div class="card-controls">
           <div class="stepper">
             <button type="button" class="stepper-btn btn-dec" aria-label="Decrease quantity">−</button>
             <span class="stepper-val">${qty}</span>
@@ -204,8 +292,8 @@ function createProductCard(item) {
     </div>
   `;
 
-  // Pill click handlers
-  const pills = card.querySelectorAll(".size-pill");
+  // Option pill click handlers
+  const pills = card.querySelectorAll(".size-chip");
   const priceEl = card.querySelector(".price-number");
   const stepperVal = card.querySelector(".stepper-val");
 
@@ -223,8 +311,8 @@ function createProductCard(item) {
     pill.addEventListener("click", () => {
       const idx = parseInt(pill.getAttribute("data-idx"), 10);
       selectedOptions[item.id] = idx;
-      pills.forEach((p) => p.classList.remove("selected"));
-      pill.classList.add("selected");
+      pills.forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
 
       const minAllowed = getMinAllowed();
       if (qty < minAllowed) {
@@ -251,7 +339,7 @@ function createProductCard(item) {
     updatePriceDisplay();
   });
 
-  // Add to Order
+  // Add to Order Action
   card.querySelector(".btn-card-add").addEventListener("click", () => {
     const opt = item.options[selectedOptions[item.id] || 0];
     addToCart(item, opt, qty);
@@ -261,637 +349,545 @@ function createProductCard(item) {
   return card;
 }
 
-// 6. Cart Management & Session Persistence (LocalStorage)
-const CART_STORAGE_KEY = "page26_cart";
-const DRAFT_STORAGE_KEY = "page26_checkout_draft";
+// --------------------------------------------------------------------------
+// 7. Render FAQ Accordion
+// --------------------------------------------------------------------------
+function renderFaqs() {
+  const container = document.getElementById("faq-accordion-list");
+  if (!container || !window.PAGE26_FAQS) return;
+  container.innerHTML = "";
 
-function saveCartToStorage() {
-  try {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-  } catch (e) {
-    console.warn("Could not save cart to localStorage", e);
-  }
+  window.PAGE26_FAQS.forEach((faq, index) => {
+    const item = document.createElement("div");
+    item.className = "faq-item";
+    if (index === 0) item.classList.add("active"); // First FAQ open by default
+
+    item.innerHTML = `
+      <button type="button" class="faq-question" aria-expanded="${index === 0 ? "true" : "false"}">
+        <span>${faq.q}</span>
+        <span class="faq-icon-glyph">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>${faq.a}</p>
+      </div>
+    `;
+
+    const btn = item.querySelector(".faq-question");
+    btn.addEventListener("click", () => {
+      const isActive = item.classList.contains("active");
+      item.classList.toggle("active", !isActive);
+      btn.setAttribute("aria-expanded", !isActive ? "true" : "false");
+    });
+
+    container.appendChild(item);
+  });
 }
 
-function loadCartFromStorage() {
-  try {
-    const raw = localStorage.getItem(CART_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        cart = parsed.filter((item) =>
-          item &&
-          typeof item.name === "string" &&
-          typeof item.size === "string" &&
-          typeof item.unitPrice === "number" &&
-          typeof item.qty === "number" &&
-          item.qty > 0
-        );
-      }
-    }
-  } catch (e) {
-    console.warn("Could not load cart from localStorage", e);
-    cart = [];
-  }
+// --------------------------------------------------------------------------
+// 8. Render Customer Reviews
+// --------------------------------------------------------------------------
+function renderReviews() {
+  const container = document.getElementById("reviews-grid");
+  if (!container || !window.PAGE26_REVIEWS) return;
+  container.innerHTML = "";
+
+  window.PAGE26_REVIEWS.forEach((rev) => {
+    const card = document.createElement("div");
+    card.className = "review-card";
+    card.innerHTML = `
+      <div class="review-stars">★★★★★</div>
+      <h3 class="review-highlight">"${rev.highlight}"</h3>
+      <p class="review-text">${rev.review}</p>
+      <div class="review-author">
+        <span class="review-name">${rev.name}</span>
+        <span class="review-loc">📍 ${rev.locality}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  });
 }
 
-function addToCart(item, option, qty) {
-  const existing = cart.find(
-    (c) => c.name === item.name && c.size === option.size
-  );
-
+// --------------------------------------------------------------------------
+// 9. Cart Operations & Persistence
+// --------------------------------------------------------------------------
+function addToCart(item, opt, qty) {
+  const existing = cart.find((c) => c.id === item.id && c.size === opt.size);
   if (existing) {
     existing.qty += qty;
   } else {
     cart.push({
+      id: item.id,
       name: item.name,
-      size: option.size,
-      unitPrice: option.price,
+      size: opt.size,
+      unitPrice: opt.price,
+      serving: opt.serving || "",
       qty: qty,
-      minQty: option.minQty || 1
+      minQty: opt.minQty || 1
     });
   }
 
   saveCartToStorage();
   updateDockUI();
+  renderCartItems();
 }
 
-function updateCartQty(index, delta) {
-  if (!cart[index]) return;
-  const item = cart[index];
-  const newQty = item.qty + delta;
-
-  if (item.minQty && newQty < item.minQty) {
-    cart.splice(index, 1);
-  } else if (newQty <= 0) {
-    cart.splice(index, 1);
-  } else {
-    item.qty = newQty;
-  }
-
-  saveCartToStorage();
-  updateDockUI();
-  renderDrawerCart();
-}
-
-function removeCartItem(index) {
+function removeFromCart(index) {
   cart.splice(index, 1);
   saveCartToStorage();
   updateDockUI();
-  renderDrawerCart();
+  renderCartItems();
 }
 
-function clearAllCart() {
-  cart = [];
+function updateCartQty(index, newQty) {
+  const item = cart[index];
+  if (!item) return;
+  const minAllowed = item.minQty || 1;
+  if (newQty < minAllowed) {
+    removeFromCart(index);
+    return;
+  }
+  item.qty = newQty;
   saveCartToStorage();
   updateDockUI();
-  renderDrawerCart();
+  renderCartItems();
 }
 
-// Expose cart functions globally for inline onclick handlers
-window.updateCartQty = updateCartQty;
-window.removeCartItem = removeCartItem;
-window.clearAllCart = clearAllCart;
+function clearCart() {
+  if (confirm("Are you sure you want to clear your pre-order?")) {
+    cart = [];
+    saveCartToStorage();
+    updateDockUI();
+    renderCartItems();
+    showToast("Pre-order cleared");
+  }
+}
 
-function getTotals() {
-  const count = cart.reduce((sum, i) => sum + i.qty, 0);
-  const total = cart.reduce((sum, i) => sum + (i.qty * i.unitPrice), 0);
-  return { count, total };
+function saveCartToStorage() {
+  try {
+    localStorage.setItem("page26_cart", JSON.stringify(cart));
+  } catch (e) {}
+}
+
+function loadCartFromStorage() {
+  try {
+    const saved = localStorage.getItem("page26_cart");
+    if (saved) {
+      cart = JSON.parse(saved);
+    }
+  } catch (e) {
+    cart = [];
+  }
 }
 
 function updateDockUI() {
   const dock = document.getElementById("order-dock");
   const qtyEl = document.getElementById("dock-qty");
   const priceEl = document.getElementById("dock-price");
-  const { count, total } = getTotals();
+  if (!dock || !qtyEl || !priceEl) return;
 
-  if (!dock) return;
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item.unitPrice * item.qty, 0);
 
-  if (cart.length > 0) {
+  qtyEl.textContent = totalQty;
+  priceEl.textContent = `₹${totalPrice.toLocaleString("en-IN")}`;
+
+  if (totalQty > 0) {
     dock.classList.add("visible");
-    qtyEl.textContent = count;
-    priceEl.textContent = `₹${total.toLocaleString("en-IN")}`;
   } else {
     dock.classList.remove("visible");
   }
 }
 
-// Form Draft Auto-Save & Restore
-function saveFormDraft() {
-  try {
-    const nameInput = document.getElementById("cust-name");
-    const dateInput = document.getElementById("cust-date");
-    const addrInput = document.getElementById("cust-address");
-    const notesInput = document.getElementById("cust-notes");
+function renderCartItems() {
+  const container = document.getElementById("cart-items-list");
+  const emptyMsg = document.getElementById("cart-empty-message");
+  const contentWrapper = document.getElementById("cart-content-wrapper");
+  const subtotalEl = document.getElementById("cart-subtotal-val");
+  const totalEl = document.getElementById("cart-total-val");
 
-    const draft = {
-      name: nameInput ? nameInput.value : "",
-      date: dateInput ? dateInput.value : "",
-      mode: currentDeliveryMode,
-      address: addrInput ? addrInput.value : "",
-      pinnedLocationUrl: pinnedLocationUrl,
-      notes: notesInput ? notesInput.value : ""
-    };
-    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
-  } catch (e) {
-    console.warn("Could not save form draft", e);
+  if (!container) return;
+
+  if (cart.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = "block";
+    if (contentWrapper) contentWrapper.style.display = "none";
+    return;
   }
-}
 
-function restoreFormDraft() {
-  try {
-    const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
-    if (!raw) return;
-    const draft = JSON.parse(raw);
-    if (!draft) return;
+  if (emptyMsg) emptyMsg.style.display = "none";
+  if (contentWrapper) contentWrapper.style.display = "block";
 
-    const nameInput = document.getElementById("cust-name");
-    const dateInput = document.getElementById("cust-date");
-    const addrInput = document.getElementById("cust-address");
-    const notesInput = document.getElementById("cust-notes");
+  container.innerHTML = "";
+  let subtotal = 0;
 
-    if (nameInput && draft.name) nameInput.value = draft.name;
-    if (notesInput && draft.notes) notesInput.value = draft.notes;
-    if (addrInput && draft.address) addrInput.value = draft.address;
+  cart.forEach((item, index) => {
+    const itemTotal = item.unitPrice * item.qty;
+    subtotal += itemTotal;
 
-    if (dateInput && draft.date && dateInput.min && draft.date >= dateInput.min) {
-      dateInput.value = draft.date;
-    }
+    const row = document.createElement("div");
+    row.className = "cart-item-row";
+    row.innerHTML = `
+      <div class="item-info">
+        <span class="item-name">${item.name}</span>
+        <span class="item-size">${item.size} • ₹${item.unitPrice.toLocaleString("en-IN")} each</span>
+      </div>
+      <div class="item-right-actions">
+        <div class="stepper">
+          <button type="button" class="stepper-btn btn-cart-dec">−</button>
+          <span class="stepper-val">${item.qty}</span>
+          <button type="button" class="stepper-btn btn-cart-inc">+</button>
+        </div>
+        <span class="item-total">₹${itemTotal.toLocaleString("en-IN")}</span>
+        <button type="button" class="btn-remove-item" aria-label="Remove item">✕</button>
+      </div>
+    `;
 
-    if (draft.mode === "pickup") {
-      const pickupRadio = document.querySelector('input[name="delivery-mode"][value="pickup"]');
-      if (pickupRadio) {
-        pickupRadio.checked = true;
-        pickupRadio.dispatchEvent(new Event("change"));
-      }
-    }
+    row.querySelector(".btn-cart-dec").addEventListener("click", () => {
+      updateCartQty(index, item.qty - 1);
+    });
 
-    if (draft.pinnedLocationUrl) {
-      pinnedLocationUrl = draft.pinnedLocationUrl;
-      const gmapsIframe = document.getElementById("gmaps-iframe");
-      const mapPreviewBox = document.getElementById("gmaps-preview-box");
-      const pinStatus = document.getElementById("pin-status-pill");
+    row.querySelector(".btn-cart-inc").addEventListener("click", () => {
+      updateCartQty(index, item.qty + 1);
+    });
 
-      if (pinStatus) {
-        pinStatus.style.display = "flex";
-        pinStatus.innerHTML = `
-          <span>✓ Saved Location • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a></span>
-          <button type="button" class="btn-clear-pin" id="btn-clear-pin" title="Clear location">✕ Clear</button>
-        `;
-        const clearBtn = document.getElementById("btn-clear-pin");
-        if (clearBtn) {
-          clearBtn.addEventListener("click", () => {
-            if (addrInput) addrInput.value = "";
-            pinnedLocationUrl = "";
-            pinStatus.style.display = "none";
-            if (mapPreviewBox) mapPreviewBox.style.display = "none";
-            saveFormDraft();
-          });
-        }
-      }
+    row.querySelector(".btn-remove-item").addEventListener("click", () => {
+      removeFromCart(index);
+    });
 
-      if (gmapsIframe && mapPreviewBox) {
-        if (pinnedLocationUrl.includes("q=")) {
-          const qVal = pinnedLocationUrl.split("q=")[1];
-          gmapsIframe.src = `https://maps.google.com/maps?q=${qVal}&z=15&output=embed`;
-          mapPreviewBox.style.display = "block";
-        }
-      }
-    }
-  } catch (e) {
-    console.warn("Could not restore form draft", e);
-  }
-}
-
-function setupFormAutoSave() {
-  const nameInput = document.getElementById("cust-name");
-  const dateInput = document.getElementById("cust-date");
-  const addrInput = document.getElementById("cust-address");
-  const notesInput = document.getElementById("cust-notes");
-
-  [nameInput, dateInput, addrInput, notesInput].forEach((el) => {
-    if (el) {
-      el.addEventListener("input", saveFormDraft);
-      el.addEventListener("change", saveFormDraft);
-    }
+    container.appendChild(row);
   });
+
+  if (subtotalEl) subtotalEl.textContent = `₹${subtotal.toLocaleString("en-IN")}`;
+  if (totalEl) totalEl.textContent = `₹${subtotal.toLocaleString("en-IN")}`;
 }
 
-// 7. Delivery Method Selection (Home Delivery vs Kitchen Pickup)
+// --------------------------------------------------------------------------
+// 10. Checkout Drawer & Modals
+// --------------------------------------------------------------------------
+function setupCheckoutModal() {
+  const modal = document.getElementById("checkout-modal");
+  const openBtn = document.getElementById("dock-btn-checkout");
+  const openInfoBtn = document.getElementById("dock-open-cart");
+  const closeBtn = document.getElementById("sheet-close");
+  const browseBtn = document.getElementById("btn-browse-trigger");
+  const submitBtn = document.getElementById("btn-submit-whatsapp");
+  const clearBtn = document.getElementById("btn-clear-cart");
+
+  function openModal() {
+    renderCartItems();
+    if (modal) modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    if (modal) modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  if (openBtn) openBtn.addEventListener("click", openModal);
+  if (openInfoBtn) openInfoBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (browseBtn) browseBtn.addEventListener("click", closeModal);
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  if (clearBtn) clearBtn.addEventListener("click", clearCart);
+  if (submitBtn) submitBtn.addEventListener("click", handleWhatsAppSubmit);
+}
+
+function setupMenuCardModal() {
+  const modal = document.getElementById("card-modal");
+  const openBtns = [
+    document.getElementById("btn-view-card"),
+    document.getElementById("hero-btn-menu-card")
+  ];
+  const closeBtn = document.getElementById("card-modal-close");
+
+  function openCard() {
+    if (modal) modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeCard() {
+    if (modal) modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  openBtns.forEach((btn) => {
+    if (btn) btn.addEventListener("click", openCard);
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", closeCard);
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeCard();
+    });
+  }
+}
+
+// --------------------------------------------------------------------------
+// 11. Delivery Mode & Google Maps Integration
+// --------------------------------------------------------------------------
 function setupDeliveryMethod() {
-  const homeRadio = document.querySelector('input[name="delivery-mode"][value="home"]');
-  const pickupRadio = document.querySelector('input[name="delivery-mode"][value="pickup"]');
+  const radios = document.querySelectorAll('input[name="delivery-mode"]');
   const cardHome = document.getElementById("card-delivery-home");
   const cardPickup = document.getElementById("card-delivery-pickup");
   const addressGroup = document.getElementById("delivery-address-group");
   const pickupBanner = document.getElementById("kitchen-pickup-banner");
-  const deliveryStatusBadge = document.getElementById("cart-delivery-status");
+  const deliveryStatus = document.getElementById("cart-delivery-status");
   const shippingDisclaimer = document.getElementById("shipping-disclaimer");
 
-  function updateDeliveryUI() {
-    const isHome = homeRadio && homeRadio.checked;
-    currentDeliveryMode = isHome ? "home" : "pickup";
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      currentDeliveryMode = e.target.value;
 
-    if (cardHome && cardPickup) {
-      if (isHome) {
-        cardHome.classList.add("active");
-        cardPickup.classList.remove("active");
+      if (currentDeliveryMode === "home") {
+        if (cardHome) cardHome.classList.add("active");
+        if (cardPickup) cardPickup.classList.remove("active");
+        if (addressGroup) addressGroup.style.display = "block";
+        if (pickupBanner) pickupBanner.style.display = "none";
+        if (deliveryStatus) deliveryStatus.textContent = "At actuals via Porter/Dunzo upon dispatch";
+        if (shippingDisclaimer) {
+          shippingDisclaimer.textContent = "🛵 Delivery charges are calculated at actuals based on distance via Porter or Dunzo upon dispatch. Or choose free kitchen pickup!";
+        }
       } else {
-        cardPickup.classList.add("active");
-        cardHome.classList.remove("active");
+        if (cardPickup) cardPickup.classList.add("active");
+        if (cardHome) cardHome.classList.remove("active");
+        if (addressGroup) addressGroup.style.display = "none";
+        if (pickupBanner) pickupBanner.style.display = "block";
+        if (deliveryStatus) deliveryStatus.textContent = "Free (Kitchen Self-Pickup)";
+        if (shippingDisclaimer) {
+          shippingDisclaimer.textContent = "🛍️ Free kitchen self-pickup. Scheduled pickup time slot will be confirmed over WhatsApp.";
+        }
       }
-    }
-
-    if (addressGroup) addressGroup.style.display = isHome ? "block" : "none";
-    if (pickupBanner) pickupBanner.style.display = isHome ? "none" : "block";
-
-    if (deliveryStatusBadge) {
-      deliveryStatusBadge.textContent = isHome ? "At actuals via Porter/Dunzo" : "Free (Kitchen Pickup)";
-    }
-    if (shippingDisclaimer) {
-      shippingDisclaimer.innerHTML = isHome
-        ? "🛵 Delivery charges are calculated at actuals based on distance upon dispatch, or you can opt for free kitchen pickup."
-        : "🛍️ Free pickup from our Bangalore kitchen. Exact address & time window will be shared on WhatsApp.";
-    }
-  }
-
-  if (homeRadio) homeRadio.addEventListener("change", () => {
-    updateDeliveryUI();
-    saveFormDraft();
-  });
-  if (pickupRadio) pickupRadio.addEventListener("change", () => {
-    updateDeliveryUI();
-    saveFormDraft();
+    });
   });
 }
 
-// 8. User-Friendly Google Maps Integration (Auto-detect GPS + Manual Override + Link Paste)
 function setupGoogleMapsIntegration() {
-  const btnGps = document.getElementById("btn-gps-auto");
-  const mapPreviewBox = document.getElementById("gmaps-preview-box");
-  const gmapsIframe = document.getElementById("gmaps-iframe");
-  const pinStatus = document.getElementById("pin-status-pill");
+  const gpsBtn = document.getElementById("btn-gps-auto");
+  const statusPill = document.getElementById("pin-status-pill");
+  const previewBox = document.getElementById("gmaps-preview-box");
+  const iframe = document.getElementById("gmaps-iframe");
   const addressInput = document.getElementById("cust-address");
   const chips = document.querySelectorAll(".chip-jump");
 
-  function clearLocationPin() {
-    pinnedLocationUrl = "";
-    if (pinStatus) {
-      pinStatus.style.display = "none";
-      pinStatus.innerHTML = "";
-    }
-    if (mapPreviewBox) {
-      mapPreviewBox.style.display = "none";
-    }
-    if (btnGps) {
-      btnGps.disabled = false;
-      btnGps.innerHTML = `<span>📍 Pin My Exact Location (Google Maps)</span>`;
-    }
-  }
+  // Locality Quick Jump
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const area = chip.getAttribute("data-area");
+      if (addressInput) {
+        addressInput.value = `${area}, Bangalore`;
+      }
+      updateMapPreview(`${area}, Bangalore, Karnataka`);
+    });
+  });
 
-  function renderStatusPill(labelHtml) {
-    if (!pinStatus) return;
-    pinStatus.style.display = "flex";
-    pinStatus.innerHTML = `
-      <span>${labelHtml}</span>
-      <button type="button" class="btn-clear-pin" id="btn-clear-pin" title="Clear or update location">✕ Clear</button>
-    `;
-    const clearBtn = document.getElementById("btn-clear-pin");
-    if (clearBtn) {
-      clearBtn.addEventListener("click", () => {
-        if (addressInput) addressInput.value = "";
-        clearLocationPin();
-        showToast("Location cleared. You can type an address or re-pin.");
-      });
-    }
-  }
-
-  // Single-Tap "Pin My Exact Location"
-  if (btnGps) {
-    btnGps.addEventListener("click", () => {
+  // GPS Auto Pin
+  if (gpsBtn) {
+    gpsBtn.addEventListener("click", () => {
       if (!navigator.geolocation) {
-        alert("Location services are not supported by your browser.");
+        showToast("Geolocation is not supported by your browser.");
         return;
       }
 
-      btnGps.disabled = true;
-      btnGps.innerHTML = `<span>⏳ Pinning your location...</span>`;
+      gpsBtn.textContent = "📍 Locating your position...";
+      gpsBtn.disabled = true;
 
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          btnGps.disabled = false;
-          btnGps.innerHTML = `<span>✓ Location Pinned on Google Maps!</span>`;
+          const lat = pos.coords.latitude.toFixed(5);
+          const lng = pos.coords.longitude.toFixed(5);
+          pinnedLocationUrl = `https://www.google.com/maps?q=${lat},${lng}`;
 
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          const latFixed = lat.toFixed(6);
-          const lngFixed = lng.toFixed(6);
+          gpsBtn.textContent = "✓ Location Pinned Successfully";
+          gpsBtn.disabled = false;
 
-          pinnedLocationUrl = `https://www.google.com/maps?q=${latFixed},${lngFixed}`;
-
-          renderStatusPill(`✓ GPS Pinned: <strong>${latFixed}, ${lngFixed}</strong> • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a>`);
-
-          if (gmapsIframe) {
-            gmapsIframe.src = `https://maps.google.com/maps?q=${latFixed},${lngFixed}&z=16&output=embed`;
-            if (mapPreviewBox) mapPreviewBox.style.display = "block";
+          if (statusPill) {
+            statusPill.style.display = "block";
+            statusPill.innerHTML = `📍 Pinned GPS: <strong>${lat}, ${lng}</strong> (<a href="${pinnedLocationUrl}" target="_blank" style="text-decoration:underline;">View in Maps</a>)`;
           }
 
-          showToast("📍 Location pinned on Google Maps!");
+          updateMapPreview(`${lat},${lng}`);
+          showToast("Exact location pinned!");
         },
         (err) => {
-          btnGps.disabled = false;
-          btnGps.innerHTML = `<span>📍 Pin My Exact Location (Google Maps)</span>`;
-          let msg = "Could not detect GPS location.";
-          if (err.code === err.PERMISSION_DENIED) {
-            msg = "Location permission was denied. You can type your society/apartment name or share your live pin in WhatsApp.";
-          }
-          alert(msg);
+          gpsBtn.textContent = "📍 Pin My Exact Location (Google Maps)";
+          gpsBtn.disabled = false;
+          showToast("Could not retrieve GPS. Please type your locality below.");
         },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        { timeout: 10000, enableHighAccuracy: true }
       );
     });
   }
 
-  // Live address preview, link paste & coordinate detection
-  if (addressInput) {
-    let debounceTimer;
-    addressInput.addEventListener("input", () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        const val = addressInput.value.trim();
-        if (!val) {
-          if (!pinnedLocationUrl.includes("q=")) {
-            clearLocationPin();
-          }
-          return;
-        }
-
-        // 1. If user pasted a Google Maps or web link
-        if (/^https?:\/\//i.test(val)) {
-          pinnedLocationUrl = val;
-          renderStatusPill(`✓ Google Maps link added • <a href="${val}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify</a>`);
-          return;
-        }
-
-        // 2. If user pasted exact coordinates e.g. "12.9716, 77.5946"
-        const coordsMatch = val.match(/^(-?\d+(\.\d+)?)[,\s]+(-?\d+(\.\d+)?)$/);
-        if (coordsMatch) {
-          const lat = parseFloat(coordsMatch[1]).toFixed(6);
-          const lng = parseFloat(coordsMatch[3]).toFixed(6);
-          pinnedLocationUrl = `https://www.google.com/maps?q=${lat},${lng}`;
-          if (gmapsIframe) {
-            gmapsIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
-            if (mapPreviewBox) mapPreviewBox.style.display = "block";
-          }
-          renderStatusPill(`✓ Coordinates: <strong>${lat}, ${lng}</strong> • <a href="${pinnedLocationUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Verify in Maps</a>`);
-          return;
-        }
-
-        // 3. Typed address or landmark in Bangalore
-        const query = `${val}, Bangalore`;
-        pinnedLocationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-        if (gmapsIframe) {
-          gmapsIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&output=embed`;
-          if (mapPreviewBox) mapPreviewBox.style.display = "block";
-        }
-        renderStatusPill(`📍 Using address: <strong>${val}</strong>`);
-      }, 600);
-    });
+  function updateMapPreview(query) {
+    if (!iframe || !previewBox) return;
+    previewBox.style.display = "block";
+    iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=14&output=embed`;
   }
+}
 
-  // Bangalore Quick Area Chips
-  chips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const area = chip.getAttribute("data-area");
-      if (!area) return;
-      if (addressInput) {
-        addressInput.value = `${area}, Bangalore`;
-      }
-      if (gmapsIframe) {
-        gmapsIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(area + ", Bangalore")}&z=14&output=embed`;
-        if (mapPreviewBox) mapPreviewBox.style.display = "block";
-      }
-      pinnedLocationUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(area + ", Bangalore")}`;
-      renderStatusPill(`✓ Area: <strong>${area}, Bangalore</strong>`);
-      showToast(`Selected ${area}`);
-    });
+// --------------------------------------------------------------------------
+// 12. Form Draft Auto-Save & Restore
+// --------------------------------------------------------------------------
+function setupFormAutoSave() {
+  const fields = ["cust-name", "cust-date", "cust-address", "cust-notes"];
+  fields.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", () => {
+        saveFormDraft();
+      });
+    }
   });
 }
 
-// 8. Checkout Modal Drawer
-function setupCheckoutModal() {
-  const modal = document.getElementById("checkout-modal");
-  const open1 = document.getElementById("dock-open-cart");
-  const open2 = document.getElementById("dock-btn-checkout");
-  const close = document.getElementById("sheet-close");
-  const submitBtn = document.getElementById("btn-submit-whatsapp");
-
-  function openDrawer() {
-    renderDrawerCart();
-    modal.classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeDrawer() {
-    modal.classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  if (open1) open1.addEventListener("click", openDrawer);
-  if (open2) open2.addEventListener("click", openDrawer);
-  if (close) close.addEventListener("click", closeDrawer);
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeDrawer();
-    });
-  }
-
-  if (submitBtn) submitBtn.addEventListener("click", sendWhatsAppOrder);
-
-  // Original Card Lightbox
-  const cardModal = document.getElementById("card-modal");
-  const cardBtn = document.getElementById("btn-view-card");
-  const cardClose = document.getElementById("card-modal-close");
-
-  if (cardBtn && cardModal) {
-    cardBtn.addEventListener("click", () => {
-      cardModal.classList.add("open");
-      document.body.style.overflow = "hidden";
-    });
-  }
-  if (cardClose && cardModal) {
-    cardClose.addEventListener("click", () => {
-      cardModal.classList.remove("open");
-      document.body.style.overflow = "";
-    });
-  }
-  if (cardModal) {
-    cardModal.addEventListener("click", (e) => {
-      if (e.target === cardModal) {
-        cardModal.classList.remove("open");
-        document.body.style.overflow = "";
-      }
-    });
-  }
+function saveFormDraft() {
+  const draft = {
+    name: (document.getElementById("cust-name") || {}).value || "",
+    date: (document.getElementById("cust-date") || {}).value || "",
+    address: (document.getElementById("cust-address") || {}).value || "",
+    notes: (document.getElementById("cust-notes") || {}).value || "",
+    mode: currentDeliveryMode,
+    pinnedUrl: pinnedLocationUrl
+  };
+  try {
+    localStorage.setItem("page26_checkout_draft", JSON.stringify(draft));
+  } catch (e) {}
 }
 
-function renderDrawerCart() {
-  const list = document.getElementById("cart-items-list");
-  const subtotalEl = document.getElementById("cart-subtotal-val");
-  const totalEl = document.getElementById("cart-total-val");
-  const emptyMsg = document.getElementById("cart-empty-message");
-  const content = document.getElementById("cart-content-wrapper");
+function restoreFormDraft() {
+  try {
+    const saved = localStorage.getItem("page26_checkout_draft");
+    if (!saved) return;
+    const draft = JSON.parse(saved);
 
-  if (!list) return;
-  list.innerHTML = "";
+    if (draft.name) (document.getElementById("cust-name") || {}).value = draft.name;
+    if (draft.address) (document.getElementById("cust-address") || {}).value = draft.address;
+    if (draft.notes) (document.getElementById("cust-notes") || {}).value = draft.notes;
+    if (draft.pinnedUrl) pinnedLocationUrl = draft.pinnedUrl;
 
-  const { total } = getTotals();
-  if (subtotalEl) subtotalEl.textContent = `₹${total.toLocaleString("en-IN")}`;
-  if (totalEl) totalEl.textContent = `₹${total.toLocaleString("en-IN")}`;
-
-  if (cart.length === 0) {
-    emptyMsg.style.display = "block";
-    content.style.display = "none";
-    return;
-  }
-
-  emptyMsg.style.display = "none";
-  content.style.display = "block";
-
-  // Items header with Clear Cart option
-  const headerRow = document.createElement("div");
-  headerRow.style.cssText = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;";
-  headerRow.innerHTML = `
-    <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Selected Items (${cart.length})</span>
-    <button type="button" id="btn-clear-cart-all" style="background: none; border: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; text-decoration: underline; padding: 2px 4px;">Clear Cart</button>
-  `;
-  list.appendChild(headerRow);
-
-  const clearBtn = headerRow.querySelector("#btn-clear-cart-all");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to clear all items from your order?")) {
-        clearAllCart();
-        showToast("Cart cleared");
+    if (draft.date) {
+      const dateEl = document.getElementById("cust-date");
+      if (dateEl && dateEl.min && draft.date >= dateEl.min) {
+        dateEl.value = draft.date;
       }
-    });
-  }
-
-  cart.forEach((item, i) => {
-    const row = document.createElement("div");
-    row.className = "cart-item-row";
-    row.innerHTML = `
-      <div class="cart-item-main">
-        <div class="cart-item-title">${item.name}</div>
-        <div class="cart-item-size">${item.size} • ₹${item.unitPrice} each</div>
-      </div>
-      <div class="stepper" style="transform: scale(0.9);">
-        <button type="button" class="stepper-btn" onclick="updateCartQty(${i}, -1)">−</button>
-        <span class="stepper-val">${item.qty}</span>
-        <button type="button" class="stepper-btn" onclick="updateCartQty(${i}, 1)">+</button>
-      </div>
-      <div class="cart-item-price">₹${(item.qty * item.unitPrice).toLocaleString("en-IN")}</div>
-      <button type="button" style="background:none;border:none;color:#999;cursor:pointer;padding:2px 6px;" onclick="removeCartItem(${i})">✕</button>
-    `;
-    list.appendChild(row);
-  });
+    }
+  } catch (e) {}
 }
 
-// 9. Send Formatted Order to WhatsApp
-function sendWhatsAppOrder() {
+// --------------------------------------------------------------------------
+// 13. WhatsApp Pre-Order Compilation & Dispatch
+// --------------------------------------------------------------------------
+function handleWhatsAppSubmit() {
   if (cart.length === 0) {
-    alert("Please select at least one item from the menu.");
+    showToast("Your pre-order is empty. Select items to proceed.");
     return;
   }
 
   const nameInput = document.getElementById("cust-name");
   const dateInput = document.getElementById("cust-date");
-  const addrInput = document.getElementById("cust-address");
-  const mapLinkInput = document.getElementById("cust-map-link");
+  const addressInput = document.getElementById("cust-address");
   const notesInput = document.getElementById("cust-notes");
 
-  const name = nameInput ? nameInput.value.trim() : "";
-  const date = dateInput ? dateInput.value : "";
-  const address = addrInput ? addrInput.value.trim() : "";
-  const mapLink = mapLinkInput ? mapLinkInput.value.trim() : "";
-  const notes = notesInput ? notesInput.value.trim() : "";
-  const isHomeDelivery = currentDeliveryMode === "home";
+  const name = (nameInput ? nameInput.value : "").trim();
+  const date = (dateInput ? dateInput.value : "").trim();
+  const address = (addressInput ? addressInput.value : "").trim();
+  const notes = (notesInput ? notesInput.value : "").trim();
 
   if (!name) {
-    alert("Please enter your name.");
+    showToast("Please enter your name.");
     if (nameInput) nameInput.focus();
     return;
   }
 
-  if (isHomeDelivery && !address && !pinnedLocationUrl && !mapLink) {
-    alert("Please enter your delivery area or location.");
-    if (addrInput) addrInput.focus();
+  if (!date) {
+    showToast("Please select your preferred delivery/pickup date.");
+    if (dateInput) dateInput.focus();
     return;
   }
 
-  const { total } = getTotals();
-
-  // Format delivery date nicely
-  let dateFormatted = date;
-  if (date) {
-    try {
-      const d = new Date(date + "T00:00:00");
-      dateFormatted = d.toLocaleDateString("en-IN", {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      });
-    } catch (e) {
-      dateFormatted = date;
-    }
+  if (currentDeliveryMode === "home" && !address && !pinnedLocationUrl) {
+    showToast("Please enter your Bangalore delivery area or pin your location.");
+    if (addressInput) addressInput.focus();
+    return;
   }
 
-  // Compose formatted WhatsApp text
-  let msg = `🍰 *PRE-ORDER REQUEST — PAGE 26*\n`;
-  msg += `-----------------------------------------\n`;
-  msg += `👤 *Customer Name:* ${name}\n`;
-  if (dateFormatted) msg += `📅 *Date Needed:* ${dateFormatted}\n`;
-  msg += `🚚 *Fulfillment:* ${isHomeDelivery ? "🛵 Home Delivery" : "🛍️ Kitchen Pickup (Self-Pickup)"}\n`;
+  // Calculate Subtotal
+  const subtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.qty, 0);
 
-  if (isHomeDelivery) {
-    if (address) msg += `📍 *Delivery Area:* ${address}\n`;
-    const finalMapUrl = pinnedLocationUrl || mapLink;
-    if (finalMapUrl) msg += `🗺️ *Google Maps Link:* ${finalMapUrl}\n`;
+  // Format Date (DD-MMM-YYYY)
+  let formattedDate = date;
+  try {
+    const parts = date.split("-");
+    const dObj = new Date(parts[0], parts[1] - 1, parts[2]);
+    formattedDate = dObj.toLocaleDateString("en-IN", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+  } catch (e) {}
+
+  // Compile Structured WhatsApp Pre-Order Message
+  let msg = `*🍰 PRE-ORDER — PAGE 26 CHEESECAKES & BAKES*\n`;
+  msg += `─────────────────────────\n`;
+  msg += `*Customer:* ${name}\n`;
+  msg += `*Scheduled Date:* ${formattedDate}\n`;
+  msg += `*Fulfillment:* ${currentDeliveryMode === "home" ? "🛵 Bangalore Door Delivery" : "🛍️ Kitchen Self-Pickup"}\n`;
+
+  if (currentDeliveryMode === "home") {
+    if (address) msg += `*Delivery Area:* ${address}\n`;
+    if (pinnedLocationUrl) msg += `*Google Maps Pin:* ${pinnedLocationUrl}\n`;
+    msg += `*Delivery Fee:* At actuals via Porter/Dunzo upon dispatch\n`;
   } else {
-    msg += `📍 *Pickup Location:* Bangalore Kitchen (please confirm time window)\n`;
+    msg += `*Pickup Location:* Bangalore Kitchen (Slot confirmed on chat)\n`;
   }
 
-  if (notes) msg += `📝 *Notes/Customization:* ${notes}\n`;
-  msg += `-----------------------------------------\n`;
-  msg += `🛒 *SELECTED ITEMS:*\n\n`;
+  msg += `─────────────────────────\n`;
+  msg += `*ORDER ITEMS (100% Eggless):*\n`;
 
-  cart.forEach((item, i) => {
-    const subtotal = item.qty * item.unitPrice;
-    msg += `${i + 1}. *${item.name}*\n`;
+  cart.forEach((item, idx) => {
+    msg += `${idx + 1}. *${item.name}*\n`;
     msg += `   • Size/Weight: ${item.size}\n`;
-    msg += `   • Qty: ${item.qty} × ₹${item.unitPrice} = ₹${subtotal.toLocaleString("en-IN")}\n\n`;
+    msg += `   • Quantity: ${item.qty}\n`;
+    msg += `   • Price: ₹${(item.unitPrice * item.qty).toLocaleString("en-IN")}\n`;
   });
 
-  msg += `-----------------------------------------\n`;
-  msg += `💰 *ITEMS SUBTOTAL: ₹${total.toLocaleString("en-IN")}*\n`;
-  if (isHomeDelivery) {
-    msg += `📦 *Delivery Charges:* Extra at actuals via Porter/Dunzo (based on distance)\n`;
-  } else {
-    msg += `📦 *Delivery Charges:* Free (Kitchen Pickup)\n`;
+  msg += `─────────────────────────\n`;
+  msg += `*ESTIMATED SUBTOTAL:* ₹${subtotal.toLocaleString("en-IN")}\n`;
+
+  if (notes) {
+    msg += `─────────────────────────\n`;
+    msg += `*Cake Message / Special Notes:*\n${notes}\n`;
   }
-  msg += `-----------------------------------------\n`;
-  msg += `⏳ *Pre-orders only (1 week notice) • Exclusively Eggless*\n`;
-  msg += `📍 Bangalore`;
+
+  msg += `─────────────────────────\n`;
+  msg += `_Order submitted via page26.vercel.app_\n`;
+  msg += `_Notice policy: 1 week advance notice acknowledged._`;
 
   const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(waUrl, "_blank");
 }
 
-function showToast(text) {
-  const t = document.getElementById("toast");
-  if (!t) return;
-  t.textContent = text;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2200);
+// --------------------------------------------------------------------------
+// 14. Toast Notification Popup
+// --------------------------------------------------------------------------
+let toastTimeout = null;
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2800);
 }

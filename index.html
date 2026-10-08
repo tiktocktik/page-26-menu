@@ -2,219 +2,708 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PAGE 26 | Cheesecakes & Bakes - Bangalore</title>
-  <meta name="description" content="Artisanal eggless cheesecakes, cakes, brownies, muffins and cupcakes in Bangalore. Pre-orders with 1 week notice. Couverture chocolate bakes.">
-  <meta property="og:title" content="PAGE 26 — Cheesecakes & Bakes">
-  <meta property="og:description" content="Artisanal eggless cheesecakes & bakes. Bangalore. Pre-orders on WhatsApp / Call.">
-  <meta property="og:image" content="logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>PAGE 26 | Artisanal Eggless Cheesecakes &amp; Bakes — Bangalore</title>
+  
+  <!-- Primary SEO Meta Tags -->
+  <meta name="description" content="Artisanal 100% eggless cheesecakes, celebration cakes, and couverture chocolate brownies handcrafted in Bangalore. Small-batch pre-orders with 1 week notice. Order directly via WhatsApp.">
+  <meta name="keywords" content="eggless cheesecake bangalore, new york cheesecake bangalore, biscoff cheesecake, nutella cheesecake, couverture chocolate brownies, artisanal bakery bangalore, eggless cakes bangalore, bento cakes bangalore, page 26 bakery, whatsapp cake ordering">
+  <meta name="author" content="Page 26 Cheesecakes &amp; Bakes">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://page26.vercel.app">
+  <meta name="theme-color" content="#2C1A11" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16110E" media="(prefers-color-scheme: dark)">
 
-  <!-- Google Fonts: Cormorant Garamond, Playfair Display & Outfit for luxury artisanal typography -->
+  <!-- Geo & Local Business Meta (Bangalore, India) -->
+  <meta name="geo.region" content="IN-KA">
+  <meta name="geo.placename" content="Bengaluru, Karnataka, India">
+  <meta name="geo.position" content="12.9716;77.5946">
+  <meta name="ICBM" content="12.9716, 77.5946">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PAGE 26 — Cheesecakes &amp; Bakes">
+  <meta property="og:title" content="PAGE 26 | Artisanal Eggless Cheesecakes &amp; Bakes — Bangalore">
+  <meta property="og:description" content="Small-batch eggless cheesecakes, celebration cakes, and couverture chocolate brownies made fresh to order in Bangalore. Pre-order on WhatsApp with 1 week notice.">
+  <meta property="og:url" content="https://page26.vercel.app">
+  <meta property="og:image" content="https://page26.vercel.app/logo.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAGE 26 Cheesecakes and Bakes Luxury Patisserie Bangalore">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PAGE 26 | Artisanal Eggless Cheesecakes &amp; Bakes — Bangalore">
+  <meta name="twitter:description" content="100% Eggless baked cheesecakes, celebration cakes, and pure couverture chocolate brownies in Bangalore. Pre-orders with 1 week notice.">
+  <meta name="twitter:image" content="https://page26.vercel.app/logo.png">
+
+  <!-- High-End Patisserie Typography Pairing -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
+
+  <!-- 1. JSON-LD: Bakery & Local Business Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "@id": "https://page26.vercel.app/#bakery",
+    "name": "PAGE 26 Cheesecakes & Bakes",
+    "alternateName": "Page 26 Bakery Bangalore",
+    "url": "https://page26.vercel.app",
+    "logo": "https://page26.vercel.app/logo.png",
+    "image": "https://page26.vercel.app/menu.png",
+    "description": "Boutique artisanal patisserie in Bangalore crafting 100% eggless baked cheesecakes, celebration cakes, and couverture chocolate brownies made fresh to order.",
+    "telephone": "+918780547928",
+    "priceRange": "₹₹",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, UPI, Google Pay, PhonePe, Bank Transfer",
+    "servesCuisine": ["Bakery", "Desserts", "Cheesecakes", "Cakes", "Eggless Patisserie"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bengaluru",
+      "addressRegion": "Karnataka",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 12.9716,
+      "longitude": 77.5946
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "21:00"
+      }
+    ],
+    "hasMenu": "https://page26.vercel.app#menu",
+    "acceptsReservations": "True",
+    "potentialAction": {
+      "@type": "OrderAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://wa.me/918780547928?text=Hello%20Page%2026",
+        "inLanguage": "en",
+        "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"]
+      },
+      "deliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"
+    }
+  }
+  </script>
+
+  <!-- 2. JSON-LD: Menu & MenuItems Schema (Complete 16 Items) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "@id": "https://page26.vercel.app/#menu",
+    "name": "Page 26 Artisanal Menu",
+    "inLanguage": "en",
+    "hasMenuSection": [
+      {
+        "@type": "MenuSection",
+        "name": "Baked Cheesecakes",
+        "description": "Slow-baked dense cream cheese on hand-pressed biscuit crust. 100% Eggless.",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Classic New York Cheesecake",
+            "description": "Dense, slow-baked Philadelphia-style cream cheese on a buttery biscuit crust. Balanced, not overly sweet.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "700", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Lotus Biscoff Cheesecake",
+            "description": "Velvety cream cheese layered and swirled with original Lotus Biscoff spread over spiced biscuit crust.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "800", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Nutella Cheesecake",
+            "description": "Silky cream cheese harmoniously swirled with pure Nutella and roasted hazelnut chocolate.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "800", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Blueberry Cheesecake",
+            "description": "Signature baked cheesecake crowned with slow-simmered wild blueberry compote.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "800", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Strawberry Cheesecake",
+            "description": "Luxurious baked cheesecake blanketed with artisanal farm strawberry reduction.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "800", "priceCurrency": "INR" }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Celebration Cakes",
+        "description": "Pure couverture chocolate cakes and tender layer cakes with artisanal frostings.",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Chocolate Ganache Cake",
+            "description": "Tender cocoa sponge layered with 54% dark couverture chocolate ganache (real cocoa butter).",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "500", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Red Velvet Cake",
+            "description": "Soft cocoa sponge paired with whipped real cream cheese frosting.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "500", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Naked Chocolate Nutella Cake",
+            "description": "Semi-frosted rustic celebration cake layered with Nutella and glossy couverture drip.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "550", "priceCurrency": "INR" }
+          }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Fudgy Brownies",
+        "description": "Crinkle-top brownies baked with melted dark couverture chocolate.",
+        "hasMenuItem": [
+          {
+            "@type": "MenuItem",
+            "name": "Classic Fudgy Brownies",
+            "description": "Glossy crinkle crust with an intensely molten fudgy center.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "450", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Nutella Brownies",
+            "description": "Dense brownie batter baked with thick swirls of pure Nutella.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "500", "priceCurrency": "INR" }
+          },
+          {
+            "@type": "MenuItem",
+            "name": "Lotus Biscoff Brownies",
+            "description": "Deep cocoa fudgy brownies with crunchy Lotus Biscoff speculoos swirls.",
+            "suitableForDiet": "http://schema.org/VegetarianDiet",
+            "offers": { "@type": "Offer", "price": "500", "priceCurrency": "INR" }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- 3. JSON-LD: FAQPage Schema for Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why do pre-orders require 1 week's notice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every bake at Page 26 is made from scratch in small, artisanal batches. We procure fresh ingredients—including fresh fruit compotes and pure couverture chocolate—specifically for your order. We never freeze or mass-produce ahead of time, ensuring peak freshness."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are all your cakes and cheesecakes 100% eggless?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! 100% of our menu is strictly eggless and vegetarian. We craft our recipes using cultured dairy, cream cheese, and time-honored artisanal techniques to achieve dense, authentic New York cheesecake textures without eggs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is couverture chocolate and why does it matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unlike commercial bakeries that use compound chocolate made with hydrogenated vegetable palm fats, Page 26 exclusively uses pure couverture chocolate containing high percentages of real cocoa butter. It melts luxuriously with zero waxy residue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does delivery work across Bangalore?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because delicate cheesecakes require careful temperature and handling, we arrange point-to-point delivery across Bangalore via Porter or Dunzo at actual distance-based rates upon dispatch. Alternatively, you can choose free Kitchen Pickup from our Bangalore location."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add a custom message or request specific toppings on my cake?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! When ordering on our website, simply enter your custom message in the Cake Message / Notes field. This will be automatically compiled into your WhatsApp pre-order message so our head baker can personalize your cake."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- 4. JSON-LD: Organization & Website Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PAGE 26",
+    "url": "https://page26.vercel.app",
+    "logo": "https://page26.vercel.app/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+918780547928",
+      "contactType": "customer service",
+      "areaServed": "Bangalore",
+      "availableLanguage": ["English", "Hindi"]
+    }
+  }
+  </script>
 </head>
 <body>
 
   <!-- Top Announcement Bar -->
-  <aside class="top-announcement">
+  <aside class="top-announcement" aria-label="Bakery Announcements">
     <div class="announcement-content">
-      <span>⏳ PRE-ORDERS ONLY (1 Week's Notice)</span>
-      <span class="sep">•</span>
-      <span>🟢 100% Exclusively Eggless</span>
-      <span class="sep">•</span>
-      <span>📍 Bangalore</span>
+      <span class="ann-item">⏳ <strong>Pre-Orders Only:</strong> 1 Week's Notice Required</span>
+      <span class="ann-sep">•</span>
+      <span class="ann-item">🟢 <strong>100% Exclusively Eggless</strong></span>
+      <span class="ann-sep">•</span>
+      <span class="ann-item">🍫 <strong>Pure Couverture Chocolate</strong></span>
+      <span class="ann-sep">•</span>
+      <span class="ann-item">📍 <strong>Bangalore Handcrafted</strong></span>
     </div>
   </aside>
 
-  <!-- Site Header with Brand Logo -->
-  <header class="site-header">
+  <!-- Sticky Global Navigation -->
+  <header class="site-header" id="site-header">
     <div class="header-inner">
-
-      <!-- Top Row: Direct Actions & Simple Theme Toggle -->
-      <div class="header-top-row">
-        <div class="quick-contacts">
-          <a href="https://wa.me/918780547928" target="_blank" class="head-pill wa-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
-            </svg>
-            <span>WhatsApp</span>
-          </a>
-          <a href="tel:+918780547928" class="head-pill phone-pill">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            <span>Call</span>
-          </a>
-          <button type="button" class="head-pill card-pill" id="btn-view-card">
-            <span>📜 Menu Card</span>
-          </button>
+      <div class="nav-brand-group">
+        <a href="#" class="brand-monogram" aria-label="Page 26 Home">
+          <span class="monogram-text">P<span class="monogram-num">26</span></span>
+        </a>
+        <div class="brand-meta-text">
+          <span class="brand-eyebrow">Artisanal Patisserie</span>
+          <span class="brand-city">Bangalore • 100% Eggless</span>
         </div>
+      </div>
 
-        <!-- Simplified Single-Tap Dark/Light Theme Button -->
+      <div class="header-nav-actions">
+        <a href="https://wa.me/918780547928" target="_blank" rel="noopener noreferrer" class="btn-nav-action btn-nav-wa" aria-label="Chat on WhatsApp">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+          </svg>
+          <span class="btn-text">WhatsApp</span>
+        </a>
+
+        <a href="tel:+918780547928" class="btn-nav-action btn-nav-phone" aria-label="Call Bakery">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span class="btn-text">Call</span>
+        </a>
+
+        <button type="button" class="btn-nav-action btn-nav-card" id="btn-view-card" aria-label="View Original Menu Card">
+          <span>📜 Menu Card</span>
+        </button>
+
         <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
           <span class="theme-icon" id="theme-icon">🌙</span>
         </button>
       </div>
-
-      <!-- Responsive Luxury Typography Crest -->
-      <div class="brand-crest">
-        <h1 class="brand-title">PAGE <span class="brand-num">26</span></h1>
-        <div class="brand-sub-wrap">
-          <span class="crest-line"></span>
-          <h2 class="brand-sub">CHEESECAKES &amp; BAKES</h2>
-          <span class="crest-line"></span>
-        </div>
-        <p class="brand-tagline">Small-batch eggless bakes, made fresh to order with real couverture chocolate in Bangalore.</p>
-      </div>
-
     </div>
   </header>
 
-  <!-- Sticky Mobile-Friendly Category Navigation Bar with Theme Switch -->
-  <nav class="sticky-nav" id="sticky-nav">
-    <div class="sticky-nav-inner">
-      <div class="nav-scroll-container">
-        <button type="button" class="nav-chip active" data-category="all">✨ All Items</button>
-        <button type="button" class="nav-chip" data-category="cheesecakes">👑 Cheesecakes</button>
-        <button type="button" class="nav-chip" data-category="cakes">🎂 Cakes</button>
-        <button type="button" class="nav-chip" data-category="brownies">🍫 Brownies</button>
-        <button type="button" class="nav-chip" data-category="muffins">🧁 Muffins</button>
-        <button type="button" class="nav-chip" data-category="cupcakes">🧁 Cupcakes</button>
+  <!-- Editorial Hero Section -->
+  <section class="hero-editorial" aria-labelledby="hero-title">
+    <div class="hero-container">
+      <div class="hero-crest-badge">
+        <span class="crest-leaf">🌿</span>
+        <span class="crest-text">Boutique Small-Batch Bakery</span>
+        <span class="crest-leaf">🌿</span>
       </div>
-      <div class="sticky-nav-actions">
-        <button type="button" class="theme-toggle-btn sticky-theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
-          <span class="theme-icon">🌙</span>
+
+      <h1 class="hero-brand-title" id="hero-title">
+        PAGE <span class="brand-num">26</span>
+      </h1>
+
+      <div class="hero-tagline-wrap">
+        <span class="hero-filigree"></span>
+        <h2 class="hero-brand-sub">CHEESECAKES &amp; BAKES</h2>
+        <span class="hero-filigree"></span>
+      </div>
+
+      <p class="hero-narrative">
+        Handcrafted in Bangalore with cultured cream cheese, pure couverture chocolate, and real fruit compotes. 
+        Slow-baked strictly to order with <strong>1 week's notice</strong> for peerless freshness.
+      </p>
+
+      <!-- Trust Badges Strip -->
+      <div class="trust-grid">
+        <div class="trust-item">
+          <span class="trust-icon">🟢</span>
+          <div class="trust-text">
+            <strong>100% Eggless</strong>
+            <span>Pure Vegetarian Patisserie</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🍫</span>
+          <div class="trust-text">
+            <strong>Pure Couverture</strong>
+            <span>Real Cocoa Butter • No Compound</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">⏳</span>
+          <div class="trust-text">
+            <strong>1 Week Notice</strong>
+            <span>Small-Batch Made to Order</span>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🛵</span>
+          <div class="trust-text">
+            <strong>Bangalore Delivery</strong>
+            <span>At Actuals or Kitchen Pickup</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Jump Buttons -->
+      <div class="hero-actions-row">
+        <a href="#menu-nav" class="btn-hero-primary">
+          <span>Explore 16 Artisanal Creations ↓</span>
+        </a>
+        <button type="button" class="btn-hero-secondary" id="hero-btn-menu-card">
+          <span>View Original Menu Card 📜</span>
         </button>
       </div>
     </div>
+  </section>
+
+  <!-- Live Search & Category Filtering Bar -->
+  <nav class="sticky-nav" id="menu-nav" aria-label="Menu categories and search">
+    <div class="sticky-nav-inner">
+      
+      <!-- Interactive Live Search Bar -->
+      <div class="search-input-wrapper">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input 
+          type="search" 
+          id="menu-search-input" 
+          class="menu-search-input" 
+          placeholder="Search cheesecakes, biscoff, ganache, bento, brownies..." 
+          aria-label="Search menu items"
+          autocomplete="off"
+        >
+        <button type="button" class="search-clear-btn" id="search-clear-btn" aria-label="Clear search" style="display: none;">✕</button>
+      </div>
+
+      <!-- Category Filter Chips -->
+      <div class="category-scroll-strip" role="tablist" id="category-tabs">
+        <button type="button" class="nav-chip active" data-category="all" role="tab" aria-selected="true">
+          <span>✨ All Creations</span>
+          <span class="chip-count">16</span>
+        </button>
+        <button type="button" class="nav-chip" data-category="cheesecakes" role="tab" aria-selected="false">
+          <span>👑 Cheesecakes</span>
+          <span class="chip-count">5</span>
+        </button>
+        <button type="button" class="nav-chip" data-category="cakes" role="tab" aria-selected="false">
+          <span>🎂 Cakes</span>
+          <span class="chip-count">3</span>
+        </button>
+        <button type="button" class="nav-chip" data-category="brownies" role="tab" aria-selected="false">
+          <span>🍫 Brownies</span>
+          <span class="chip-count">3</span>
+        </button>
+        <button type="button" class="nav-chip" data-category="muffins" role="tab" aria-selected="false">
+          <span>🧁 Muffins</span>
+          <span class="chip-count">2</span>
+        </button>
+        <button type="button" class="nav-chip" data-category="cupcakes" role="tab" aria-selected="false">
+          <span>🧁 Cupcakes</span>
+          <span class="chip-count">3</span>
+        </button>
+      </div>
+
+    </div>
   </nav>
 
-  <!-- Main Menu Grid -->
-  <main class="main-container">
+  <!-- Main Menu Vitrine -->
+  <main class="main-container" id="menu-content">
     <div class="menu-sections-wrapper" id="menu-sections">
-      <!-- Generated Dynamically by app.js -->
+      <!-- Populated Dynamically by app.js with rich semantic cards -->
+    </div>
+
+    <!-- Empty Search State -->
+    <div class="search-zero-state" id="search-zero-state" style="display: none;">
+      <div class="zero-state-icon">🍰</div>
+      <h3 class="zero-state-title">No pastry matches your search</h3>
+      <p class="zero-state-desc">Try searching for "Cheesecake", "Biscoff", "Nutella", or "Brownie".</p>
+      <button type="button" class="btn-zero-reset" id="btn-reset-search">Show All 16 Creations</button>
     </div>
   </main>
 
-  <!-- Heritage Distinct Footer (Visually separated from product cards) -->
-  <footer class="heritage-footer">
+  <!-- The Page 26 Difference / Craftsmanship Showcase -->
+  <section class="craft-story-section" aria-labelledby="story-title">
+    <div class="craft-container">
+      <div class="section-crest-tag">Artisanal Standards</div>
+      <h2 class="section-heading-serif" id="story-title">Why Our Bakes Taste Remarkably Different</h2>
+      <p class="section-sub-serif">
+        We built Page 26 with a singular obsession: zero compromises on chocolate, dairy, or time.
+      </p>
+
+      <div class="craft-features-grid">
+        <div class="craft-card">
+          <div class="craft-card-icon">🍫</div>
+          <h3 class="craft-card-title">Pure Couverture Chocolate</h3>
+          <p class="craft-card-desc">
+            Commercial bakeries use compound chocolate loaded with vegetable palm fats. We exclusively use pure couverture chocolate with real cocoa butter that melts luxuriously at body temperature.
+          </p>
+        </div>
+
+        <div class="craft-card">
+          <div class="craft-card-icon">🟢</div>
+          <h3 class="craft-card-title">100% Exclusively Eggless</h3>
+          <p class="craft-card-desc">
+            No compromises on texture. Through careful emulsion of cultured cream, whole dairy, and pure extracts, our cheesecakes achieve the authentic dense crumb of traditional Philadelphia bakeries.
+          </p>
+        </div>
+
+        <div class="craft-card">
+          <div class="craft-card-icon">⏳</div>
+          <h3 class="craft-card-title">Slow-Baked to Order (7 Days)</h3>
+          <p class="craft-card-desc">
+            Nothing sits in a freezer or on a display shelf. When you place a pre-order, ingredients are procured fresh and your bake is slow-baked in small batches just before dispatch.
+          </p>
+        </div>
+
+        <div class="craft-card">
+          <div class="craft-card-icon">🍓</div>
+          <h3 class="craft-card-title">Artisanal Real Fruit Compotes</h3>
+          <p class="craft-card-desc">
+            Our blueberries and strawberries are simmered slowly in-house into luscious compotes, providing natural brightness that pairs perfectly with rich baked cream cheese.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How Pre-Ordering Works (3 Steps) -->
+  <section class="how-it-works-section" aria-labelledby="how-title">
+    <div class="how-container">
+      <div class="section-crest-tag">Simple &amp; Direct</div>
+      <h2 class="section-heading-serif" id="how-title">How Pre-Ordering Works</h2>
+      <p class="section-sub-serif">No third-party marketplace commissions. Direct baker-to-customer connection.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">1</div>
+          <h3 class="step-title">Select Flavours &amp; Sizes</h3>
+          <p class="step-desc">Browse our 16 eggless creations. Choose your desired weights (Bento, 500g, 1kg+) or treat box sizes (Box of 4/6).</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">2</div>
+          <h3 class="step-title">Choose Date &amp; Area</h3>
+          <p class="step-desc">Pick your event date (minimum 7 days notice). Opt for door delivery via Porter/Dunzo across Bangalore or free kitchen pickup.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">3</div>
+          <h3 class="step-title">WhatsApp Order Confirmation</h3>
+          <p class="step-desc">Tap "Send Order on WhatsApp". Your complete order breakdown and address pin will be pre-formatted and sent directly to our head baker.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Praise & Reviews -->
+  <section class="reviews-section" aria-labelledby="reviews-title">
+    <div class="reviews-container">
+      <div class="section-crest-tag">Bangalore Dessert Lovers</div>
+      <h2 class="section-heading-serif" id="reviews-title">Customer Praise</h2>
+      
+      <div class="reviews-grid" id="reviews-grid">
+        <!-- Rendered from window.PAGE26_REVIEWS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive FAQ Accordion -->
+  <section class="faq-section" aria-labelledby="faq-title">
+    <div class="faq-container">
+      <div class="section-crest-tag">Got Questions?</div>
+      <h2 class="section-heading-serif" id="faq-title">Frequently Asked Questions</h2>
+      <p class="section-sub-serif">Everything you need to know about our ingredients, delivery, and storage.</p>
+
+      <div class="faq-accordion-list" id="faq-accordion-list">
+        <!-- Rendered dynamically from window.PAGE26_FAQS with micro-animations -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Heritage Distinct Footer -->
+  <footer class="heritage-footer" role="contentinfo">
     <div class="footer-container">
       <div class="footer-brand-column">
         <h3 class="footer-brand-title">PAGE <span class="brand-num">26</span></h3>
         <p class="footer-brand-sub">CHEESECAKES &amp; BAKES</p>
         <p class="footer-desc">
-          Small-batch home bakery in Bangalore crafting 100% eggless cheesecakes, couverture chocolate cakes, brownies, and bakes made fresh to order.
+          Boutique artisanal patisserie in Bangalore crafting 100% eggless baked cheesecakes, celebration cakes, and couverture chocolate brownies made fresh to order.
         </p>
+        <div class="footer-badges-row">
+          <span class="footer-badge">🟢 100% Eggless</span>
+          <span class="footer-badge">🍫 Pure Couverture</span>
+          <span class="footer-badge">📍 Bangalore</span>
+        </div>
       </div>
 
       <div class="footer-policy-column">
         <h4 class="footer-col-heading">ORDERING POLICY</h4>
         <ul class="policy-list">
-          <li>⏳ <strong>Pre-Orders Only:</strong> 1 week's notice required</li>
-          <li>🟢 <strong>100% Eggless:</strong> All products are vegetarian</li>
-          <li>🍫 <strong>Couverture Chocolate:</strong> Premium real cocoa butter</li>
-          <li>📍 <strong>Location:</strong> Bangalore, Karnataka</li>
+          <li>⏳ <strong>Pre-Orders Only:</strong> 1 week's notice required (minimum 7 days)</li>
+          <li>🟢 <strong>100% Eggless:</strong> Strictly vegetarian kitchen</li>
+          <li>🍫 <strong>Couverture Standard:</strong> Real cocoa butter only</li>
+          <li>🛵 <strong>Delivery:</strong> At actuals via Porter/Dunzo or free pickup</li>
+          <li>❄️ <strong>Cheesecake Shelf Life:</strong> 4–5 days refrigerated (2°C–5°C)</li>
         </ul>
       </div>
 
       <div class="footer-contact-column">
-        <h4 class="footer-col-heading">CONTACT & INQUIRIES</h4>
-        <a href="https://wa.me/918780547928" target="_blank" class="footer-action-link wa">
-          <span>💬 WhatsApp: +91 8780547928</span>
+        <h4 class="footer-col-heading">DIRECT BAKER CONTACT</h4>
+        <a href="https://wa.me/918780547928" target="_blank" rel="noopener noreferrer" class="footer-contact-card wa-card">
+          <span class="contact-icon">💬</span>
+          <div class="contact-text">
+            <strong>WhatsApp Pre-Orders</strong>
+            <span>+91 8780547928</span>
+          </div>
         </a>
-        <a href="tel:+918780547928" class="footer-action-link phone">
-          <span>📞 Call: +91 8780547928</span>
+
+        <a href="tel:+918780547928" class="footer-contact-card phone-card">
+          <span class="contact-icon">📞</span>
+          <div class="contact-text">
+            <strong>Telephone Inquiries</strong>
+            <span>+91 8780547928</span>
+          </div>
         </a>
-        <p class="footer-copy">© 2026 Page 26. Baked fresh to order.</p>
+
+        <p class="footer-copyright">
+          © 2026 PAGE 26 Cheesecakes &amp; Bakes. Handcrafted with love in Bangalore.
+        </p>
       </div>
     </div>
   </footer>
 
-  <!-- Sticky Bottom Order Dock -->
-  <aside class="order-dock" id="order-dock">
+  <!-- Sticky Bottom Order Floating Dock -->
+  <aside class="order-dock" id="order-dock" aria-label="Order summary dock">
     <div class="dock-inner">
-      <div class="dock-info" id="dock-open-cart">
+      <button type="button" class="dock-info-button" id="dock-open-cart" aria-label="Open your pre-order drawer">
         <span class="dock-qty-bubble" id="dock-qty">0</span>
         <div class="dock-text">
           <span class="dock-label">Your Pre-Order</span>
           <span class="dock-val" id="dock-price">₹0</span>
         </div>
-      </div>
+      </button>
+
       <button type="button" class="dock-cta-btn" id="dock-btn-checkout">
-        <span>Review & Order on WhatsApp →</span>
+        <span>Review Order &amp; WhatsApp →</span>
       </button>
     </div>
   </aside>
 
-  <!-- Slide-Up Checkout Drawer with Interactive Map Picker -->
-  <div class="checkout-overlay" id="checkout-modal">
+  <!-- Slide-Up Checkout Drawer with Interactive Map & Details -->
+  <div class="checkout-overlay" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
     <div class="checkout-sheet">
       <div class="sheet-header">
-        <h3 class="sheet-title">🍰 Your Pre-Order Details</h3>
-        <button type="button" class="sheet-close" id="sheet-close" aria-label="Close drawer">&times;</button>
+        <div class="sheet-title-group">
+          <h3 class="sheet-title" id="drawer-title">🍰 Your Pre-Order Details</h3>
+          <span class="sheet-sub">Bangalore • 100% Eggless • Direct WhatsApp Order</span>
+        </div>
+        <button type="button" class="sheet-close" id="sheet-close" aria-label="Close pre-order drawer">&times;</button>
       </div>
 
       <div class="sheet-body">
-        <div id="cart-empty-message" style="display: none; text-align: center; padding: 36px 16px;">
-          <p style="font-size: 2rem; margin-bottom: 8px;">🧺</p>
-          <h4 style="font-weight: 700; margin-bottom: 4px;">Your order is empty</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Select your favourite cakes or desserts to proceed.</p>
+        
+        <!-- Empty Cart State -->
+        <div id="cart-empty-message" style="display: none;" class="cart-empty-panel">
+          <div class="empty-icon">🧺</div>
+          <h4 class="empty-title">Your pre-order is currently empty</h4>
+          <p class="empty-sub">Select your favourite cheesecakes, celebration cakes, or brownies to begin.</p>
+          <button type="button" class="btn-browse-trigger" id="btn-browse-trigger">Browse Menu Creations</button>
         </div>
 
         <div id="cart-content-wrapper">
           <!-- Item list -->
-          <div class="cart-items-box" id="cart-items-list"></div>
+          <div class="cart-items-box" id="cart-items-list" aria-live="polite"></div>
 
           <!-- Price & Delivery Fee Breakdown -->
           <div class="cart-breakdown-box">
             <div class="breakdown-line">
-              <span>Items Subtotal:</span>
+              <span class="line-label">Items Subtotal:</span>
               <span class="breakdown-subtotal-val" id="cart-subtotal-val">₹0</span>
             </div>
             <div class="breakdown-line delivery-fee-line">
-              <span>Delivery Fee:</span>
-              <span id="cart-delivery-status" class="fee-status-badge">At actuals via Porter/Dunzo</span>
+              <span class="line-label">Delivery Fee:</span>
+              <span id="cart-delivery-status" class="fee-status-badge">At actuals via Porter/Dunzo upon dispatch</span>
             </div>
             <div class="breakdown-divider"></div>
             <div class="breakdown-line total-line">
-              <span>Estimated Total:</span>
+              <span class="line-label">Estimated Subtotal:</span>
               <span class="cart-total-val" id="cart-total-val">₹0</span>
             </div>
             <div class="shipping-disclaimer" id="shipping-disclaimer">
-              🛵 Delivery charges are calculated at actuals based on distance upon dispatch, or you can opt for free kitchen pickup.
+              🛵 Delivery charges are calculated at actuals based on distance via Porter or Dunzo upon dispatch. Or choose free kitchen pickup!
             </div>
           </div>
 
+          <!-- 7-Day Lead Notice Banner -->
           <div class="sheet-notice-box">
-            <span>⏳</span>
-            <span><strong>Notice:</strong> Pre-orders require <strong>1 week's notice</strong> as everything is made fresh.</span>
+            <span class="notice-icon">⏳</span>
+            <div class="notice-text">
+              <strong>1 Week Notice Required:</strong> All bakes are made completely from scratch to order.
+            </div>
           </div>
 
-          <!-- Checkout Form Details -->
+          <!-- Form Details: Name & Date -->
           <div class="form-row">
             <label class="form-label" for="cust-name">Your Full Name <span class="required">*</span></label>
-            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Ananya Sharma" required>
+            <input type="text" id="cust-name" class="form-control" placeholder="e.g. Ananya Sharma" required autocomplete="name">
           </div>
 
           <div class="form-row">
             <label class="form-label" for="cust-date">Preferred Delivery / Pickup Date <span class="required">*</span></label>
             <input type="date" id="cust-date" class="form-control" required>
-            <small class="form-hint">Enforces 7 days notice minimum.</small>
+            <small class="form-hint">Enforces minimum 7 days notice as everything is freshly baked.</small>
           </div>
 
-          <!-- Delivery Mode: Home Delivery vs Kitchen Pickup -->
+          <!-- Delivery Mode Toggle: Home Delivery vs Kitchen Pickup -->
           <div class="form-row">
-            <label class="form-label">Delivery or Pickup? <span class="required">*</span></label>
+            <label class="form-label">Delivery or Kitchen Pickup? <span class="required">*</span></label>
             <div class="delivery-type-grid">
               <label class="delivery-option-card active" id="card-delivery-home">
                 <input type="radio" name="delivery-mode" value="home" checked>
                 <div class="delivery-card-content">
-                  <div class="delivery-card-title">🛵 Home Delivery</div>
-                  <div class="delivery-card-sub">Charges at actuals via Porter / Dunzo</div>
+                  <div class="delivery-card-title">🛵 Bangalore Delivery</div>
+                  <div class="delivery-card-sub">At actuals via Porter / Dunzo upon dispatch</div>
                 </div>
               </label>
 
@@ -231,14 +720,14 @@
           <!-- Kitchen Pickup Note Banner (toggled when pickup selected) -->
           <div class="kitchen-pickup-banner" id="kitchen-pickup-banner" style="display: none;">
             <p>📍 <strong>Bangalore Kitchen Pickup:</strong></p>
-            <p class="pickup-desc">We will share our exact kitchen address & pickup time slot over WhatsApp for your scheduled date.</p>
+            <p class="pickup-desc">We will share our exact kitchen location &amp; scheduled pickup time slot on WhatsApp for your chosen date.</p>
           </div>
 
           <!-- Address & Google Maps Location Group (toggled when delivery selected) -->
           <div class="form-row" id="delivery-address-group">
             <label class="form-label" for="cust-address">Delivery Area / Landmark in Bangalore <span class="required">*</span></label>
-            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Sobha Forest View, Indiranagar, or paste Maps link">
-            <small class="form-hint">Type your building/society, or tap below to auto-pin your GPS location.</small>
+            <input type="text" id="cust-address" class="form-control" placeholder="e.g. Sobha Forest View, Indiranagar, or paste Google Maps link" autocomplete="street-address">
+            <small class="form-hint">Type your building/area, or tap below to auto-pin your GPS location.</small>
 
             <!-- Bangalore Locality Quick Jump Chips -->
             <div class="map-quick-areas">
@@ -269,27 +758,34 @@
                 loading="lazy"
                 allowfullscreen
                 referrerpolicy="no-referrer-when-downgrade"
-                src="https://maps.google.com/maps?q=Bangalore,Karnataka&z=12&output=embed">
+                src="https://maps.google.com/maps?q=Bangalore,Karnataka&z=12&output=embed"
+                title="Google Maps Location Preview">
               </iframe>
             </div>
 
-            <!-- Friendly WhatsApp Location Tip -->
             <div class="whatsapp-location-tip">
               <span>💡</span>
               <span><strong>Tip:</strong> You can also tap <strong>📎 → Location</strong> in WhatsApp after placing your order to share your live pin!</span>
             </div>
           </div>
 
+          <!-- Custom Cake Message / Notes -->
           <div class="form-row">
-            <label class="form-label" for="cust-notes">Cake Message / Notes</label>
-            <textarea id="cust-notes" class="form-control" rows="2" placeholder="e.g. Message on cake: 'Happy Birthday Ananya!', extra toppings..."></textarea>
+            <label class="form-label" for="cust-notes">Cake Message / Dietary Notes</label>
+            <textarea id="cust-notes" class="form-control" rows="2" placeholder="e.g. Message on cake: 'Happy Birthday Ananya!', extra chocolate drizzle..."></textarea>
           </div>
+
+          <!-- Clear Cart Action -->
+          <div class="form-row-clear">
+            <button type="button" class="btn-clear-cart" id="btn-clear-cart">🗑️ Clear Entire Order</button>
+          </div>
+
         </div>
       </div>
 
       <div class="sheet-footer">
         <button type="button" class="btn-wa-checkout" id="btn-submit-whatsapp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.181-.077.356.101.174.451.744.969 1.205.666.593 1.228.777 1.402.864.174.087.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
           </svg>
           <span>Send Order on WhatsApp</span>
@@ -298,16 +794,16 @@
     </div>
   </div>
 
-  <!-- Original Menu Card Lightbox -->
-  <div class="image-modal" id="card-modal">
+  <!-- Original Menu Card High-Res Lightbox Modal -->
+  <div class="image-modal" id="card-modal" role="dialog" aria-modal="true" aria-label="Original Menu Card">
     <div class="image-modal-card">
-      <button type="button" class="image-modal-close" id="card-modal-close">&times;</button>
-      <img src="menu.png" alt="PAGE 26 Original Menu Card" class="image-modal-img">
+      <button type="button" class="image-modal-close" id="card-modal-close" aria-label="Close menu card">&times;</button>
+      <img src="menu.png" alt="PAGE 26 Original Handcrafted Menu Card" class="image-modal-img" loading="lazy">
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast-popup" id="toast">Added to order!</div>
+  <div class="toast-popup" id="toast" role="status" aria-live="polite">Added to pre-order!</div>
 
   <script src="menu-data.js"></script>
   <script src="app.js"></script>

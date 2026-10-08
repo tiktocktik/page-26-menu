@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://page26.vercel.app/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/hero_cheesecake.jpg</image:loc>
+      <image:title>Best Cheesecake in Bangalore - Page 26 Classic New York Baked Cheesecake</image:title>
+      <image:caption>Slow-baked Philadelphia-style 100% eggless cheesecake in Bangalore</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/lotus_biscoff_cheesecake.jpg</image:loc>
+      <image:title>Lotus Biscoff Baked Cheesecake Bangalore</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/classic_ny_cheesecake.jpg</image:loc>
+      <image:title>Classic New York Baked Cheesecake Bangalore</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/nutella_hazelnut_cheesecake.jpg</image:loc>
+      <image:title>Nutella Hazelnut Cheesecake Bangalore</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/chocolate_ganache_cake.jpg</image:loc>
+      <image:title>Dark Couverture Chocolate Ganache Cake Bangalore</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://page26.vercel.app/images/classic_fudge_brownie.jpg</image:loc>
+      <image:title>Couverture Dark Fudge Brownie Bangalore</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://page26.vercel.app/menu-card-render.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://page26.vercel.app/llms.txt</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>

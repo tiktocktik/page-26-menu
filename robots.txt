@@ -1,0 +1,39 @@
+# Robots.txt for PAGE 26 Cheesecakes & Bakes (Bangalore)
+# Fully optimized for Google Search, Bing, and AI Search Engines (ChatGPT, Gemini, Claude, Perplexity, Grok)
+
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /sitemap.xml
+Allow: /menu.png
+Allow: /images/
+
+# AI Crawlers & LLM Search Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Grok
+Allow: /
+
+# Sitemap & LLM Discovery Index
+Sitemap: https://page26.vercel.app/sitemap.xml
+# LLM Knowledge Graph Spec
+# See: https://page26.vercel.app/llms.txt

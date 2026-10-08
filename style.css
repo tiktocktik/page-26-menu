@@ -359,8 +359,9 @@ img {
   padding: 48px 20px 48px;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(circle at 75% 30%, rgba(197, 138, 56, 0.12) 0%, transparent 60%),
-              radial-gradient(circle at 20% 70%, rgba(44, 26, 17, 0.04) 0%, transparent 50%);
+  background: radial-gradient(circle at 75% 30%, rgba(197, 138, 56, 0.16) 0%, transparent 60%),
+              radial-gradient(circle at 20% 70%, rgba(44, 26, 17, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 50% 100%, rgba(197, 138, 56, 0.08) 0%, transparent 60%);
 }
 
 .hero-container {
@@ -639,16 +640,18 @@ img {
   min-width: 0;
   box-sizing: border-box;
   background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(197, 138, 56, 0.28);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 20px 48px rgba(44, 26, 17, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 25px 60px -15px rgba(44, 26, 17, 0.16), 0 10px 24px rgba(197, 138, 56, 0.12);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  position: relative;
 }
 
 .hero-showcase-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 28px 64px rgba(44, 26, 17, 0.18);
+  transform: translateY(-5px);
+  border-color: var(--brand-gold);
+  box-shadow: 0 32px 72px -15px rgba(44, 26, 17, 0.22), 0 14px 32px rgba(197, 138, 56, 0.18);
 }
 
 .hero-image-frame {
@@ -1152,16 +1155,16 @@ img {
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(44, 26, 17, 0.04);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
 
 .patisserie-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--brand-gold-border);
-  box-shadow: 0 16px 36px rgba(44, 26, 17, 0.1);
+  transform: translateY(-6px);
+  border-color: rgba(197, 138, 56, 0.45);
+  box-shadow: 0 20px 40px -10px rgba(44, 26, 17, 0.12), 0 0 0 1px rgba(197, 138, 56, 0.25);
 }
 
 /* Media Vitrine Container */
@@ -1284,10 +1287,11 @@ img {
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 1.32rem;
+  font-size: 1.34rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--brand-cocoa);
   line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .card-flavor-pill {
@@ -1295,9 +1299,10 @@ img {
   align-items: center;
   gap: 6px;
   font-size: 0.78rem;
-  color: var(--brand-gold);
+  color: #8C5E28;
   font-weight: 600;
-  background-color: var(--bg-surface-subtle);
+  background: linear-gradient(135deg, #FDF9F3, #F6EFE5);
+  border: 1px solid rgba(197, 138, 56, 0.25);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
   width: fit-content;
@@ -1307,6 +1312,7 @@ img {
 
 .flavor-sparkle {
   font-size: 0.8rem;
+  color: var(--brand-gold);
 }
 
 .card-desc {
@@ -1920,6 +1926,206 @@ img {
   font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+/* Sensory Comparison Matrix (Couverture vs Compound) */
+.sensory-matrix-card {
+  margin-top: 48px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  box-shadow: 0 10px 30px rgba(44, 26, 17, 0.05);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.sensory-matrix-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-gold), #F4D396, var(--brand-gold));
+}
+
+.matrix-header {
+  margin-bottom: 24px;
+}
+
+.matrix-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-gold);
+  background: var(--brand-gold-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--brand-gold-border);
+  margin-bottom: 8px;
+}
+
+.matrix-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  color: var(--brand-cocoa);
+  margin-bottom: 6px;
+}
+
+.matrix-subtitle {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.matrix-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 620px;
+}
+
+.matrix-table th {
+  padding: 12px 16px;
+  font-weight: 700;
+  text-align: left;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-surface-subtle);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.matrix-table th.th-brand {
+  color: var(--brand-gold);
+  background: #FAF5EC;
+}
+
+.matrix-table th.th-mass {
+  color: var(--text-muted);
+}
+
+.matrix-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.matrix-table tr:last-child td {
+  border-bottom: none;
+}
+
+.matrix-table td.td-attr {
+  font-weight: 700;
+  color: var(--text-primary);
+  width: 22%;
+}
+
+.matrix-table td.td-brand {
+  color: var(--brand-cocoa);
+  background: rgba(250, 245, 236, 0.45);
+  width: 44%;
+}
+
+.matrix-table td.td-brand strong {
+  color: var(--brand-gold);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.matrix-table td.td-mass {
+  color: var(--text-muted);
+  width: 34%;
+  font-size: 0.84rem;
+}
+
+/* Bangalore Citywide Enclaves Guide */
+.bangalore-enclaves-section {
+  padding: 70px 20px;
+  background: radial-gradient(circle at 50% 0%, rgba(197, 138, 56, 0.08) 0%, transparent 70%);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.enclaves-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 36px;
+  text-align: left;
+}
+
+.enclave-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.enclave-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-gold);
+  box-shadow: var(--shadow-md);
+}
+
+.enclave-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold);
+  background: var(--brand-gold-light);
+  border: 1px solid var(--brand-gold-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.enclave-name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--brand-cocoa);
+  margin-bottom: 8px;
+}
+
+.enclave-desc {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.enclave-pincodes {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--brand-gold);
+  background: var(--bg-surface-subtle);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+@media (max-width: 640px) {
+  .sensory-matrix-card {
+    padding: 24px 16px;
+    margin-top: 32px;
+  }
 }
 
 /* How Pre-Ordering Works */

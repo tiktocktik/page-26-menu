@@ -498,44 +498,239 @@
         </div>
       </div>
 
-      <!-- Right Column: Studio Showcase Food Vitrine (Cheesecake Factory & Junior's Style) -->
+      <!-- Right Column: Studio Showcase Food Vitrine Multi-Item Auto Slider -->
       <div class="hero-showcase-col">
-        <div class="hero-showcase-card">
-          <div class="hero-image-frame">
-            <img 
-              src="images/hero_cheesecake.jpg" 
-              alt="Classic New York Baked Cheesecake - Page 26 Boutique Patisserie Bangalore" 
-              class="hero-showcase-img"
-              width="800"
-              height="450"
-              fetchpriority="high"
-            >
-            <div class="hero-img-badge-overlay">
-              <span class="hero-pill-badge">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                Signature Selection
-              </span>
-              <div class="hero-veg-badge" title="100% Eggless">
-                <span class="veg-badge-dot"></span>
+        <div class="hero-showcase-card hero-slider-card" id="hero-slider-card" aria-roledescription="carousel" aria-label="Page 26 Signature Highlights Showcase">
+          
+          <!-- Slider Floating Navigation Buttons -->
+          <button type="button" class="hero-slider-nav-btn hero-slider-prev" id="hero-slider-prev" aria-label="Previous signature bake" title="Previous Item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="hero-slider-nav-btn hero-slider-next" id="hero-slider-next" aria-label="Next signature bake" title="Next Item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <!-- Slides Container -->
+          <div class="hero-slides-wrapper" id="hero-slides-wrapper">
+            
+            <!-- Slide 1: Classic New York Cheesecake -->
+            <div class="hero-slide active" data-slide-index="0" role="group" aria-roledescription="slide" aria-label="1 of 5">
+              <div class="hero-image-frame">
+                <img 
+                  src="images/hero_cheesecake.jpg" 
+                  alt="Classic New York Baked Cheesecake - Page 26 Boutique Patisserie Bangalore" 
+                  class="hero-showcase-img"
+                  width="800"
+                  height="500"
+                  fetchpriority="high"
+                >
+                <div class="hero-img-badge-overlay">
+                  <span class="hero-pill-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Signature Selection
+                  </span>
+                  <div class="hero-veg-badge" title="100% Eggless Pure Vegetarian">
+                    <span class="veg-badge-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card-caption">
+                <div class="hero-caption-header">
+                  <h3 class="hero-caption-title">Classic New York Cheesecake</h3>
+                  <span class="hero-caption-price">From ₹700</span>
+                </div>
+                <p class="hero-caption-text">
+                  Slow-baked Philadelphia cream cheese on hand-pressed butter crust, crowned with fresh berries &amp; coulis.
+                </p>
+                <div class="hero-caption-footer">
+                  <span class="hero-serving-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Serves 4 to 20 guests
+                  </span>
+                  <a href="#sec-cheesecakes" class="hero-view-link">View Cheesecakes →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Lotus Biscoff Cheesecake -->
+            <div class="hero-slide" data-slide-index="1" role="group" aria-roledescription="slide" aria-label="2 of 5">
+              <div class="hero-image-frame">
+                <img 
+                  src="images/lotus_biscoff_cheesecake.jpg" 
+                  alt="Lotus Biscoff Baked Cheesecake - Page 26 Patisserie" 
+                  class="hero-showcase-img"
+                  width="800"
+                  height="500"
+                  loading="lazy"
+                >
+                <div class="hero-img-badge-overlay">
+                  <span class="hero-pill-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Crowd Bestseller
+                  </span>
+                  <div class="hero-veg-badge" title="100% Eggless Pure Vegetarian">
+                    <span class="veg-badge-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card-caption">
+                <div class="hero-caption-header">
+                  <h3 class="hero-caption-title">Lotus Biscoff Cheesecake</h3>
+                  <span class="hero-caption-price">From ₹800</span>
+                </div>
+                <p class="hero-caption-text">
+                  Velvety cream cheese swirled with caramelized Belgian Biscoff spread over a crunchy spiced biscuit crust.
+                </p>
+                <div class="hero-caption-footer">
+                  <span class="hero-serving-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Serves 4 to 20 guests
+                  </span>
+                  <a href="#sec-cheesecakes" class="hero-view-link">View Cheesecakes →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Naked Chocolate Nutella Cake -->
+            <div class="hero-slide" data-slide-index="2" role="group" aria-roledescription="slide" aria-label="3 of 5">
+              <div class="hero-image-frame">
+                <img 
+                  src="images/naked_nutella_cake.jpg" 
+                  alt="Naked Chocolate Nutella Cake - Page 26 Patisserie" 
+                  class="hero-showcase-img"
+                  width="800"
+                  height="500"
+                  loading="lazy"
+                >
+                <div class="hero-img-badge-overlay">
+                  <span class="hero-pill-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Couverture Special
+                  </span>
+                  <div class="hero-veg-badge" title="100% Eggless Pure Vegetarian">
+                    <span class="veg-badge-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card-caption">
+                <div class="hero-caption-header">
+                  <h3 class="hero-caption-title">Naked Chocolate Nutella Cake</h3>
+                  <span class="hero-caption-price">From ₹550</span>
+                </div>
+                <p class="hero-caption-text">
+                  Moist chocolate sponge smothered in roasted hazelnut Nutella couverture ganache. Available from Bento to 2 kg.
+                </p>
+                <div class="hero-caption-footer">
+                  <span class="hero-serving-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Bento (250g) to 2 kg
+                  </span>
+                  <a href="#sec-cakes" class="hero-view-link">View Cakes →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Wild Blueberry Baked Cheesecake -->
+            <div class="hero-slide" data-slide-index="3" role="group" aria-roledescription="slide" aria-label="4 of 5">
+              <div class="hero-image-frame">
+                <img 
+                  src="images/blueberry_cheesecake.jpg" 
+                  alt="Wild Blueberry Baked Cheesecake - Page 26 Patisserie" 
+                  class="hero-showcase-img"
+                  width="800"
+                  height="500"
+                  loading="lazy"
+                >
+                <div class="hero-img-badge-overlay">
+                  <span class="hero-pill-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Artisanal Fruit Craft
+                  </span>
+                  <div class="hero-veg-badge" title="100% Eggless Pure Vegetarian">
+                    <span class="veg-badge-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card-caption">
+                <div class="hero-caption-header">
+                  <h3 class="hero-caption-title">Wild Blueberry Cheesecake</h3>
+                  <span class="hero-caption-price">From ₹800</span>
+                </div>
+                <p class="hero-caption-text">
+                  Rich, silky slow-baked cream cheese crowned with house-simmered whole wild mountain blueberry compote.
+                </p>
+                <div class="hero-caption-footer">
+                  <span class="hero-serving-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Serves 4 to 20 guests
+                  </span>
+                  <a href="#sec-cheesecakes" class="hero-view-link">View Cheesecakes →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 5: Nutella Couverture Fudge Brownie -->
+            <div class="hero-slide" data-slide-index="4" role="group" aria-roledescription="slide" aria-label="5 of 5">
+              <div class="hero-image-frame">
+                <img 
+                  src="images/nutella_fudge_brownie.jpg" 
+                  alt="Couverture Nutella Fudge Brownie - Page 26 Patisserie" 
+                  class="hero-showcase-img"
+                  width="800"
+                  height="500"
+                  loading="lazy"
+                >
+                <div class="hero-img-badge-overlay">
+                  <span class="hero-pill-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Pure Couverture
+                  </span>
+                  <div class="hero-veg-badge" title="100% Eggless Pure Vegetarian">
+                    <span class="veg-badge-dot"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card-caption">
+                <div class="hero-caption-header">
+                  <h3 class="hero-caption-title">Nutella Couverture Brownie</h3>
+                  <span class="hero-caption-price">₹130 / pc</span>
+                </div>
+                <p class="hero-caption-text">
+                  Dense, crackly-topped single-origin couverture fudge brownie swirled with molten Nutella. Curated Box of 4 at ₹500.
+                </p>
+                <div class="hero-caption-footer">
+                  <span class="hero-serving-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Box of 4 &amp; 6 available
+                  </span>
+                  <a href="#sec-brownies" class="hero-view-link">View Brownies →</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Slider Pagination Bar -->
+          <div class="hero-slider-bar">
+            <div class="hero-slider-dots" id="hero-slider-dots">
+              <button type="button" class="hero-slider-dot active" data-slide-target="0" aria-label="Slide 1 of 5"></button>
+              <button type="button" class="hero-slider-dot" data-slide-target="1" aria-label="Slide 2 of 5"></button>
+              <button type="button" class="hero-slider-dot" data-slide-target="2" aria-label="Slide 3 of 5"></button>
+              <button type="button" class="hero-slider-dot" data-slide-target="3" aria-label="Slide 4 of 5"></button>
+              <button type="button" class="hero-slider-dot" data-slide-target="4" aria-label="Slide 5 of 5"></button>
+            </div>
+            <div class="hero-slider-controls-right">
+              <div class="hero-slider-counter">
+                <span class="hero-counter-current" id="hero-slide-current-num">01</span>
+                <span class="hero-counter-sep">/</span>
+                <span class="hero-counter-total">05</span>
+              </div>
+              <div class="hero-slider-progress-track" title="Auto-slide progress">
+                <div class="hero-slider-progress-fill" id="hero-slider-progress-fill"></div>
               </div>
             </div>
           </div>
-          <div class="hero-card-caption">
-            <div class="hero-caption-header">
-              <h3 class="hero-caption-title">Classic New York Cheesecake</h3>
-              <span class="hero-caption-price">From ₹700</span>
-            </div>
-            <p class="hero-caption-text">
-              Slow-baked Philadelphia cream cheese on hand-pressed butter crust, crowned with fresh berries &amp; coulis.
-            </p>
-            <div class="hero-caption-footer">
-              <span class="hero-serving-note">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Serves 4 to 20 guests
-              </span>
-              <a href="#sec-cheesecakes" class="hero-view-link">View Cheesecakes →</a>
-            </div>
-          </div>
+
         </div>
       </div>
 

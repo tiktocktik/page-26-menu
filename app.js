@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDeliveryMethod();
   setupGoogleMapsIntegration();
   setupCheckoutModal();
+  setupHeroSlider();
   setupMenuCardModal();
   setupProductModal();
   restoreFormDraft();
@@ -630,6 +631,145 @@ function setupCheckoutModal() {
 
   if (clearBtn) clearBtn.addEventListener("click", clearCart);
   if (submitBtn) submitBtn.addEventListener("click", handleWhatsAppSubmit);
+}
+
+// --------------------------------------------------------------------------
+// 9B. Hero Studio Showcase Auto-Slider & Touch Carousel
+// --------------------------------------------------------------------------
+function setupHeroSlider() {
+  const container = document.getElementById("hero-slider-card");
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".hero-slider-dot");
+  const prevBtn = document.getElementById("hero-slider-prev");
+  const nextBtn = document.getElementById("hero-slider-next");
+  const counterEl = document.getElementById("hero-slide-current-num");
+  const progressFill = document.getElementById("hero-slider-progress-fill");
+
+  if (!container || slides.length === 0) return;
+
+  const totalSlides = slides.length;
+  let currentIndex = 0;
+  const slideDuration = 4500; // 4.5 seconds per slide
+  let startTime = Date.now();
+  let isPaused = false;
+  let animFrameId = null;
+
+  function updateSlide(newIndex) {
+    currentIndex = (newIndex + totalSlides) % totalSlides;
+
+    slides.forEach((slide, idx) => {
+      const isActive = idx === currentIndex;
+      slide.classList.toggle("active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+    });
+
+    dots.forEach((dot, idx) => {
+      const isActive = idx === currentIndex;
+      dot.classList.toggle("active", isActive);
+      dot.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    if (counterEl) {
+      counterEl.textContent = String(currentIndex + 1).padStart(2, "0");
+    }
+
+    resetTimer();
+  }
+
+  function resetTimer() {
+    startTime = Date.now();
+    if (progressFill) progressFill.style.width = "0%";
+  }
+
+  function tick() {
+    if (!isPaused) {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min((elapsed / slideDuration) * 100, 100);
+
+      if (progressFill) {
+        progressFill.style.width = `${progress}%`;
+      }
+
+      if (elapsed >= slideDuration) {
+        updateSlide(currentIndex + 1);
+      }
+    }
+    animFrameId = requestAnimationFrame(tick);
+  }
+
+  // Prev / Next Buttons
+  if (prevBtn) {
+    prevBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      updateSlide(currentIndex - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      updateSlide(currentIndex + 1);
+    });
+  }
+
+  // Dots Navigation
+  dots.forEach((dot) => {
+    dot.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = parseInt(dot.getAttribute("data-slide-target"), 10);
+      if (!isNaN(target)) updateSlide(target);
+    });
+  });
+
+  // Pause on hover
+  container.addEventListener("mouseenter", () => {
+    isPaused = true;
+  });
+
+  container.addEventListener("mouseleave", () => {
+    isPaused = false;
+    startTime = Date.now() - ((parseFloat(progressFill?.style.width) || 0) / 100) * slideDuration;
+  });
+
+  // Touch Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  container.addEventListener("touchstart", (e) => {
+    isPaused = true;
+    if (e.changedTouches && e.changedTouches[0]) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+  }, { passive: true });
+
+  container.addEventListener("touchend", (e) => {
+    if (e.changedTouches && e.changedTouches[0]) {
+      touchEndX = e.changedTouches[0].screenX;
+    }
+    isPaused = false;
+    startTime = Date.now();
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        updateSlide(currentIndex + 1); // Swiped Left -> Next
+      } else {
+        updateSlide(currentIndex - 1); // Swiped Right -> Prev
+      }
+    }
+  }, { passive: true });
+
+  // Keyboard accessibility
+  container.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      updateSlide(currentIndex - 1);
+    } else if (e.key === "ArrowRight") {
+      updateSlide(currentIndex + 1);
+    }
+  });
+
+  // Start Animation Loop
+  resetTimer();
+  animFrameId = requestAnimationFrame(tick);
 }
 
 function setupMenuCardModal() {

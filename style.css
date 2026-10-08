@@ -645,9 +645,166 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.hero-veg-badge .veg-badge-dot,
+.veg-badge-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--veg-green);
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Hero Showcase Carousel Slider */
+.hero-slider-card {
+  position: relative;
+}
+
+.hero-slider-nav-btn {
+  position: absolute;
+  top: 36%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(28, 15, 10, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.hero-slider-nav-btn:hover {
+  background: var(--brand-cocoa-dark);
+  border-color: var(--brand-gold);
+  color: var(--brand-gold-light);
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.hero-slider-prev {
+  left: 12px;
+}
+
+.hero-slider-next {
+  right: 12px;
+}
+
+.hero-slides-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.hero-slide {
+  display: none;
+  opacity: 0;
+}
+
+.hero-slide.active {
+  display: block;
+  opacity: 1;
+  animation: heroSlideFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroSlideFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-slider-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px 14px;
+  background: var(--bg-surface-subtle);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hero-slider-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(140, 94, 40, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-slider-dot:hover {
+  background-color: var(--brand-gold);
+  transform: scale(1.2);
+}
+
+.hero-slider-dot.active {
+  width: 26px;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-gold);
+}
+
+.hero-slider-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-slider-counter {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-counter-current {
+  color: var(--brand-gold);
+  font-weight: 800;
+}
+
+.hero-slider-progress-track {
+  width: 48px;
+  height: 3px;
+  background: rgba(140, 94, 40, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-slider-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--brand-gold);
+  border-radius: 999px;
+  transition: width 0.1s linear;
 }
 
 .hero-card-caption {

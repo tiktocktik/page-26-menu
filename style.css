@@ -376,22 +376,163 @@ img {
   align-items: center;
 }
 
-@media (max-width: 960px) {
-  .hero-split-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    text-align: center;
-  }
-}
-
 .hero-text-col {
   display: flex;
   flex-direction: column;
 }
 
+.hero-intro-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-narrative-group {
+  display: flex;
+  flex-direction: column;
+}
+
 @media (max-width: 960px) {
+  .hero-editorial {
+    padding: 18px 14px 26px;
+  }
+
+  .hero-split-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  /* Key UX Fix: display: contents allows reordering children directly in the mobile flex container */
   .hero-text-col {
+    display: contents;
+  }
+
+  /* 1. Compact Brand Intro Header at the top */
+  .hero-intro-group {
+    order: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    margin-bottom: 0;
+  }
+
+  .hero-crest-badge {
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-brand-title {
+    font-size: clamp(2.3rem, 7.5vw, 3rem);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .hero-tagline-wrap {
+    margin-bottom: 4px;
+    gap: 8px;
+  }
+
+  .hero-filigree {
+    width: 24px;
+  }
+
+  .hero-brand-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+  }
+
+  /* 2. THE FOOD SLIDER IS IMMEDIATELY BELOW THE TITLE (FRONT & CENTER!) */
+  .hero-showcase-col {
+    order: 2;
+    width: 100%;
+    margin: 2px 0 6px;
+  }
+
+  .hero-showcase-card {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .hero-image-frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  /* 3. PRIMARY CALL TO ACTIONS DIRECTLY BELOW SLIDER */
+  .hero-actions-row {
+    order: 3;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-wa {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 11px 10px;
+    font-size: 0.82rem;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .btn-hero-secondary {
+    display: none;
+  }
+
+  /* 4. EDITORIAL NARRATIVE & COMPACT 2x2 TRUST PILLS */
+  .hero-narrative-group {
+    order: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .hero-narrative {
+    font-size: 0.85rem;
+    line-height: 1.48;
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+  }
+
+  .trust-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .trust-item {
+    padding: 7px 9px !important;
+    gap: 7px !important;
+    border-radius: 8px !important;
+  }
+
+  .trust-icon-box {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .trust-icon-box svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .trust-text strong {
+    font-size: 0.72rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .trust-text span {
+    font-size: 0.63rem !important;
   }
 }
 
@@ -472,11 +613,6 @@ img {
   max-width: 560px;
 }
 
-@media (max-width: 520px) {
-  .trust-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 .trust-item {
   display: flex;
@@ -3758,30 +3894,52 @@ body.dock-active .floating-wa-fab-wrap {
 
 @media (max-width: 960px) {
   .hero-split-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
   }
 
   .hero-text-col {
+    display: contents;
+  }
+
+  .hero-intro-group {
+    order: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
-  }
-
-  .hero-narrative {
-    text-align: center;
-  }
-
-  .hero-actions-row {
-    justify-content: center;
+    margin-bottom: 0;
   }
 
   .hero-showcase-col {
+    order: 2;
     width: 100%;
+    margin: 2px 0 6px;
   }
 
   .hero-showcase-card {
-    max-width: 540px;
+    max-width: 100%;
     margin: 0 auto;
+    border-radius: 16px;
+  }
+
+  .hero-actions-row {
+    order: 3;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .hero-narrative-group {
+    order: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
   }
 }
 
@@ -4052,54 +4210,62 @@ body.dock-active .floating-wa-fab-wrap {
     margin-bottom: 16px;
   }
 
-  /* Single-column full-width trust grid on phones for guaranteed zero-cropping */
+  /* Compact 2x2 trust grid on mobile (never 1-column stack) */
   .trust-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    margin-bottom: 18px;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
   }
 
   .trust-item {
-    padding: 10px 12px;
-    gap: 10px;
-    width: 100%;
+    padding: 7px 9px !important;
+    gap: 7px !important;
+    width: 100% !important;
+    border-radius: 8px !important;
   }
 
   .trust-icon-box {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
+    width: 26px !important;
+    height: 26px !important;
+    flex-shrink: 0 !important;
   }
 
   .trust-icon-box svg {
-    width: 16px;
-    height: 16px;
+    width: 14px !important;
+    height: 14px !important;
   }
 
-  .trust-title {
-    font-size: 0.82rem;
-    line-height: 1.25;
+  .trust-text strong {
+    font-size: 0.72rem !important;
+    line-height: 1.2 !important;
   }
 
-  .trust-sub {
-    display: block;
-    font-size: 0.72rem;
+  .trust-text span {
+    font-size: 0.62rem !important;
   }
 
   .hero-actions-row {
-    flex-direction: column;
-    width: 100%;
-    gap: 8px;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    gap: 8px !important;
+    margin-bottom: 6px !important;
   }
 
   .btn-hero-primary,
-  .btn-hero-wa,
+  .btn-hero-wa {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    justify-content: center !important;
+    padding: 11px 8px !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+  }
+
   .btn-hero-secondary {
-    width: 100%;
-    justify-content: center;
-    padding: 11px 16px;
-    font-size: 0.86rem;
+    display: none !important;
   }
 
   /* Slider card mobile spacing */
